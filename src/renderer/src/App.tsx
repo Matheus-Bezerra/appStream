@@ -1,9 +1,12 @@
+import { Button } from '../src/components/ui/button';
 import './styles/global.css'
 
 export function App(): JSX.Element {
   return (
-    <>
-      <h1 className="text-violet-400 text-2xl">mamainsss</h1>
-    </>
+    <div className='bg-primary text-primary h-[100vh]'>
+      <Button variant={"destructive"}>teste</Button>
+    </div>
+
   )
 }
+ 

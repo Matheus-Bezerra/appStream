@@ -19,12 +19,9 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
-      "~/*": [
-        "./*"
-      ],
-      "@*": ["./src/*"],
+      "@/*": ["src/renderer/src/*"]
     }
   },
   "include": [
@@ -34,5 +31,5 @@
   ],
   "exclude": [
     "node_modules"
-  ],
+  ]
 }
