@@ -11,9 +11,10 @@ const shareService = require('../services/shareService');
 // Função do controlador para conectar à live do TikTok
 exports.connectToTikTokLive = (req, res) => {
     const { username } = req.body; // Pega o nome de usuário a partir do corpo da requisição
-
+    const { game } = req.body
+    console.log("jogo", game)
     // Chama o serviço para conectar à live
-    tiktokService.connectToTikTokLive(username)
+    tiktokService.connectToTikTokLive(username, game)
         .then(() => {
             res.status(200).json({ message: `Conexão feita com sucesso com live ${username}` });
         })
@@ -26,11 +27,12 @@ exports.connectToTikTokLive = (req, res) => {
 
 exports.getAvailableGifts = (req, res) => {
     const { username } = req.body; // Pega o nome de usuário a partir do corpo da requisição
-
+    const { game } = req.body
+    console.log("jogo", game)
     // Chama o serviço para conectar à live e pegar os presentes disponíveis
-    availableGiftsService.getAvailableGifts(username)
+    availableGiftsService.getAvailableGifts(username, game)
         .then((gifts) => {
-            res.status(200).json({ 
+            res.status(200).json({
                 message: `Conexão feita com sucesso com a live de ${username}`,
                 availableGifts: gifts // Envia a lista de presentes na resposta
             });
@@ -48,7 +50,7 @@ exports.roomUser = (req, res) => {
     // Chama o serviço para conectar à live e pegar os top 3 doadores
     roomUserService.roomUser(username)
         .then((top3Donors) => {
-            res.status(200).json({ 
+            res.status(200).json({
                 message: `Conexão feita com sucesso com a live de ${username}`,
                 top3Donors: top3Donors // Envia os top 3 doadores na resposta
             });

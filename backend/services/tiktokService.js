@@ -1,55 +1,74 @@
 const { WebcastPushConnection } = require('tiktok-live-connector');
-const { piscarTela } = require('./webcamService'); 
-const { executarAcaoNoJogo } = require('./actionsMineCraftService'); 
-const { executarTecla } = require('./actionsGtaService'); 
+const { piscarTela } = require('./webcamService');
+const { executarAcaoNoJogo } = require('./actionsMineCraftService');
+const { executarTecla } = require('./actionsGtaService');
+const { getData } = require('./redisService'); // Import the Redis service
 
-const connectToTikTokLive = async (username) => {
+const connectToTikTokLive = async (username, game) => {
     let tiktokLiveConnection = new WebcastPushConnection(username);
 
     try {
-        // Conectar à live do TikTok
+        // Retrieve user preferences from Redis
+        const preferences = await getData(username);
+
+        if (!preferences) {
+            console.error(`No preferences found for user: ${username}`);
+            // return;
+        }
+
+        console.log(`Loaded preferences for user ${username}:`, preferences);
+
+        // Connect to the TikTok live stream
         let state = await tiktokLiveConnection.connect();
-        console.log(`Conectado à live de ${state.roomInfo.owner.nickname}`);
+        try {
+            console.log(`Connected to ${state.roomInfo.owner.nickname}'s live stream`);
+        } catch (error) {
 
+        }
 
-        // Ouvir eventos de presentes enviados
+        // Listen for gift events
         tiktokLiveConnection.on('gift', data => {
-            console.log(`${data.uniqueId} enviou o presente: ${data.giftName} (Quantidade: ${data.repeatCount})`);
-            if (data.giftName === "Rose") {
-                console.log("------------------ROSA CHAMADAAAAAAAA--------")
-                // piscarTela();
+            console.log(`${data.uniqueId} sent gift: ${data.giftName} (Quantity: ${data.repeatCount})`);
 
+            // Encontrar preferência que corresponda ao presente e ao jogo especificado
+            const matchedPref = preferences.find(
+                pref => pref.presente === data.giftName && pref.modulo === game
+            );
+
+            if (matchedPref) {
+                console.log(`Action for gift "${matchedPref.presente}":`, matchedPref.acao);
+
+                // Execute based on module and action
+                if (matchedPref.modulo === 'GTA' && matchedPref.tecla) {
+                    executarTecla(matchedPref.tecla);
+                } else if (matchedPref.modulo === 'webcam') {
+                    piscarTela();
+                } else if (matchedPref.modulo === 'Minecraft') {
+                    executarAcaoNoJogo(matchedPref.acao, username);
+                }
             }
         });
-
 
         // Ouvir eventos de mensagens no chat
         tiktokLiveConnection.on('chat', data => {
             console.log(`${data.uniqueId} disse: ${data.comment}`);
-            if (data.comment === "safa" || data.comment === "top" || data.comment === "10") {
-                console.log("cai no safaaaaaaaaaaaaaaaaaaaa")
-                executarAcaoNoJogo('safa');
+            // Encontrar preferência que corresponda ao presente e ao jogo especificado
+            const matchedPref = preferences.find(
+                pref => pref.presente === data.comment && pref.modulo === game
+            );
+            if (matchedPref) {
+                console.log(`Action for gift "${matchedPref.presente}":`, matchedPref.acao);
 
-                // piscarTela();
-
-                if (data.comment == "top") {
-                    // Executar o script AHK para pular
-                    console.log("------------------toppp CHAMADAAAAAAAA--------")
-                    executarTecla('F9')
+                // Execute based on module and action
+                if (matchedPref.modulo === 'GTA' && matchedPref.tecla) {
+                    executarTecla(matchedPref.tecla);
+                } else if (matchedPref.modulo === 'webcam') {
+                    piscarTela();
+                } else if (matchedPref.modulo === 'Minecraft') {
+                    executarAcaoNoJogo(matchedPref.acao, username);
                 }
-                if (data.comment == "10") {
-                    // Executar o script AHK para pular
-                    console.log("------------------10 CHAMADAAAAAAAA--------")
-                    // ls aiport teleport 
-                    executarTecla('g')
-                }
-
-                if (data.comment == "nossa") {
-                    // Executar o script AHK para pular
-                    console.log("------------------nossa CHAMADAAAAAAAA--------")
-                    // k -> Snow
-                    executarTecla('k')
-                }
+            } else {
+                console.log(`Nenhuma ação definida para o presente "${data.comment}" no módulo "${game}".`);
 
             }
         });

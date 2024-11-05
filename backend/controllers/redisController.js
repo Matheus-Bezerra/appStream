@@ -16,11 +16,16 @@ exports.saveUserPreferences = async (req, res) => {
 };
 
 exports.getUserPreferences = async (req, res) => {
+    const { usuario } = req.body; // Captura o usuário da URL
     try {
-        const { usuario } = req.params;
-        const preferences = await redisService.getData(usuario);
-        res.status(200).json(preferences);
+        const preferences = await redisService.getData(usuario); // Chama a função de busca
+        if (preferences) {
+            res.status(200).json(preferences); // Retorna as preferências encontradas
+        } else {
+            res.status(404).json({ message: 'Preferências não encontradas' }); // Se não encontrar, retorna 404
+        }
     } catch (error) {
+        console.error("Erro ao buscar preferências:", error);
         res.status(500).json({ error: 'Erro ao buscar preferências' });
     }
 };
