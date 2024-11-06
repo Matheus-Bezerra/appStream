@@ -3,7 +3,7 @@ import './styles/global.css'
 export function App(): JSX.Element {
   return (
     <>
-      <h1 className="text-violet-400 text-2xl">mamainsss</h1>
+      <h1 className="text-violet-400 text-2xl">hello</h1>
     </>
   )
 }
