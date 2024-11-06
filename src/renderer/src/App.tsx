@@ -1,9 +1,8 @@
+
+import {RouterProvider } from "react-router-dom";
 import './styles/global.css'
+import { router } from './routes';
 
 export function App(): JSX.Element {
-  return (
-    <>
-      <h1 className="text-violet-400 text-2xl">mamainsss</h1>
-    </>
-  )
+  return <RouterProvider router={router} />;
 }
