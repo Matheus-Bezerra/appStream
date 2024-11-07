@@ -37,7 +37,7 @@ export const Sidebar = () => {
                         <img
                             src={logoImage} // Substitua com o caminho real da sua logo
                             alt="Logo"
-                            className="w-32 h-auto" // Ajuste o tamanho conforme necessário
+                            className="w-42 h-auto" // Ajuste o tamanho conforme necessário
                         />
                     </div>
 
@@ -209,7 +209,6 @@ export const Sidebar = () => {
 
                         </div>
                     </div>
-                    {/* Outras opções do sidebar */}
                 </div>
             </aside>
         </div>
