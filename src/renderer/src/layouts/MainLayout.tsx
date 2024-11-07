@@ -10,7 +10,9 @@ export const MainLayout = () => {
 
       <div className="flex-1  text-white bg-background">
         <header className=""></header>
-        <Outlet />
+        <main className="min-h-screen">
+          <Outlet />
+        </main>
       </div>
     </div>
   );

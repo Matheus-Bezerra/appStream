@@ -11,9 +11,7 @@ export const Home = () => {
   const [showCard, setShowCard] = useState(false); // Controle de visibilidade do Card
 
   return (
-    <div className="flex h-screen text-white">
-
-
+    <div className="flex text-white">
       <main className="flex-1 p-8">
         <div className="relative bg-[#363B4A] rounded-3xl overflow-hidden mb-8">
           <img
