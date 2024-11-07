@@ -12,6 +12,7 @@
   "dependencies": {
     "@tensorflow-models/facemesh": "^0.0.5",
     "@tensorflow/tfjs": "^4.21.0",
+    "backend": "file:",
     "canvas": "^2.11.2",
     "express": "^4.21.1",
     "jimp": "^1.6.0",
