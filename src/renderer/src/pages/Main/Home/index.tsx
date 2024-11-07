@@ -11,59 +11,57 @@ export const Home = () => {
   const [showCard, setShowCard] = useState(false); // Controle de visibilidade do Card
 
   return (
-    <div className="flex h-screen bg-[#1C1F28] text-white">
+    <div className="flex h-screen text-white">
 
 
-      {/* Main Content */}
       <main className="flex-1 p-8">
-        {/* Banner Principal */}
-        <div className="relative bg-[#363B4A] rounded-lg overflow-hidden mb-8">
+        <div className="relative bg-[#363B4A] rounded-3xl overflow-hidden mb-8">
           <img
             src={minecraftImage}
             alt="Minecraft"
             className="w-full h-48 object-cover opacity-70"
           />
           <div className="absolute top-0 left-0 w-full h-full flex flex-col justify-center items-start p-6 space-y-2">
-            <span className="bg-yellow-500 text-black px-2 py-1 rounded text-sm font-bold">Último jogo</span>
+            <span className="bg-primary text-black px-2 py-1 rounded text-sm font-bold">Último jogo</span>
             <h2 className="text-2xl font-bold">MINECRAFT</h2>
-            <Button className="bg-yellow-500 text-black">Acessar</Button>
+            <Button className="bg-primary text-black">Acessar</Button>
           </div>
         </div>
 
         {/* Meus Jogos */}
         <div className="mb-8">
-          <h1 className="text-2xl font-bold mb-4">Meus jogos</h1>
+          <h1 className="text-2xl font-bold mb-4 text-primary">Meus jogos</h1>
         </div>
 
         {/* Jogos principais */}
         <div className="grid grid-cols-3 gap-4">
           <Card className="bg-[#0b0c0f] p-4 border-0">
             <CardHeader>
-              <CardTitle className="text-yellow-400">Minecraft</CardTitle>
+              <CardTitle className="text-primary">Minecraft</CardTitle>
             </CardHeader>
             <CardContent>
               <img src={minecraftImage} alt="Minecraft" className="w-full h-32 object-cover rounded-lg mb-4" />
-              <Button className="w-full bg-yellow-500">Acessar</Button>
+              <Button className="w-full bg-primary">Acessar</Button>
             </CardContent>
           </Card>
 
           <Card className="bg-[#0b0c0f] p-4 border-0">
             <CardHeader>
-              <CardTitle className="text-yellow-400">Grand Theft Auto V</CardTitle>
+              <CardTitle className="text-primary">Grand Theft Auto V</CardTitle>
             </CardHeader>
             <CardContent>
               <img src={gtaImage} alt="GTA V" className="w-full h-32 object-cover rounded-lg mb-4" />
-              <Button className="w-full bg-yellow-500">Acessar</Button>
+              <Button className="w-full bg-primary">Acessar</Button>
             </CardContent>
           </Card>
 
           <Card className="bg-[#0b0c0f] p-4 border-0">
             <CardHeader>
-              <CardTitle className="text-yellow-400">Batalha</CardTitle>
+              <CardTitle className="text-primary">Batalha</CardTitle>
             </CardHeader>
             <CardContent>
               <img src={batalhaImage} alt="Dark Souls II" className="w-full h-32 object-cover rounded-lg mb-4" />
-              <Button className="w-full bg-yellow-500">Acessar</Button>
+              <Button className="w-full bg-primary">Acessar</Button>
             </CardContent>
           </Card>
         </div>
@@ -86,7 +84,7 @@ export const Home = () => {
             </div>
           ))}
         </div>
-        <Button className="mt-4 w-full bg-yellow-500">Visualizar todos</Button>
+        <Button className="mt-4 w-full bg-primary">Visualizar todos</Button>
       </aside>
     </div>
   );
