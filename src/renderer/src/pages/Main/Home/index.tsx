@@ -71,7 +71,7 @@ export const Home = () => {
       <aside className="w-64 bg-[#0b0c0f] p-4">
         <h2 className="text-lg font-bold mb-4">Top Streamer</h2>
         <div className="space-y-4">
-          {[...Array(5)].map((_, index) => (
+          {[...Array(2)].map((_, index) => (
             <div key={index} className="flex items-center space-x-4 p-2 rounded-lg bg-[#1C1F28]">
               <Avatar>
                 <AvatarImage src="link_para_avatar" alt="streamer_avatar" />
