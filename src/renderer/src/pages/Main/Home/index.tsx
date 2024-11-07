@@ -11,8 +11,8 @@ export const Home = () => {
   const [showCard, setShowCard] = useState(false); // Controle de visibilidade do Card
 
   return (
-    <div className="flex text-white">
-      <main className="flex-1 p-8">
+    <div className="flex text-white space-x-4 p-4">
+      <main className="flex-1 p-4">
         <div className="relative bg-[#363B4A] rounded-3xl overflow-hidden mb-8">
           <img
             src={minecraftImage}
@@ -46,7 +46,7 @@ export const Home = () => {
       </main>
 
       {/* Top Streamers */}
-      <aside className="w-64 bg-[#0b0c0f] p-4 rounded-3xl shadow-md ml-4 mr-4">
+      <aside className="w-64 bg-[#0b0c0f] p-4 rounded-3xl shadow-md">
         <h2 className="text-lg font-bold mb-4">Top Streamer</h2>
         <div className="space-y-4">
           {[{ name: "Gabriel_freire", views: "25,000 Views", avatar: "link_para_avatar" },
@@ -67,7 +67,6 @@ export const Home = () => {
         </div>
         <Button className="w-full mt-4 border-2 border-yellow-500 text-yellow-500 rounded-full font-bold py-2 bg-transparent">Visualizar todos</Button>
       </aside>
-
     </div>
   );
 };

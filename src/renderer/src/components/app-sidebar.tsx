@@ -31,7 +31,7 @@ export const Sidebar = () => {
                 className={`transition-transform transform text-white overflow-hidden h-full ${isOpen ? "w-64" : "w-0"}`}
                 aria-label="Sidebar"
             >
-                <div className="h-full px-1 py-4 overflow-y-auto overflow-x-hidden">
+                <div className="h-full px-1 py-4 overflow-y-hidden overflow-x-hidden">
                     {/* Imagem da logo no topo */}
                     <div className="mb-4 flex justify-center">
                         <img
@@ -78,7 +78,7 @@ export const Sidebar = () => {
                             </button>
 
 
-                            <div className="h-full px-3 py-4 overflow-y-auto bg-black">
+                            <div className="h-full px-3 py-4 overflow-y-hidden bg-black">
                                 <ul className="space-y-2 font-medium">
                                     <li>
                                         <a
