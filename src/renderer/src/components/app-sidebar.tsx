@@ -8,11 +8,11 @@ import {
     ChevronUp,
 } from "lucide-react";
 
+import logoImage from "../imagens/image.png";
+
 export const Sidebar = () => {
-    // Estado para controlar a visibilidade da sidebar
     const [isOpen, setIsOpen] = useState(true);
 
-    // Função para alternar a visibilidade da sidebar
     const toggleSidebar = () => setIsOpen(!isOpen);
 
     return (
@@ -28,11 +28,19 @@ export const Sidebar = () => {
             {/* Sidebar */}
             <aside
                 id="separator-sidebar"
-                className={`transition-transform transform text-white overflow-hidden h-full ${isOpen ? "w-64" : "w-0"
-                    }`}
+                className={`transition-transform transform text-white overflow-hidden h-full ${isOpen ? "w-64" : "w-0"}`}
                 aria-label="Sidebar"
             >
-                <div className="h-full px-1 py-4  overflow-y-auto overflow-x-hidden">
+                <div className="h-full px-1 py-4 overflow-y-auto overflow-x-hidden">
+                    {/* Imagem da logo no topo */}
+                    <div className="mb-4 flex justify-center">
+                        <img
+                            src={logoImage} // Substitua com o caminho real da sua logo
+                            alt="Logo"
+                            className="w-32 h-auto" // Ajuste o tamanho conforme necessário
+                        />
+                    </div>
+
                     {/* Botão de seta para expandir/recolher a parte interna da sidebar */}
                     <button
                         onClick={toggleSidebar}
@@ -42,6 +50,8 @@ export const Sidebar = () => {
                     </button>
 
                     {/* Conteúdo da sidebar */}
+
+
                     <div className="h-screen w-64 bg-gray-800 text-white">
                         <div className="h-screen w-64 bg-black text-white">
                             <button
