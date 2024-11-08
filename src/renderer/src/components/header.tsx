@@ -1,18 +1,20 @@
-import React from "react";
-import { Input } from "./ui/input"; 
+import { ArrowLeft, Menu } from "lucide-react";
 
-export const Header = () => {
+interface HeaderProps {
+  isOpen: boolean; 
+  toggleSidebar: () => void; 
+}
+
+export const Header: React.FC<HeaderProps> = ({isOpen, toggleSidebar}) => {
   return (
-    <header className="flex items-center justify-between p-4 bg-black text-white  shadow-md">
+    <header className="flex items-center justify-between py-3 px-8 bg-foreground text-white  shadow-md">
       <div className="flex items-center space-x-4">
+        <button className="text-primary cursor-pointer" onClick={toggleSidebar}>
+          {isOpen ? <ArrowLeft /> :  <Menu size={24} />}
+        </button>
       </div>
       <div className="flex items-center space-x-4">
-        
-        <img
-          src="link_para_avatar" // Substitua pelo link ou path da imagem do avatar
-          alt="Perfil"
-          className="w-10 h-10 rounded-full"
-        />
+          Perfil
       </div>
     </header>
   );

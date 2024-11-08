@@ -29,7 +29,7 @@ export const Home = () => {
         </div>
 
         {/* Jogos principais */}
-        <section className="grid grid-cols-3 gap-4">
+        <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {gameData.map((game, index) => (
             <CardGamer key={index} imagem={game.imagem} titulo={game.titulo} />
           ))}
@@ -37,7 +37,7 @@ export const Home = () => {
       </main>
 
       {/* Top Streamers */}
-      <aside className="w-64 bg-[#0b0c0f] p-4 rounded-3xl shadow-md">
+      <aside className="w-64 bg-foreground p-4 rounded-3xl shadow-md hidden lg:block">
         <h2 className="text-lg font-bold mb-4">Top Streamer</h2>
         <div className="space-y-4">
           {[{ name: "Gabriel_freire", views: "25,000 Views", avatar: "link_para_avatar" },
