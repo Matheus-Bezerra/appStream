@@ -22,7 +22,7 @@ export interface PredefinicoesProps {
 export interface ModeProps {
     id: number;
     titulo: string;
-    imagem: string;
+    imagemModo: string;
     navigateTo: string;
     predefinicoes: PredefinicoesProps[]; 
 }
@@ -34,6 +34,7 @@ export interface GameProps {
     acessado: string; // formato ISO para datas
     banner: string;
     imagem: string;
+    imagemGame: string;
     ultimoAcesso: boolean;
     // predefinicoes: PredefinicoesProps[]; // Remova ou mantenha conforme a necessidade
 }

@@ -1,11 +1,12 @@
 // src/routes.tsx
 import React from "react";
 import { createHashRouter } from "react-router-dom"; 
-import {MainLayout} from "./layouts/MainLayout";
-import {AuthLayout} from "./layouts/AuthLayout";
-import {Home} from "./pages/Main/Home";
-import {Login} from "./pages/Auth/Login";
+import { MainLayout } from "./layouts/MainLayout";
+import { AuthLayout } from "./layouts/AuthLayout";
+import { Home } from "./pages/Main/Home";
+import { Login } from "./pages/Auth/Login";
 import { Predefinicoes } from "./pages/Main/Predefinicoes";
+import { Jogos } from "./pages/Main/Jogos";  // Importa o componente Jogos
 
 export const router = createHashRouter([
     {
@@ -16,8 +17,12 @@ export const router = createHashRouter([
                 path: "/",
                 element: <Home />
             },
+            {
+                path: "/jogos",   // Adiciona a rota para Jogos
+                element: <Jogos />
+            },
             // {
-            //     path: "/",
+            //     path: "/predefinicoes",
             //     element: <Predefinicoes />
             // },
         ]

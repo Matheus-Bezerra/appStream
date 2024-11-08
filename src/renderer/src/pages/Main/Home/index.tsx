@@ -38,7 +38,7 @@ export const Home = () => {
               <CardContent className="flex flex-col items-center">
                 <img src={game.image} alt={game.title} className="w-full h-32 object-cover rounded-lg mb-4" />
                 <h3 className="text-primary font-bold text-center mb-2">{game.title}</h3>
-                <Button className="w-full border-2 border-yellow-500 text-yellow-500 rounded-full font-bold py-2 bg-transparent">Acessar</Button>
+                <Button className="w-full border-2 border-yellow-500 text-yellow-500 rounded-full hover:text-gray-300 font-bold py-2 bg-transparent">Acessar</Button>
               </CardContent>
             </Card>
           ))}
@@ -65,7 +65,7 @@ export const Home = () => {
             </div>
           ))}
         </div>
-        <Button className="w-full mt-4 border-2 border-yellow-500 text-yellow-500 rounded-full font-bold py-2 bg-transparent">Visualizar todos</Button>
+        <Button className="w-full mt-4 border-2 border-yellow-500 text-yellow-500 hover:text-gray-300 rounded-full font-bold py-2 bg-transparent">Visualizar todos</Button>
       </aside>
     </div>
   );

@@ -1,14 +1,19 @@
 import { GameProps } from "../utils/GameDataProps";
+import minecraftImage from "../imagens/mineCraft.jpg";
+import gtaImage from "../imagens/thumbnail.webp";
+import batalhaImage from "../imagens/batalha.jpg";
+import redDeadImage from "../imagens/redDead.jpg";
 
 export const gameData: GameProps[] = [
     {
         id: 1,
         titulo: "Minecraft",
+        imagem: minecraftImage,
         modes: [
             {
                 id: 1,
                 titulo: "Sobrevivência",
-                imagem: '../assets/sobrevivencia.png',
+                imagemModo: '../assets/sobrevivencia.png',
                 navigateTo: 'PreDefinicoesScreen',
                 predefinicoes: [
                     {
@@ -39,7 +44,7 @@ export const gameData: GameProps[] = [
             {
                 id: 2,
                 titulo: "Expansão",
-                imagem: '../assets/expansion.png',
+                imagemModo: '../assets/expansion.png',
                 navigateTo: 'PreDefinicoesScreen',
                 predefinicoes: [
                     {
@@ -54,7 +59,7 @@ export const gameData: GameProps[] = [
             {
                 id: 3,
                 titulo: "Apocalipse",
-                imagem: '../assets/zombie.png',
+                imagemModo: '../assets/zombie.png',
                 navigateTo: 'PreDefinicoesScreen',
                 predefinicoes: [
                     {
@@ -69,17 +74,18 @@ export const gameData: GameProps[] = [
         ],
         acessado: "2024-09-21T17:00:47.536Z",
         banner: "../assets/Minecraft-1.jpg",
-        imagem: "../assets/mineCraft.jpg",
+        imagemGame: "../assets/mineCraft.jpg",
         ultimoAcesso: true,
     },
     {
         id: 2,
         titulo: "Grand Theft Auto V",
+        imagem: gtaImage,
         modes: [
             {
                 id: 1,
                 titulo: "Modo Missões V",
-                imagem: '../assets/moodMissaoGta.jpg',
+                imagemModo: '../assets/moodMissaoGta.jpg',
                 navigateTo: 'PreDefinicoesScreen',
                 predefinicoes: [
                     {
@@ -94,7 +100,7 @@ export const gameData: GameProps[] = [
             {
                 id: 2,
                 titulo: "KOTH (King of the Hill)",
-                imagem: '../assets/moodKothGta.jpg',
+                imagemModo: '../assets/moodKothGta.jpg',
                 navigateTo: 'PreDefinicoesScreen',
                 predefinicoes: [
                     {
@@ -118,17 +124,18 @@ export const gameData: GameProps[] = [
         ],
         acessado: "2024-09-21T17:00:47.536Z",
         banner: "../assets/thumbnail.webp",
-        imagem: "../assets/thumbnail.webp",
+        imagemGame: "../assets/thumbnail.webp",
         ultimoAcesso: false,
     },
     {
         id: 3,
         titulo: "Batalha",
+        imagem: batalhaImage,  // Capa do jogo
         modes: [
             {
                 id: 1,
                 titulo: "Modo Batalha",
-                imagem: '../assets/batalha.jpg',
+                imagemModo: '../assets/batalha.jpg',
                 navigateTo: 'PreDefinicoesScreen',
                 predefinicoes: [
                     {
@@ -143,7 +150,7 @@ export const gameData: GameProps[] = [
             {
                 id: 2,
                 titulo: "Modo de Rima",
-                imagem: '../assets/batalha.jpg',
+                imagemModo: '../assets/batalha.jpg',
                 navigateTo: 'PreDefinicoesScreen',
                 predefinicoes: [
                     {
@@ -158,17 +165,18 @@ export const gameData: GameProps[] = [
         ],
         acessado: "2024-09-21T17:00:47.536Z",
         banner: "../assets/batalha.jpg",
-        imagem: "../assets/batalha.jpg",
+        imagemGame: "../assets/batalha.jpg",
         ultimoAcesso: false,
     },
     {
         id: 4,
         titulo: "Red Dead",
+        imagem: redDeadImage,  // Capa do jogo
         modes: [
             {
                 id: 1,
                 titulo: "Modo Red Dead",
-                imagem: '../assets/redDead.jpg',
+                imagemModo: '../assets/redDead.jpg',
                 navigateTo: 'PreDefinicoesScreen',
                 predefinicoes: [
                     {
@@ -181,7 +189,7 @@ export const gameData: GameProps[] = [
         ],
         acessado: "2024-09-21T17:00:47.536Z",
         banner: "../assets/redDead.jpg",
-        imagem: "../assets/redDead.jpg",
+        imagemGame: "../assets/redDead.jpg",
         ultimoAcesso: false,
     },
 ];
