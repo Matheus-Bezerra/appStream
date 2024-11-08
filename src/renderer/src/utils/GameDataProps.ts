@@ -31,10 +31,9 @@ export interface GameProps {
     id: number;
     titulo: string;
     modes: ModeProps[];
-    acessado: string; // formato ISO para datas
+    acessado: string;
     banner: string;
     imagem: string;
     imagemGame: string;
     ultimoAcesso: boolean;
-    // predefinicoes: PredefinicoesProps[]; // Remova ou mantenha conforme a necessidade
 }
