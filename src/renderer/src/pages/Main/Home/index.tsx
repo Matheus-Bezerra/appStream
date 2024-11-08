@@ -1,28 +1,25 @@
 import { Avatar, AvatarFallback, AvatarImage } from "../../../components/ui/avatar";
 import { Button } from "../../../components/ui/button";
-import { Input } from "../../../components/ui/input";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../../../components/ui/card";
-import { useState } from "react";
 import minecraftImage from "../../../imagens/mineCraft.jpg";
-import gtaImage from "../../../imagens/thumbnail.webp";
-import batalhaImage from "../../../imagens/batalha.jpg";
+import { CardGamer } from "../../../components/CardGamer";
+import { gameData } from "../../../constants/GameData";
 
 export const Home = () => {
-  const [showCard, setShowCard] = useState(false); // Controle de visibilidade do Card
 
   return (
     <div className="flex text-white space-x-4 p-4">
       <main className="flex-1 p-4">
-        <div className="relative bg-[#363B4A] rounded-3xl overflow-hidden mb-8">
+        <div className="relative bg-foreground rounded-[40px] overflow-hidden mb-8">
           <img
             src={minecraftImage}
             alt="Minecraft"
-            className="w-full h-48 object-cover opacity-70"
+            className="w-full h-48 object-cover opacity-90"
           />
-          <div className="absolute top-0 left-0 w-full h-full flex flex-col justify-center items-start p-6 space-y-2">
-            <span className="bg-primary text-black px-2 py-1 rounded text-sm font-bold">Último jogo</span>
+
+          <div className="absolute top-4 left-6 bg-primary text-black px-2 py-1 rounded-full text-sm font-bold">Último jogo</div>
+          <div className="absolute bottom-4 left-6 w-full justify-center items-start">
             <h2 className="text-2xl font-bold">MINECRAFT</h2>
-            <Button className="bg-primary text-black rounded-full px-6 py-2 font-bold mt-2">Acessar</Button>
+            <Button  className="mt-2">Acessar</Button>
           </div>
         </div>
 
@@ -32,17 +29,11 @@ export const Home = () => {
         </div>
 
         {/* Jogos principais */}
-        <div className="grid grid-cols-3 gap-4">
-          {[{ title: "Grand Theft Auto V", image: gtaImage }, { title: "MineCraft", image: minecraftImage }, { title: "Batalha", image: batalhaImage }].map((game, index) => (
-            <Card key={index} className="bg-[#0b0c0f] p-4 border-0 rounded-2xl">
-              <CardContent className="flex flex-col items-center">
-                <img src={game.image} alt={game.title} className="w-full h-32 object-cover rounded-lg mb-4" />
-                <h3 className="text-primary font-bold text-center mb-2">{game.title}</h3>
-                <Button className="w-full border-2 border-yellow-500 text-yellow-500 rounded-full hover:text-gray-300 font-bold py-2 bg-transparent">Acessar</Button>
-              </CardContent>
-            </Card>
+        <section className="grid grid-cols-3 gap-4">
+          {gameData.map((game, index) => (
+            <CardGamer key={index} imagem={game.imagem} titulo={game.titulo} />
           ))}
-        </div>
+        </section>
       </main>
 
       {/* Top Streamers */}

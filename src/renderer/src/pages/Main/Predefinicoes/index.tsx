@@ -5,7 +5,7 @@ export const Predefinicoes = () => {
   return (
     <>
         <div>
-            <img src={modoJogo.imagem} alt="Modo de jogo" />
+            <img src={modoJogo.imagemModo} alt="Modo de jogo" />
             <h2>{modoJogo.titulo}</h2>
         </div>
 
