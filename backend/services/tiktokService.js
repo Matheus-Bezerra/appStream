@@ -5,6 +5,7 @@ const { executarTecla } = require('./actionsGtaService');
 const { getData } = require('./redisService'); // Import the Redis service
 const { executeAhk } = require('./ahkService');
 
+
 const connectToTikTokLive = async (username, game) => {
     let tiktokLiveConnection = new WebcastPushConnection(username);
 
@@ -83,7 +84,7 @@ const connectToTikTokLive = async (username, game) => {
 
 
     } catch (error) {
-        stopAhk()
+        // stopAhk()
         console.error('Erro ao conectar à live:', error);
     }
 };

@@ -13,14 +13,15 @@ app.use(express.json());
 // Rotas da webcam
 app.use('/api/webcam', webcamRoutes);
 
-// Rota tikTok
+// Rota TikTok
 app.use('/tiktok', tiktokRoutes);
 
-
-// Rota redis
+// Rota Redis
 app.use('/redis', redisRoutes);
 
 // Inicia o servidor
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
 });
+
+
