@@ -4,6 +4,16 @@ import gtaImage from "../imagens/thumbnail.webp";
 import batalhaImage from "../imagens/batalha.jpg";
 import redDeadImage from "../imagens/redDead.jpg";
 
+// Importe as imagens dos modos diretamente
+import sobrevivenciaImage from '../assets/sobrevivencia.png';
+import expansionImage from '../assets/expansion.png';
+import zombieImage from '../assets/zombie.png';
+import missaoGtaImage from '../assets/moodMissaoGta.jpg';
+import kothGtaImage from '../assets/moodKothGta.jpg';
+import batalhaImageMode from '../assets/batalha.jpg';
+import redDeadImageMode from '../assets/redDead.jpg';
+
+
 export const gameData: GameProps[] = [
     {
         id: 1,
@@ -12,8 +22,9 @@ export const gameData: GameProps[] = [
         modes: [
             {
                 id: 1,
+                idJogo: 1,
                 titulo: "Sobrevivência",
-                imagemModo: '../assets/sobrevivencia.png',
+                imagemModo: sobrevivenciaImage,
                 navigateTo: 'PreDefinicoesScreen',
                 predefinicoes: [
                     {
@@ -43,8 +54,9 @@ export const gameData: GameProps[] = [
             },
             {
                 id: 2,
+                idJogo: 1,
                 titulo: "Expansão",
-                imagemModo: '../assets/expansion.png',
+                imagemModo: expansionImage,
                 navigateTo: 'PreDefinicoesScreen',
                 predefinicoes: [
                     {
@@ -58,8 +70,9 @@ export const gameData: GameProps[] = [
             },
             {
                 id: 3,
+                idJogo: 1,
                 titulo: "Apocalipse",
-                imagemModo: '../assets/zombie.png',
+                imagemModo: zombieImage,
                 navigateTo: 'PreDefinicoesScreen',
                 predefinicoes: [
                     {
@@ -84,8 +97,9 @@ export const gameData: GameProps[] = [
         modes: [
             {
                 id: 1,
+                idJogo: 2,
                 titulo: "Modo Missões V",
-                imagemModo: '../assets/moodMissaoGta.jpg',
+                imagemModo: missaoGtaImage,
                 navigateTo: 'PreDefinicoesScreen',
                 predefinicoes: [
                     {
@@ -99,8 +113,9 @@ export const gameData: GameProps[] = [
             },
             {
                 id: 2,
+                idJogo: 2,
                 titulo: "KOTH (King of the Hill)",
-                imagemModo: '../assets/moodKothGta.jpg',
+                imagemModo: kothGtaImage,
                 navigateTo: 'PreDefinicoesScreen',
                 predefinicoes: [
                     {
@@ -130,12 +145,13 @@ export const gameData: GameProps[] = [
     {
         id: 3,
         titulo: "Batalha",
-        imagem: batalhaImage,  // Capa do jogo
+        imagem: batalhaImage,  
         modes: [
             {
                 id: 1,
+                idJogo: 3,
                 titulo: "Modo Batalha",
-                imagemModo: '../assets/batalha.jpg',
+                imagemModo: batalhaImageMode,
                 navigateTo: 'PreDefinicoesScreen',
                 predefinicoes: [
                     {
@@ -149,8 +165,9 @@ export const gameData: GameProps[] = [
             },
             {
                 id: 2,
+                idJogo: 3,
                 titulo: "Modo de Rima",
-                imagemModo: '../assets/batalha.jpg',
+                imagemModo: batalhaImageMode,
                 navigateTo: 'PreDefinicoesScreen',
                 predefinicoes: [
                     {
@@ -171,12 +188,13 @@ export const gameData: GameProps[] = [
     {
         id: 4,
         titulo: "Red Dead",
-        imagem: redDeadImage,  // Capa do jogo
+        imagem: redDeadImage, 
         modes: [
             {
                 id: 1,
+                idJogo: 4,
                 titulo: "Modo Red Dead",
-                imagemModo: '../assets/redDead.jpg',
+                imagemModo: redDeadImageMode,
                 navigateTo: 'PreDefinicoesScreen',
                 predefinicoes: [
                     {

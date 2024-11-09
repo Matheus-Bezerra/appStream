@@ -1,33 +1,34 @@
 interface FuncaoProps {
-    imagem?: any,
-    nome: string,
-    tecla: string
-}
-
-export interface EventosProps {
+    imagem?: any;
+    nome: string;
+    tecla: string;
+  }
+  
+  export interface EventosProps {
     id: number;
     ativo: boolean;
-    presente: any; 
+    presente?: string;  
     funcao: FuncaoProps;
     audio: string;
     video: string;
-}
-
-export interface PredefinicoesProps {
+  }
+  
+  export interface PredefinicoesProps {
     id: number;
     nome: string;
     eventos: EventosProps[];
-}
-
-export interface ModeProps {
+  }
+  
+  export interface ModeProps {
     id: number;
+    idJogo: number;
     titulo: string;
-    imagemModo: string;
+    imagemModo?: string;  
     navigateTo: string;
-    predefinicoes: PredefinicoesProps[]; 
-}
-
-export interface GameProps {
+    predefinicoes: PredefinicoesProps[];
+  }
+  
+  export interface GameProps {
     id: number;
     titulo: string;
     modes: ModeProps[];
@@ -36,4 +37,5 @@ export interface GameProps {
     imagem: string;
     imagemGame: string;
     ultimoAcesso: boolean;
-}
+  }
+  

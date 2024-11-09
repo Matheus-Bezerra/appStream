@@ -1,40 +1,45 @@
 // src/routes.tsx
 import React from "react";
-import { createHashRouter } from "react-router-dom"; 
+import { createHashRouter } from "react-router-dom";
 import { MainLayout } from "./layouts/MainLayout";
 import { AuthLayout } from "./layouts/AuthLayout";
 import { Home } from "./pages/Main/Home";
 import { Login } from "./pages/Auth/Login";
 import { Predefinicoes } from "./pages/Main/Predefinicoes";
-import { Jogos } from "./pages/Main/Jogos";  // Importa o componente Jogos
+import { Jogos } from "./pages/Main/Jogos";
+import { GameModes } from "./pages/Main/GameModes";  
 
 export const router = createHashRouter([
     {
         path: "/",
-        element: <MainLayout />,  // Layout principal para as rotas da aplicação
+        element: <MainLayout />,
         children: [
             {
                 path: "/",
                 element: <Home />
             },
             {
-                path: "/jogos",   // Adiciona a rota para Jogos
+                path: "/jogos",
                 element: <Jogos />
             },
-            // {
-            //     path: "/predefinicoes",
-            //     element: <Predefinicoes />
-            // },
+            {
+                path: "/jogos/:idJogo", 
+                element: <GameModes />
+            },
+            {
+                path: "/jogos/predefinicoes/:idJogoSelecionado/:modoJogoSelecionado", 
+                element: <Predefinicoes />
+            }
         ]
     },
     {
         path: "/",
-        element: <AuthLayout />,  // Layout para rotas de autenticação
+        element: <AuthLayout />,
         children: [
             {
                 path: "/login",
                 element: <Login />
-            },
+            }
         ]
     }
 ]);
