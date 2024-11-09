@@ -3,6 +3,7 @@ const { piscarTela } = require('./webcamService');
 const { executarAcaoNoJogo } = require('./actionsMineCraftService');
 const { executarTecla } = require('./actionsGtaService');
 const { getData } = require('./redisService'); // Import the Redis service
+const { executeAhk } = require('./ahkService');
 
 const connectToTikTokLive = async (username, game) => {
     let tiktokLiveConnection = new WebcastPushConnection(username);
@@ -18,6 +19,11 @@ const connectToTikTokLive = async (username, game) => {
 
         console.log(`Loaded preferences for user ${username}:`, preferences);
 
+
+        if (game === "GTA") {
+            const executarahk = await executeAhk(preferences, username)
+        }
+
         // Connect to the TikTok live stream
         let state = await tiktokLiveConnection.connect();
         try {
@@ -25,6 +31,8 @@ const connectToTikTokLive = async (username, game) => {
         } catch (error) {
 
         }
+
+
 
         // Listen for gift events
         tiktokLiveConnection.on('gift', data => {
@@ -75,6 +83,7 @@ const connectToTikTokLive = async (username, game) => {
 
 
     } catch (error) {
+        stopAhk()
         console.error('Erro ao conectar à live:', error);
     }
 };
