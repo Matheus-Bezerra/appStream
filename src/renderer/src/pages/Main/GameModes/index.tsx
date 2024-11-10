@@ -1,5 +1,12 @@
 import { gameData } from '../../../constants/GameData';
 import { useParams, Link } from 'react-router-dom';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "../../../components/Breadcrumb";
 
 export const GameModes = () => {
   const { idJogo } = useParams<{ idJogo: string }>();
@@ -14,8 +21,25 @@ export const GameModes = () => {
 
   return (
     <div className="p-4">
+      {/* Breadcrumb para navegação */}
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">Home</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/jogos">Meus jogos</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink href={`/jogos/${jogo.id}`}>{jogo.titulo}</BreadcrumbLink>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+
       <h2 className="text-2xl font-bold text-primary mb-4">{jogo.titulo} - Modos de Jogo</h2>
-      
+
       <div className="grid grid-cols-3 gap-4">
         {jogo.modes.map(modo => (
           <Link

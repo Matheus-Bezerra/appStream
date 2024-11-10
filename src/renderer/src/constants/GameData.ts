@@ -95,7 +95,7 @@ export const gameData: GameProps[] = [
         ],
         acessado: "2024-09-21T17:00:47.536Z",
         banner: "../assets/Minecraft-1.jpg",
-        imagemGame: "../assets/mineCraft.jpg",
+        imagemGame: minecraftImage,
         ultimoAcesso: true,
     },
     {
@@ -147,7 +147,7 @@ export const gameData: GameProps[] = [
         ],
         acessado: "2024-09-21T17:00:47.536Z",
         banner: "../assets/thumbnail.webp",
-        imagemGame: "../assets/thumbnail.webp",
+        imagemGame: gtaImage,
         ultimoAcesso: false,
     },
     {
@@ -166,7 +166,7 @@ export const gameData: GameProps[] = [
                         id: 1,
                         nome: 'Batalha Zueira',
                         eventos: [
-                            { id: 1, ativo: false, presente: '../assets/moodMissaoGta.jpg', funcao: {nome: '5x Esqueleto Canhoto', tecla: "x44"}, audio: 'esqueleto.mp3', video: 'Esqueleto' }
+                            { id: 1, ativo: false, presente: missaogtaPresente, funcao: {nome: '5x Esqueleto Canhoto', tecla: "x44"}, audio: 'esqueleto.mp3', video: 'Esqueleto' }
                         ]
                     }
                 ]
@@ -182,7 +182,7 @@ export const gameData: GameProps[] = [
                         id: 1,
                         nome: 'Rima Zueira',
                         eventos: [
-                            { id: 1, ativo: true, presente: '../assets/moodMissaoGta.jpg', funcao: {nome: 'Rima 5x', tecla: "22x2"}, audio: 'rima.mp3', video: 'Rima' },
+                            { id: 1, ativo: true, presente: missaogtaPresente, funcao: {nome: 'Rima 5x', tecla: "22x2"}, audio: 'rima.mp3', video: 'Rima' },
                         ]
                     }
                 ]
@@ -190,7 +190,7 @@ export const gameData: GameProps[] = [
         ],
         acessado: "2024-09-21T17:00:47.536Z",
         banner: "../assets/batalha.jpg",
-        imagemGame: "../assets/batalha.jpg",
+        imagemGame: batalhaImage,
         ultimoAcesso: false,
     },
     {
@@ -215,7 +215,7 @@ export const gameData: GameProps[] = [
         ],
         acessado: "2024-09-21T17:00:47.536Z",
         banner: "../assets/redDead.jpg",
-        imagemGame: "../assets/redDead.jpg",
+        imagemGame: redDeadImage,
         ultimoAcesso: false,
     },
 ];

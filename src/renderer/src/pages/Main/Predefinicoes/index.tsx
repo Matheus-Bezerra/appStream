@@ -1,17 +1,23 @@
 // src/pages/Main/Predefinicoes.tsx
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom"; // Importa Link do react-router-dom
 import { useState } from "react";
 import { gameData } from "../../../constants/GameData";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "../../../components/Table";
-import { Switch } from "./../../../components/Switch";
+import { Switch } from "../../../components/Switch";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "../../../components/Breadcrumb";
 
 export const Predefinicoes = () => {
   const { idJogoSelecionado, modoJogoSelecionado } = useParams();
@@ -21,8 +27,8 @@ export const Predefinicoes = () => {
   const modoJogo = jogo?.modes.find(
     (modo) => modo.id === parseInt(modoJogoSelecionado ?? "")
   );
-  // Estado local para controlar o status de 'ativo' de cada evento
-  const [eventosAtivos, setEventosAtivos] = useState(() =>
+
+  const [eventosAtivos, setEventosAtivos] = useState(
     modoJogo
       ? modoJogo.predefinicoes.flatMap((predef) =>
           predef.eventos.map((evento) => ({
@@ -45,6 +51,33 @@ export const Predefinicoes = () => {
 
   return (
     <div className="p-4">
+      {/* Breadcrumb para navegação */}
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink to="/">Home</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink to="/jogos">Meus jogos</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild to={""}>
+              <Link to={`/jogos/${jogo.id}`}>{jogo.titulo}</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild to={""}>
+              <Link to={`/jogos/predefinicoes/${jogo.id}/${modoJogo.id}`}>
+                {modoJogo.titulo}
+              </Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+
       <div className="flex gap-3 items-center">
         <img
           src={modoJogo.imagemModo || "../assets/rosa.jpg"}
@@ -63,8 +96,7 @@ export const Predefinicoes = () => {
               <TableHead className="w-[150px]">Ativo</TableHead>
               <TableHead>Presente</TableHead>
               <TableHead>Função</TableHead>
-              <TableHead>Tecla</TableHead>
-              <TableHead>Áudio</TableHead>
+              <TableHead>Aúdio</TableHead>
               <TableHead>Vídeo</TableHead>
             </TableRow>
           </TableHeader>
@@ -99,7 +131,6 @@ export const Predefinicoes = () => {
                       />
                     </TableCell>
                     <TableCell>{evento.funcao.nome}</TableCell>
-                    <TableCell>{evento.funcao.tecla}</TableCell>
                     <TableCell>{evento.audio}</TableCell>
                     <TableCell>{evento.video}</TableCell>
                   </TableRow>
