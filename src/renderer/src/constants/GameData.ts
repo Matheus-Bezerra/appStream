@@ -14,6 +14,14 @@ import batalhaImageMode from '../assets/batalha.jpg';
 import redDeadImageMode from '../assets/redDead.jpg';
 
 
+import sobrevivenciaPresente from '../assets/sobrevivencia.png';
+import expansionPresente from '../assets/expansion.png';
+import zombiePresente from '../assets/zombie.png';
+import missaogtaPresente from '../assets/moodMissaoGta.jpg';
+import kothgtaPresente from '../assets/moodKothGta.jpg';
+
+
+
 export const gameData: GameProps[] = [
     {
         id: 1,
@@ -31,23 +39,23 @@ export const gameData: GameProps[] = [
                         id: 1,
                         nome: 'Sobrevivência',
                         eventos: [
-                            { id: 1, ativo: true, presente: '../assets/sobrevivencia.png', funcao: { nome: '5x Esqueleto canhoto', tecla: "113" }, audio: 'teste.mp3', video: 'Zueira Esqueleto' },
-                            { id: 2, ativo: false, presente: '../assets/expansion.png', funcao: { nome: '10x Charden Creeper', tecla: "113" }, audio: 'Villhen.mp3', video: 'Zueira Creeper' },
-                            { id: 3, ativo: true, presente: '../assets/zombie.png', funcao: { nome: '10x Charden Creeper', tecla: "113" }, audio: 'Freire.mp3', video: 'Zueira Creeper' },
+                            { id: 1, ativo: true, presente: sobrevivenciaPresente, funcao: { nome: '5x Esqueleto canhoto', tecla: "113" }, audio: 'teste.mp3', video: 'Zueira Esqueleto' },
+                            { id: 2, ativo: false, presente: expansionPresente, funcao: { nome: '10x Charden Creeper', tecla: "113" }, audio: 'Villhen.mp3', video: 'Zueira Creeper' },
+                            { id: 3, ativo: true, presente: zombiePresente, funcao: { nome: '10x Charden Creeper', tecla: "113" }, audio: 'Freire.mp3', video: 'Zueira Creeper' },
                         ]
                     },
                     {
                         id: 2,
                         nome: 'Live Craft',
                         eventos: [
-                            { id: 1, ativo: true, presente: '../assets/zombie.png', funcao: { nome: 'cavalo de troia', tecla: "0x33"}, audio: 'troia.mp3', video: 'testando 2' },
+                            { id: 1, ativo: true, presente: zombiePresente, funcao: { nome: 'cavalo de troia', tecla: "0x33"}, audio: 'troia.mp3', video: 'testando 2' },
                         ]
                     },
                     {
                         id: 3,
                         nome: 'Live most',
                         eventos: [
-                            { id: 1, ativo: true, presente: '../assets/zombie.png', funcao: {nome: 'mood craft', tecla: "0x22"}, audio: 'troia.mp3', video: 'testando 2' },
+                            { id: 1, ativo: true, presente: zombiePresente, funcao: {nome: 'mood craft', tecla: "0x22"}, audio: 'troia.mp3', video: 'testando 2' },
                         ]
                     },
                 ]
@@ -63,7 +71,7 @@ export const gameData: GameProps[] = [
                         id: 1,
                         nome: 'Modo Expansão',
                         eventos: [
-                            { id: 1, ativo: true, presente: '../assets/expansion.png', funcao: {nome: '5x Creeper Gigante', tecla: "0x44"}, audio: 'explosao.mp3', video: 'Explosão Creeper' }
+                            { id: 1, ativo: true, presente: expansionPresente, funcao: {nome: '5x Creeper Gigante', tecla: "0x44"}, audio: 'explosao.mp3', video: 'Explosão Creeper' }
                         ]
                     }
                 ]
@@ -79,7 +87,7 @@ export const gameData: GameProps[] = [
                         id: 1,
                         nome: 'Modo Apocalipse',
                         eventos: [
-                            { id: 1, ativo: true, presente: '../assets/zombie.png', funcao: {nome: 'Invasão Zombie', tecla: "0x33"}, audio: 'zombie.mp3', video: 'Ataque Zombie' },
+                            { id: 1, ativo: true, presente: zombiePresente, funcao: {nome: 'Invasão Zombie', tecla: "0x33"}, audio: 'zombie.mp3', video: 'Ataque Zombie' },
                         ]
                     }
                 ]
@@ -106,7 +114,7 @@ export const gameData: GameProps[] = [
                         id: 1,
                         nome: 'Missões Iniciais',
                         eventos: [
-                            { id: 1, ativo: true, presente: '../assets/moodMissaoGta.jpg', funcao: {nome: 'Primeira Missão', tecla: "0x44"}, audio: 'missao1.mp3', video: 'Missão 1' },
+                            { id: 1, ativo: true, presente: missaogtaPresente, funcao: {nome: 'Primeira Missão', tecla: "0x44"}, audio: 'missao1.mp3', video: 'Missão 1' },
                         ]
                     }
                 ]
@@ -122,8 +130,8 @@ export const gameData: GameProps[] = [
                         id: 1,
                         nome: 'Modo Rei da Colina',
                         eventos: [
-                            { id: 1, ativo: true, presente: '../assets/moodKothGta.jpg', funcao: {nome: 'Defender a Colina', tecla: "88x8"}, audio: 'defesa.mp3', video: 'Defesa' },
-                            { id: 2, ativo: true, presente: '../assets/moodKothGta.jpg', funcao: {nome: 'Defender a Colina', tecla: "44x44"}, audio: 'defesa.mp3', video: 'Defesa' },
+                            { id: 1, ativo: true, presente: kothgtaPresente, funcao: {nome: 'Defender a Colina', tecla: "88x8"}, audio: 'defesa.mp3', video: 'Defesa' },
+                            { id: 2, ativo: true, presente: kothgtaPresente, funcao: {nome: 'Defender a Colina', tecla: "44x44"}, audio: 'defesa.mp3', video: 'Defesa' },
 
                         ]
                     },
@@ -131,7 +139,7 @@ export const gameData: GameProps[] = [
                         id: 2,
                         nome: 'Live Craft',
                         eventos: [
-                            { id: 2, ativo: true, presente: '../assets/moodKothGta.jpg', funcao: {nome: 'missão em dupla', tecla: "99x9"}, audio: 'defesa.mp3', video: 'Defesa' },
+                            { id: 2, ativo: true, presente: kothgtaPresente, funcao: {nome: 'missão em dupla', tecla: "99x9"}, audio: 'defesa.mp3', video: 'Defesa' },
                         ]
                     },
                 ]
