@@ -1,7 +1,7 @@
 // src/pages/Main/Predefinicoes.tsx
-import { useParams } from 'react-router-dom';
-import { useState } from 'react';
-import { gameData } from '../../../constants/GameData';
+import { useParams } from "react-router-dom";
+import { useState } from "react";
+import { gameData } from "../../../constants/GameData";
 import {
   Table,
   TableBody,
@@ -10,22 +10,44 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../../../components/Table"; // Ajuste o caminho para o local onde você armazenou os componentes da tabela
+} from "../../../components/Table";
 import { Switch } from "./../../../components/Switch";
 
 export const Predefinicoes = () => {
   const { idJogoSelecionado, modoJogoSelecionado } = useParams();
-  const jogo = gameData.find(game => game.id === parseInt(idJogoSelecionado ?? ''));
-  const modoJogo = jogo?.modes.find(modo => modo.id === parseInt(modoJogoSelecionado ?? ''));
+  const jogo = gameData.find(
+    (game) => game.id === parseInt(idJogoSelecionado ?? "")
+  );
+  const modoJogo = jogo?.modes.find(
+    (modo) => modo.id === parseInt(modoJogoSelecionado ?? "")
+  );
+  // Estado local para controlar o status de 'ativo' de cada evento
+  const [eventosAtivos, setEventosAtivos] = useState(() =>
+    modoJogo
+      ? modoJogo.predefinicoes.flatMap((predef) =>
+          predef.eventos.map((evento) => ({
+            id: evento.id,
+            ativo: evento.ativo,
+          }))
+        )
+      : []
+  );
 
-  // Verificação para evitar problemas de carregamento de jogo/modo inexistente
+  const toggleAtivo = (eventoId: number) => {
+    setEventosAtivos((prev) =>
+      prev.map((evento) =>
+        evento.id === eventoId ? { ...evento, ativo: !evento.ativo } : evento
+      )
+    );
+  };
+
   if (!jogo || !modoJogo) return <p>Jogo ou Modo de Jogo não encontrado</p>;
 
   return (
     <div className="p-4">
       <div className="flex gap-3 items-center">
         <img
-          src={modoJogo.imagemModo || '/path/to/default-image.jpg'}
+          src={modoJogo.imagemModo || "../assets/rosa.jpg"}
           alt={`Imagem do modo ${modoJogo.titulo}`}
           className="w-44 object-cover rounded-lg mb-4"
         />
@@ -48,36 +70,41 @@ export const Predefinicoes = () => {
           </TableHeader>
           <TableBody>
             {modoJogo.predefinicoes.map((predef) =>
-              predef.eventos.map((evento) => (
-                <TableRow key={evento.id}>
-                  <TableCell className="font-medium">
-                    <Switch
-                      checked={evento.ativo}
-                      onChange={() => {
-                        // Aqui você pode implementar a lógica para salvar a alteração de estado
-                      }}
-                      className={`${evento.ativo ? 'bg-blue-600' : 'bg-gray-200'} relative inline-flex items-center h-6 rounded-full w-11`}
-                    >
-                      <span
-                        className={`${
-                          evento.ativo ? 'translate-x-6' : 'translate-x-1'
-                        } inline-block w-4 h-4 transform bg-white rounded-full`}
+              predef.eventos.map((evento) => {
+                const eventoAtual = eventosAtivos.find(
+                  (e) => e.id === evento.id
+                );
+                return (
+                  <TableRow key={evento.id}>
+                    <TableCell className="font-medium">
+                      <Switch
+                        checked={eventoAtual?.ativo}
+                        onCheckedChange={() => toggleAtivo(evento.id)}
+                        className={`${eventoAtual?.ativo ? "bg-blue-600" : "bg-gray-200"} relative inline-flex items-center h-6 rounded-full w-11`}
+                      >
+                        <span
+                          className={`${
+                            eventoAtual?.ativo
+                              ? "translate-x-6"
+                              : "translate-x-1"
+                          } inline-block w-4 h-4 transform bg-white rounded-full`}
+                        />
+                      </Switch>
+                    </TableCell>
+                    <TableCell className="flex items-center">
+                      <img
+                        src={evento.presente || "/path/to/default-image.jpg"}
+                        alt={evento.funcao.nome}
+                        className="w-10 h-10 object-cover rounded-lg mr-2"
                       />
-                    </Switch>
-                  </TableCell>
-                  <TableCell className="flex items-center">
-                    <img
-                      src={evento.presente || "../assets/vilhena.jpg"}
-                      alt={evento.funcao.nome}
-                      className="w-10 h-10 object-cover rounded-lg mr-2"
-                    />
-                  </TableCell>
-                  <TableCell>{evento.funcao.nome}</TableCell>
-                  <TableCell>{evento.funcao.tecla}</TableCell>
-                  <TableCell>{evento.audio}</TableCell>
-                  <TableCell>{evento.video}</TableCell>
-                </TableRow>
-              ))
+                    </TableCell>
+                    <TableCell>{evento.funcao.nome}</TableCell>
+                    <TableCell>{evento.funcao.tecla}</TableCell>
+                    <TableCell>{evento.audio}</TableCell>
+                    <TableCell>{evento.video}</TableCell>
+                  </TableRow>
+                );
+              })
             )}
           </TableBody>
         </Table>
