@@ -30,3 +30,32 @@ exports.getUserPreferences = async (req, res) => {
     }
 };
 
+
+exports.saveGiftAvaliable = async (req, res) => {
+    try {
+        console.log("ENTREI")
+        await redisService.saveGifts();
+        console.log('gift salvas com sucesso!'); // Log para verificar o fluxo
+
+        res.status(200).json({ message: 'gift salvo com sucesso!' });
+    } catch (error) {
+        console.error('Erro ao salvar preferências:', error);
+        res.status(500).json({ error: 'Erro ao salvar preferências' });
+    }
+};
+
+exports.getGiftAvaliable = async (req, res) => {
+    try {
+        const giftList = await redisService.getGifts(); // Chama a função de busca
+        if (giftList) {
+            res.status(200).json(giftList); // Retorna as preferências encontradas
+        } else {
+            res.status(404).json({ message: 'Preferências não encontradas' }); // Se não encontrar, retorna 404
+        }
+    } catch (error) {
+        console.error("Erro ao buscar preferências:", error);
+        res.status(500).json({ error: 'Erro ao buscar preferências' });
+    }
+};
+
+
