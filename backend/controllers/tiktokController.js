@@ -27,10 +27,9 @@ exports.connectToTikTokLive = (req, res) => {
 
 exports.getAvailableGifts = (req, res) => {
     const { username } = req.body; // Pega o nome de usuário a partir do corpo da requisição
-    const { game } = req.body
-    console.log("jogo", game)
+    
     // Chama o serviço para conectar à live e pegar os presentes disponíveis
-    availableGiftsService.getAvailableGifts(username, game)
+    availableGiftsService.getAvailableGifts(username)
         .then((gifts) => {
             res.status(200).json({
                 message: `Conexão feita com sucesso com a live de ${username}`,
