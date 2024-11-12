@@ -45,7 +45,7 @@ const getData = async (usuario) => {
 
 const saveGifts = async (value) => {
   console.log("CHEGUEI NA saveGifts");
-  const key = `avalibleGift`;
+  const key = `availableGift`;
 
   if (!client.isOpen) {
     await client.connect();
@@ -64,7 +64,7 @@ const saveGifts = async (value) => {
 };
 
 const getGifts = async () => {
-  const key = `avalibleGift`;
+  const key = `availableGift`;
   console.log("key", key);
 
   if (!client.isOpen) {
@@ -74,7 +74,7 @@ const getGifts = async () => {
 
   try {
     const reply = await client.get(key);
-    console.log("Resposta do Redis buscar:", reply); 
+    // console.log("Resposta do Redis buscar:", reply); 
     return reply ? JSON.parse(reply) : null; 
   } catch (err) {
     console.error("Erro ao buscar no Redis:", err);
