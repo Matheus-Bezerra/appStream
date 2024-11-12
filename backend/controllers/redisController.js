@@ -31,7 +31,7 @@ exports.getUserPreferences = async (req, res) => {
 };
 
 
-exports.saveGiftAvaliable = async (req, res) => {
+exports.saveGiftAvailable = async (req, res) => {
     try {
         console.log("ENTREI")
         await redisService.saveGifts();
@@ -44,7 +44,7 @@ exports.saveGiftAvaliable = async (req, res) => {
     }
 };
 
-exports.getGiftAvaliable = async (req, res) => {
+exports.getGiftAvailable = async (req, res) => {
     try {
         const giftList = await redisService.getGifts(); // Chama a função de busca
         if (giftList) {
