@@ -11,13 +11,9 @@ import { Input } from "./ui/input";
 import { gameData } from "../constants/GameData";
 import { useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import { Gift } from '../utils/GameDataProps';
 
-interface Gift {
-  id: number;
-  name: string;
-  diamond_count: number;
-  image_urls: string[];
-}
+
 
 const ModalPresentes = () => {
   const { idJogoSelecionado, modoJogoSelecionado } = useParams();

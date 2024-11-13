@@ -38,4 +38,11 @@ interface FuncaoProps {
     imagemGame: string;
     ultimoAcesso: boolean;
   }
+
+  export interface Gift {
+    id: number;
+    name: string;
+    diamond_count: number;
+    image_urls: string[];
+  }
   
