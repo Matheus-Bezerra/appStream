@@ -1,19 +1,26 @@
 const express = require('express');
-const http = require('http'); // Importa o módulo HTTP para criar um servidor
+const http = require('http');
+const cors = require('cors'); // Importe o CORS
 const webcamRoutes = require('./routes/webcamRoutes');
 const tiktokRoutes = require('./routes/tiktokRoutes');
 const redisRoutes = require('./routes/redisRoutes');
-const initializeWebSocket = require('./config/websocketServer'); // Importe o WebSocket Server
+const initializeWebSocket = require('./config/websocketServer');
 
-require('./keyboardListener');  // Ativa o listener de teclado
+require('./keyboardListener');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Cria o servidor HTTP com o Express
+// middleware CORS
+app.use(cors({
+    // origin: 'http://localhost:5173', // Permitir apenas esta origem
+    origin: '*', // Permito todas as origens aqui de requisição
+    methods: ['GET', 'POST'], // Permitir esses tipos.
+}));
+
+
 const server = http.createServer(app);
 
-// Inicializa o WebSocket com o servidor HTTP
 initializeWebSocket(server);
 
 app.use(express.json());

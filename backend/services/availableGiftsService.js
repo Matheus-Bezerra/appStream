@@ -3,6 +3,7 @@ const { getGifts, saveGifts } = require('./redisService'); // Importa os serviç
 
 const getAvailableGifts = async (username) => {
     // Primeiro, tenta buscar os presentes no Redis
+    console.log("chamei")
     const cachedGifts = await getGifts();
     
     // Se houver presentes salvos em cache, retorna-os
