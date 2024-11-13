@@ -8,7 +8,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'self'; style-src fonts.googleapis.com 'self' 'unsafe-inline'; font-src fonts.gstatic.com" />
+      content="default-src 'self'; 
+               script-src 'self'; 
+               style-src fonts.googleapis.com 'self' 'unsafe-inline'; 
+               font-src fonts.gstatic.com; 
+               connect-src 'self' http://localhost:3000; 
+               img-src 'self' https://p16-webcast.tiktokcdn.com https://p19-webcast.tiktokcdn.com https://via.placeholder.com;">
+
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 </head>

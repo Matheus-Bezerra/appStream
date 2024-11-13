@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useMutation } from '@tanstack/react-query';
 import {
   Dialog,
   DialogContent,
@@ -8,8 +9,15 @@ import {
 } from "./Dialog";
 import { Input } from "./ui/input";
 import { gameData } from "../constants/GameData";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+
+interface Gift {
+  id: number;
+  name: string;
+  diamond_count: number;
+  image_urls: string[];
+}
 
 const ModalPresentes = () => {
   const { idJogoSelecionado, modoJogoSelecionado } = useParams();
@@ -20,28 +28,35 @@ const ModalPresentes = () => {
     (modo) => modo.id === parseInt(modoJogoSelecionado ?? "")
   );
 
-  const [eventosAtivos, setEventosAtivos] = useState(
-    modoJogo
-      ? modoJogo.predefinicoes.flatMap((predef) =>
-          predef.eventos.map((evento) => ({
-            id: evento.id,
-            ativo: evento.ativo,
-          }))
-        )
-      : []
-  );
-
-  const toggleAtivo = (eventoId: number) => {
-    setEventosAtivos((prev) =>
-      prev.map((evento) =>
-        evento.id === eventoId ? { ...evento, ativo: !evento.ativo } : evento
-      )
-    );
-  };
-
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
   const [searchTerm, setSearchTerm] = useState("");
+  const [gifts, setGifts] = useState<Gift[]>([]);
+
+  const fetchGifts = useMutation({
+    mutationFn: async () => {
+      const response = await fetch("http://localhost:3000/tiktok/gifts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) throw new Error("Erro ao buscar presentes");
+      return response.json();
+    },
+    onSuccess: (data) => {
+      setGifts(data.availableGifts || []);
+    },
+    onError: (error) => {
+      console.error("Erro de conexão:", error);
+    },
+  });
+
+  useEffect(() => {
+    if (isDialogOpen) {
+      fetchGifts.mutate();
+    }
+  }, [isDialogOpen]);
+
   const presentes = modoJogo
     ? modoJogo.predefinicoes.flatMap((predef) => predef.eventos)
     : [];
@@ -63,15 +78,11 @@ const ModalPresentes = () => {
                 size={40}
                 color="#FAC638"
                 className="bg-[#363B4A] rounded-lg p-2"
-              />{" "}
+              />
             </button>
             <div className="flex flex-col ">
-              <DialogTitle className="text-white text-2xl">
-                Presentes
-              </DialogTitle>
-              <p className="text-gray-400 mb-4">
-                Gerencie seus próprios presentes
-              </p>
+              <DialogTitle className="text-white text-2xl">Presentes</DialogTitle>
+              <p className="text-gray-400 mb-4">Gerencie seus próprios presentes</p>
             </div>
           </div>
         </DialogHeader>
@@ -87,20 +98,20 @@ const ModalPresentes = () => {
           />
         </div>
 
-        {/* Grid de Presentes */}
-        <div className="grid grid-cols-4 gap-4">
-          {presentesFiltrados.map((presente) => (
+        {/* Container com rolagem para os presentes */}
+        <div className="grid grid-cols-4 gap-4 max-h-[400px] overflow-y-auto">
+          {gifts.map((gift) => (
             <div
-              key={presente.id}
+              key={gift.id}
               className="p-2 bg-gray-800 rounded-lg flex flex-col items-center text-center text-white border-2 border-yellow-500"
             >
               <img
-                src={presente.presente}
-                alt={presente.funcao.nome}
+                src={gift.image_urls[0]}
+                alt={gift.name}
                 className="w-16 h-16 object-cover rounded-md mb-2"
               />
-              <p className="text-sm font-semibold">{presente.funcao.nome}</p>
-              <p className="text-xs text-gray-400">{presente.audio}</p>
+              <p className="text-sm font-semibold">{gift.name}</p>
+              <p className="text-xs text-gray-400">{gift.diamond_count} ⭐</p>
             </div>
           ))}
         </div>
