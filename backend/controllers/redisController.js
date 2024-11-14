@@ -74,9 +74,9 @@ exports.saveSounds = async (req, res) => {
 
 exports.getSounds = async (req, res) => {
     try {
-        const giftList = await redisService.getSounds(); // Chama a função de busca
-        if (giftList) {
-            res.status(200).json(giftList); // Retorna as preferências encontradas
+        const soundtList = await redisService.getSounds(); // Chama a função de busca
+        if (soundtList) {
+            res.status(200).json(soundtList); // Retorna as preferências encontradas
         } else {
             res.status(404).json({ message: 'Preferências não encontradas' }); // Se não encontrar, retorna 404
         }
