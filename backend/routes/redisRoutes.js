@@ -7,6 +7,8 @@ router.post('/salvar', redisController.saveUserPreferences);
 router.get('/buscar', redisController.getUserPreferences); 
 router.post('/avaliableGift', redisController.saveGiftAvailable); 
 router.get('/getGift', redisController.getGiftAvailable); 
+router.post('/avaliableSounds', redisController.saveSounds); 
+router.get('/getSounds', redisController.getSounds); 
 
 
 

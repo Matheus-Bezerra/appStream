@@ -53,8 +53,8 @@ const saveGifts = async (value) => {
   }
 
   try {
-    // Define o valor com expiração de 12 horas (43200 segundos)
-    const reply = await client.set(key, JSON.stringify(value), 'EX', 43200);
+    // Define o valor com expiração de 12 horas ou 24hrs  (43200 segundos / 86400)
+    const reply = await client.set(key, JSON.stringify(value), 'EX', 86400);
     console.log("Resposta do Redis:", reply); 
     return reply;
   } catch (err) {
@@ -82,9 +82,53 @@ const getGifts = async () => {
   }
 }
 
+
+const saveSounds = async (value) => {
+  console.log("CHEGUEI NA availableSounds");
+  const key = `availableSounds`;
+
+  if (!client.isOpen) {
+    await client.connect();
+    await client.select(3); // Seleciona o banco de dados Redis 2
+  }
+
+  try {
+    const reply = await client.set(key, JSON.stringify(value), 'EX', 86400);
+    console.log("Resposta do Redis:", reply); 
+    return reply;
+  } catch (err) {
+    console.error("Erro ao salvar no Redis:", err);
+    throw err; 
+  }
+};
+
+const getSounds = async () => {
+  const key = `availableSounds`;
+  console.log("key", key);
+
+  if (!client.isOpen) {
+    await client.connect();
+    await client.select(3); 
+  }
+
+  try {
+    const reply = await client.get(key);
+    // console.log("Resposta do Redis buscar:", reply); 
+    return reply ? JSON.parse(reply) : null; 
+  } catch (err) {
+    console.error("Erro ao buscar no Redis:", err);
+    throw err; 
+  }
+}
+
+
+
+
 module.exports = {
   saveData,
   getData,
   saveGifts,
-  getGifts
+  getGifts,
+  saveSounds,
+  getSounds
 };

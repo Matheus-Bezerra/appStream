@@ -59,3 +59,31 @@ exports.getGiftAvailable = async (req, res) => {
 };
 
 
+exports.saveSounds = async (req, res) => {
+    try {
+        console.log("ENTREI")
+        await redisService.saveSounds();
+        console.log('gift salvas com sucesso!'); // Log para verificar o fluxo
+
+        res.status(200).json({ message: 'gift salvo com sucesso!' });
+    } catch (error) {
+        console.error('Erro ao salvar preferências:', error);
+        res.status(500).json({ error: 'Erro ao salvar preferências' });
+    }
+};
+
+exports.getSounds = async (req, res) => {
+    try {
+        const giftList = await redisService.getSounds(); // Chama a função de busca
+        if (giftList) {
+            res.status(200).json(giftList); // Retorna as preferências encontradas
+        } else {
+            res.status(404).json({ message: 'Preferências não encontradas' }); // Se não encontrar, retorna 404
+        }
+    } catch (error) {
+        console.error("Erro ao buscar preferências:", error);
+        res.status(500).json({ error: 'Erro ao buscar preferências' });
+    }
+};
+
+

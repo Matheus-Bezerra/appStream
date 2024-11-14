@@ -4,6 +4,8 @@ const cors = require('cors'); // Importe o CORS
 const webcamRoutes = require('./routes/webcamRoutes');
 const tiktokRoutes = require('./routes/tiktokRoutes');
 const redisRoutes = require('./routes/redisRoutes');
+const soundRoutes = require('./routes/soundRoutes');
+
 const initializeWebSocket = require('./config/websocketServer');
 
 require('./keyboardListener');
@@ -33,6 +35,10 @@ app.use('/tiktok', tiktokRoutes);
 
 // Rota Redis
 app.use('/redis', redisRoutes);
+
+// Rota Sons
+app.use('/sounds', soundRoutes);
+
 
 // Inicia o servidor HTTP e WebSocket na mesma porta
 server.listen(PORT, () => {
