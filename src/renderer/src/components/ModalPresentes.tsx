@@ -63,7 +63,7 @@ const ModalPresentes = () => {
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-      <DialogTrigger className="p-1 rounded-lg flex bg-[#161920] text-primary font-bold text-lg">
+      <DialogTrigger className="p-2 rounded-xl flex bg-[#161920] text-primary font-bold text-base">
         Adicionar
       </DialogTrigger>
       <DialogContent className="max-w-2xl bg-gray-900 rounded-xl p-4">

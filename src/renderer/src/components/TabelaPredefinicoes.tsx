@@ -138,16 +138,14 @@ const TabelaPredefinicoes = () => {
               </p>
             </DialogHeader>
             <div className="grid gap-4 py-4">
-              <div className="p-4 bg-gray-800 rounded-lg flex gap-5 items-center">
+              <div className="p-4 bg-gray-800 rounded-lg flex justify-between items-center">
                 <h3 className="text-lg font-semibold ">Presente</h3>
                 <img
                   src={RoseImage}
                   alt="Rose"
                   className="w-16 bg-slate-700 p-1 rounded-full"
                 />
-                <p className="text-primary bg-slate-600 p-2 rounded-md ">
-                  Qualquer pessoa que enviar o presente 1
-                </p>
+                
               </div>
               <div className="p-4 bg-gray-800  rounded-lg flex ">
                 <div>
