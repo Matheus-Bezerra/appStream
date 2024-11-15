@@ -5,7 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogFooter
+  DialogFooter,
 } from "./Dialog";
 import {
   Table,
@@ -19,12 +19,12 @@ import { Switch } from "./Switch";
 import { Input } from "./ui/input";
 import { gameData } from "../constants/GameData";
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
 import { Button } from "./ui/button";
 import RoseImage from "../../../../src/renderer/src/assets/rose.webp";
 import PenImage from "../../../../src/renderer/src/assets/pen.png";
 import UploadImage from "../../../../src/renderer/src/assets/upload.png";
 import MusicImage from "../../../../src/renderer/src/assets/music.png";
+import DropAcoes from "./DropAcoes";
 
 const TabelaPredefinicoes = () => {
   const { idJogoSelecionado, modoJogoSelecionado } = useParams();
@@ -82,6 +82,7 @@ const TabelaPredefinicoes = () => {
             <TableHead>Função</TableHead>
             <TableHead>Aúdio</TableHead>
             <TableHead>Vídeo</TableHead>
+            <TableHead>Ações</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -115,6 +116,11 @@ const TabelaPredefinicoes = () => {
                   <TableCell>{evento.funcao.nome}</TableCell>
                   <TableCell>{evento.audio}</TableCell>
                   <TableCell>{evento.video}</TableCell>
+                  <TableCell>
+                    <div className="flex items0center">
+                      <DropAcoes/>
+                    </div>
+                  </TableCell>
                 </TableRow>
               );
             })
@@ -145,7 +151,6 @@ const TabelaPredefinicoes = () => {
                   alt="Rose"
                   className="w-16 bg-slate-700 p-1 rounded-full"
                 />
-                
               </div>
               <div className="p-4 bg-gray-800  rounded-lg flex ">
                 <div>
