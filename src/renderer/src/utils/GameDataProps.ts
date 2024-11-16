@@ -45,4 +45,10 @@ interface FuncaoProps {
     diamond_count: number;
     image_urls: string[];
   }
+
+  export interface Sound {
+    title: string;
+    url: string;
+    directUrl: string;
+  }
   

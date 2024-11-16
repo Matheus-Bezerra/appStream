@@ -8,12 +8,15 @@
 
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; 
-               script-src 'self' http://lib/utils; 
-               style-src fonts.googleapis.com 'self' 'unsafe-inline'; 
-               font-src fonts.gstatic.com; 
-               connect-src 'self' http://localhost:3000; 
-               img-src 'self' https://p16-webcast.tiktokcdn.com https://p19-webcast.tiktokcdn.com https://via.placeholder.com;"
+      content="
+        default-src 'self'; 
+        script-src 'self' http://lib/utils; 
+        style-src fonts.googleapis.com 'self' 'unsafe-inline'; 
+        font-src fonts.gstatic.com; 
+        connect-src 'self' http://localhost:3000; 
+        img-src 'self' https://p16-webcast.tiktokcdn.com https://p19-webcast.tiktokcdn.com https://via.placeholder.com; 
+        media-src 'self' https://www.myinstants.com;
+      "
     />
 
     <link

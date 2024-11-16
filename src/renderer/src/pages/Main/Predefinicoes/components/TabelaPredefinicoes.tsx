@@ -26,6 +26,8 @@ import UploadImage from "../../../../assets/upload.png";
 import MusicImage from "../../../../assets/music.png";
 import DropAcoes from "./DropAcoes";
 import { ModalPresentes } from "./ModalPresentes";
+import { ModalSounds } from "./ModalSounds";
+
 
 const TabelaPredefinicoes = () => {
   const { idJogoSelecionado, modoJogoSelecionado } = useParams();
@@ -64,6 +66,8 @@ const TabelaPredefinicoes = () => {
 
   const [isDialogPresentesOpen, setIsDialogPresentesOpen] = useState(false);
   const openDialogPresentes = () => setIsDialogPresentesOpen(true);
+  const [isDialogSoundsOpen, setIsDialogSoundsOpen] = useState(false);
+  const openDialogSounds = () => setIsDialogSoundsOpen(true);
 
   const [isDragging, setIsDragging] = useState(false);
   const [fileName, setFileName] = useState<string | null>(null);
@@ -233,19 +237,10 @@ const TabelaPredefinicoes = () => {
                   <img
                     src={MusicImage}
                     alt="Upload"
-                    className="w-16 bg-slate-700 p-1 rounded-sm"
+                    className="w-16 bg-slate-700 p-1 rounded-full cursor-pointer"
+                  onClick={openDialogSounds}
                   />
-                  <Input
-                    id="audio-upload"
-                    type="file"
-                    className="hidden"
-                    onChange={handleFileChange}
-                  />
-                  {fileName && (
-                    <p className="text-gray-200 text-sm mt-2">
-                      Arquivo: {fileName}
-                    </p>
-                  )}
+                  
                 </label>
               </div>
             </div>
@@ -270,6 +265,8 @@ const TabelaPredefinicoes = () => {
           </DialogContent>
         </Dialog>
         <ModalPresentes isDialogOpen={isDialogPresentesOpen} setIsDialogOpen={setIsDialogPresentesOpen} />
+        <ModalSounds isDialogOpen={isDialogSoundsOpen} setIsDialogOpen={setIsDialogSoundsOpen} />
+
       </div>
     </div>
   );
