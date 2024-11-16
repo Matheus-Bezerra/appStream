@@ -14,7 +14,9 @@ import {
 import ModalPresentes from "../../../components/ModalPresentes";
 import TabelaPredefinicoes from "../../../components/TabelaPredefinicoes";
 import { Button } from "../../../components/ui/button";
-import { Play } from "lucide-react";
+import { Check, CircleCheckBig, MoreHorizontal, MoreVertical, Play, SquarePen, Trash2 } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../../components/ui/dropdown-menu";
+import { PredefinicoesAction } from "./components/PredefinicoesAction";
 
 export const Predefinicoes = () => {
   const { idJogoSelecionado, modoJogoSelecionado } = useParams();
@@ -28,11 +30,11 @@ export const Predefinicoes = () => {
   const [eventosAtivos, setEventosAtivos] = useState(
     modoJogo
       ? modoJogo.predefinicoes.flatMap((predef) =>
-          predef.eventos.map((evento) => ({
-            id: evento.id,
-            ativo: evento.ativo,
-          }))
-        )
+        predef.eventos.map((evento) => ({
+          id: evento.id,
+          ativo: evento.ativo,
+        }))
+      )
       : []
   );
 
@@ -45,6 +47,12 @@ export const Predefinicoes = () => {
   };
 
   if (!jogo || !modoJogo) return <p>Jogo ou Modo de Jogo não encontrado</p>;
+
+  const predefinicoes = [
+    { name: "SEGD Mnecraft", isActive: true },
+    { name: "Live Quarta", isActive: false },
+    { name: "Classico", isActive: false },
+  ];
 
 
   return (
@@ -93,9 +101,21 @@ export const Predefinicoes = () => {
         <Button size={"icon"}>
           <Play />
         </Button>
-        <ModalPresentes/>
+        <ModalPresentes />
       </div>
-      <TabelaPredefinicoes/>
+      <div className="flex items-center mt-3 gap-6">
+        {predefinicoes.map((predefinicao) => (
+          <PredefinicoesAction
+            key={predefinicao.name}
+            name={predefinicao.name}
+            isActive={predefinicao.isActive}
+            onSelect={() => console.log(`${predefinicao.name} selecionado`)}
+            onRename={() => console.log(`Renomear ${predefinicao.name}`)}
+            onDelete={() => console.log(`Excluir ${predefinicao.name}`)}
+          />
+        ))}
+      </div>
+      <TabelaPredefinicoes />
     </div>
   );
 };

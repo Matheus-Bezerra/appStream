@@ -65,8 +65,8 @@ const ModalPresentes = () => {
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
-        <Button variant={"default"} size={"sm"}>
-          Adicionar
+        <Button variant={"outline"} size={"sm"}>
+          Adicionar Predefinição
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-2xl bg-gray-900 rounded-xl p-4">
