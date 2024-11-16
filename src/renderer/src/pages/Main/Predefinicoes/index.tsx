@@ -11,11 +11,9 @@ import {
   BreadcrumbSeparator,
 } from "../../../components/Breadcrumb";
 
-import ModalPresentes from "../../../components/ModalPresentes";
 import TabelaPredefinicoes from "../../../components/TabelaPredefinicoes";
 import { Button } from "../../../components/ui/button";
 import { Check, CircleCheckBig, MoreHorizontal, MoreVertical, Play, SquarePen, Trash2 } from "lucide-react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../../components/ui/dropdown-menu";
 import { PredefinicoesAction } from "./components/PredefinicoesAction";
 
 export const Predefinicoes = () => {
@@ -101,7 +99,9 @@ export const Predefinicoes = () => {
         <Button size={"icon"}>
           <Play />
         </Button>
-        <ModalPresentes />
+        <Button variant={"outline"} size={"sm"}>
+          Adicionar Predefinição
+        </Button>
       </div>
       <div className="flex items-center mt-3 gap-6">
         {predefinicoes.map((predefinicao) => (

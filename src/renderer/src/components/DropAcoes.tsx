@@ -71,10 +71,10 @@ export function DropdownMenuCheckboxes() {
           </DialogHeader>
           <DialogFooter className="justify-start">
             <Button variant="outline" onClick={() => setOpenDelete(false)}
-              className="border-none bg-[#363B4A] rounded-md text-white">
+              className="border-none bg-[#363B4A] text-white">
               Cancelar
             </Button>
-            <Button className="rounded-md"
+            <Button 
               variant="destructive"
               onClick={() => {
                 console.log("Item excluído");
