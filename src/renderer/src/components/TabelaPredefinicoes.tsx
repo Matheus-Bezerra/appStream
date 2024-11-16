@@ -117,7 +117,7 @@ const TabelaPredefinicoes = () => {
                   <TableCell>{evento.audio}</TableCell>
                   <TableCell>{evento.video}</TableCell>
                   <TableCell>
-                    <div className="flex items0center">
+                    <div>
                       <DropAcoes/>
                     </div>
                   </TableCell>

@@ -43,15 +43,16 @@ export function DropdownMenuCheckboxes() {
             <MoreHorizontal className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="text-[#577373]">
-          <DropdownMenuLabel>Ações</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => setOpenEdit(true)}>
-            <SquarePen className="h-4 w-4 mr-2 text-[#577373]" /> Editar
+        <DropdownMenuContent align="end" className="bg-white cursor-pointer">
+          <DropdownMenuItem 
+            onClick={() => setOpenEdit(true)}
+            className="cursor-pointer hover:bg-slate-100"  
+          >
+            <SquarePen className="h-4 w-4 mr-2" /> Editar
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => setOpenDelete(true)}
-            className="cursor-pointer text-red-400 hover:bg-muted-foreground"
+            className="cursor-pointer text-red-400 hover:bg-slate-100"
           >
             <Trash2 className="h-4 w-4 mr-2 text-red-400" /> Excluir
           </DropdownMenuItem>
@@ -62,15 +63,15 @@ export function DropdownMenuCheckboxes() {
       <Dialog open={openDelete} onOpenChange={setOpenDelete} >
         <DialogContent >
           <DialogHeader className="flex gap-3 flex-row items-center">
-            <Trash2 className="bg-[#1F2127] stroke-red-600 "/>
+            <Trash2 className="bg-[#1F2127] stroke-red-600 " />
             <div>
               <h2 className="text-white">Excluir Predefinição</h2>
             </div>
             <DialogDescription></DialogDescription>
           </DialogHeader>
           <DialogFooter className="justify-start">
-            <Button variant="outline" onClick={() => setOpenDelete(false)} 
-            className="border-none bg-[#363B4A] rounded-md text-white">
+            <Button variant="outline" onClick={() => setOpenDelete(false)}
+              className="border-none bg-[#363B4A] rounded-md text-white">
               Cancelar
             </Button>
             <Button className="rounded-md"
