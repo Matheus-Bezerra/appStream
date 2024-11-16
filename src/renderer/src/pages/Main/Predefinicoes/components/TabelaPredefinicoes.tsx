@@ -6,7 +6,7 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogFooter,
-} from "./Dialog";
+} from "../../../../components/Dialog";
 import {
   Table,
   TableBody,
@@ -14,17 +14,18 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "./Table";
-import { Switch } from "./Switch";
-import { Input } from "./ui/input";
-import { gameData } from "../constants/GameData";
+} from "../../../../components/Table";
+import { Switch } from "../../../../components/Switch";
+import { Input } from "../../../../components/ui/input";
+import { gameData } from "../../../../constants/GameData";
 import { useParams, Link } from "react-router-dom";
-import { Button } from "./ui/button";
-import RoseImage from "../../../../src/renderer/src/assets/rose.webp";
-import PenImage from "../../../../src/renderer/src/assets/pen.png";
-import UploadImage from "../../../../src/renderer/src/assets/upload.png";
-import MusicImage from "../../../../src/renderer/src/assets/music.png";
+import { Button } from "../../../../components/ui/button";
+import RoseImage from "../../../../assets/rose.webp";
+import PenImage from "../../../../assets/pen.png";
+import UploadImage from "../../../../assets/upload.png";
+import MusicImage from "../../../../assets/music.png";
 import DropAcoes from "./DropAcoes";
+import { ModalPresentes } from "./ModalPresentes";
 
 const TabelaPredefinicoes = () => {
   const { idJogoSelecionado, modoJogoSelecionado } = useParams();
@@ -60,6 +61,9 @@ const TabelaPredefinicoes = () => {
 
   const openDialog = () => setIsDialogOpen(true);
   const closeDialog = () => setIsDialogOpen(false);
+
+  const [isDialogPresentesOpen, setIsDialogPresentesOpen] = useState(false);
+  const openDialogPresentes = () => setIsDialogPresentesOpen(true);
 
   const [isDragging, setIsDragging] = useState(false);
   const [fileName, setFileName] = useState<string | null>(null);
@@ -149,7 +153,8 @@ const TabelaPredefinicoes = () => {
                 <img
                   src={RoseImage}
                   alt="Rose"
-                  className="w-16 bg-slate-700 p-1 rounded-full"
+                  className="w-16 bg-slate-700 p-1 rounded-full cursor-pointer"
+                  onClick={openDialogPresentes}
                 />
               </div>
               <div className="p-4 bg-gray-800  rounded-lg flex ">
@@ -264,6 +269,7 @@ const TabelaPredefinicoes = () => {
             </div>
           </DialogContent>
         </Dialog>
+        <ModalPresentes isDialogOpen={isDialogPresentesOpen} setIsDialogOpen={setIsDialogPresentesOpen} />
       </div>
     </div>
   );

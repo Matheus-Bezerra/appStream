@@ -6,17 +6,20 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./Dialog";
-import { Input } from "./ui/input";
-import { gameData } from "../constants/GameData";
+} from "../../../../components/Dialog";
+import { Input } from "../../../../components/ui/input";
+import { gameData } from "../../../../constants/GameData";
 import { useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import { Gift } from '../utils/GameDataProps';
-import { Button } from "./ui/button";
+import { Gift } from '../../../../utils/GameDataProps';
+import { Button } from "../../../../components/ui/button";
 
+interface ModalPresentesProps {
+  isDialogOpen: boolean;
+  setIsDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-
-const ModalPresentes = () => {
+export const ModalPresentes: React.FC<ModalPresentesProps> = ({ isDialogOpen, setIsDialogOpen }) => {
   const { idJogoSelecionado, modoJogoSelecionado } = useParams();
   const jogo = gameData.find(
     (game) => game.id === parseInt(idJogoSelecionado ?? "")
@@ -25,7 +28,6 @@ const ModalPresentes = () => {
     (modo) => modo.id === parseInt(modoJogoSelecionado ?? "")
   );
 
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [gifts, setGifts] = useState<Gift[]>([]);
 
@@ -48,6 +50,8 @@ const ModalPresentes = () => {
     },
   });
 
+  console.log("Is Dialog Openn ", isDialogOpen)
+
   useEffect(() => {
     if (isDialogOpen) {
       fetchGifts.mutate();
@@ -64,11 +68,6 @@ const ModalPresentes = () => {
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-      <DialogTrigger asChild>
-        <Button variant={"outline"} size={"sm"}>
-          Adicionar Predefinição
-        </Button>
-      </DialogTrigger>
       <DialogContent className="max-w-2xl bg-gray-900 rounded-xl p-4">
         <DialogHeader className="flex justify-between ">
           <div className="flex gap-4">
@@ -118,5 +117,3 @@ const ModalPresentes = () => {
     </Dialog>
   );
 };
-
-export default ModalPresentes;

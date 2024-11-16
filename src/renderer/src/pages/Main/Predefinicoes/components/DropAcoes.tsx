@@ -12,8 +12,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../components/ui/dropdown-menu";
-import { Button } from "./ui/button";
+} from "../../../../components/ui/dropdown-menu";
+import { Button } from "../../../../components/ui/button";
 import { Ellipsis, MoreHorizontal, SquarePen, Trash2 } from "lucide-react";
 import {
   Dialog,
@@ -22,7 +22,7 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from "./../components/Dialog"; // Ajuste o caminho conforme necessário
+} from "../../../../components/Dialog"; // Ajuste o caminho conforme necessário
 
 type Checked = DropdownMenuCheckboxItemProps["checked"];
 

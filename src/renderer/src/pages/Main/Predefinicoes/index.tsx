@@ -11,7 +11,7 @@ import {
   BreadcrumbSeparator,
 } from "../../../components/Breadcrumb";
 
-import TabelaPredefinicoes from "../../../components/TabelaPredefinicoes";
+import TabelaPredefinicoes from "./components/TabelaPredefinicoes";
 import { Button } from "../../../components/ui/button";
 import { Check, CircleCheckBig, MoreHorizontal, MoreVertical, Play, SquarePen, Trash2 } from "lucide-react";
 import { PredefinicoesAction } from "./components/PredefinicoesAction";
