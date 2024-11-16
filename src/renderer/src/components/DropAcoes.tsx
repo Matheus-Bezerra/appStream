@@ -14,7 +14,15 @@ import {
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
 import { Button } from "./ui/button";
-import { Ellipsis } from "lucide-react";
+import { Ellipsis, MoreHorizontal, SquarePen, Trash2 } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "./../components/Dialog"; // Ajuste o caminho conforme necessário
 
 type Checked = DropdownMenuCheckboxItemProps["checked"];
 
@@ -23,43 +31,61 @@ export function DropdownMenuCheckboxes() {
   const [showActivityBar, setShowActivityBar] = React.useState<Checked>(false);
   const [showPanel, setShowPanel] = React.useState<Checked>(false);
 
+  const [openEdit, setOpenEdit] = React.useState(false);
+  const [openDelete, setOpenDelete] = React.useState(false);
+
   return (
-    <DropdownMenu >
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="outline"
-          className="border-none hover:bg-inherit hover:stroke-primary"
-        >
-          {" "}
-          <Ellipsis className="stroke-zinc-500" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 border-none">
-        <DropdownMenuLabel className="text-[#717378]">Play</DropdownMenuLabel>
-        <DropdownMenuCheckboxItem
-          checked={showStatusBar}
-          onCheckedChange={setShowStatusBar}
-          className="text-[#717378] px-2"
-        >
-          Copiar
-        </DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem
-          checked={showActivityBar}
-          onCheckedChange={setShowActivityBar}
-          className="text-[#717378] px-2"
-          disabled
-        >
-          Editar{" "}
-        </DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem
-          checked={showPanel}
-          onCheckedChange={setShowPanel}
-          className="text-[#717378] px-2"
-        >
-          Excluir{" "}
-        </DropdownMenuCheckboxItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="h-8 w-8 p-0">
+            <span className="sr-only">Abrir menu</span>
+            <MoreHorizontal className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="text-[#577373]">
+          <DropdownMenuLabel>Ações</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={() => setOpenEdit(true)}>
+            <SquarePen className="h-4 w-4 mr-2 text-[#577373]" /> Editar
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => setOpenDelete(true)}
+            className="cursor-pointer text-red-400 hover:bg-muted-foreground"
+          >
+            <Trash2 className="h-4 w-4 mr-2 text-red-400" /> Excluir
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      {/* Dialog de exclusão */}
+      <Dialog open={openDelete} onOpenChange={setOpenDelete} >
+        <DialogContent >
+          <DialogHeader className="flex gap-3 flex-row items-center">
+            <Trash2 className="bg-[#1F2127] stroke-red-600 "/>
+            <div>
+              <h2 className="text-white">Excluir Predefinição</h2>
+            </div>
+            <DialogDescription></DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="justify-start">
+            <Button variant="outline" onClick={() => setOpenDelete(false)} 
+            className="border-none bg-[#363B4A] rounded-md text-white">
+              Cancelar
+            </Button>
+            <Button className="rounded-md"
+              variant="destructive"
+              onClick={() => {
+                console.log("Item excluído");
+                setOpenDelete(false); // Fecha a Dialog após a ação
+              }}
+            >
+              Excluir
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
 
