@@ -12,6 +12,7 @@ import { gameData } from "../constants/GameData";
 import { useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Gift } from '../utils/GameDataProps';
+import { Button } from "./ui/button";
 
 
 
@@ -63,8 +64,10 @@ const ModalPresentes = () => {
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-      <DialogTrigger className="p-2 rounded-xl flex bg-[#161920] text-primary font-bold text-base">
-        Adicionar
+      <DialogTrigger asChild>
+        <Button variant={"default"} size={"sm"}>
+          Adicionar
+        </Button>
       </DialogTrigger>
       <DialogContent className="max-w-2xl bg-gray-900 rounded-xl p-4">
         <DialogHeader className="flex justify-between ">
@@ -99,7 +102,7 @@ const ModalPresentes = () => {
           {gifts.map((gift) => (
             <div
               key={gift.id}
-              className="p-2 bg-gray-800 rounded-lg flex flex-col items-center text-center text-white border-2 border-yellow-500"
+              className="p-2 bg-foreground rounded-lg flex flex-col items-center text-center text-white border-2 border-yellow-500"
             >
               <img
                 src={gift.image_urls[0]}

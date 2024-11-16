@@ -73,7 +73,7 @@ const TabelaPredefinicoes = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className="mt-5">
       <Table>
         <TableHeader>
           <TableRow>

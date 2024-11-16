@@ -13,6 +13,8 @@ import {
 
 import ModalPresentes from "../../../components/ModalPresentes";
 import TabelaPredefinicoes from "../../../components/TabelaPredefinicoes";
+import { Button } from "../../../components/ui/button";
+import { Play } from "lucide-react";
 
 export const Predefinicoes = () => {
   const { idJogoSelecionado, modoJogoSelecionado } = useParams();
@@ -80,14 +82,17 @@ export const Predefinicoes = () => {
           alt={`Imagem do modo ${modoJogo.titulo}`}
           className="w-44 object-cover rounded-lg mb-4"
         />
-        <h2 className="text-xl font-bold text-primary mb-4 bg-zinc-800 p-2 rounded-3xl">
+        <h2 className="text-xl font-bold text-primary mb-4 bg-foreground p-2 rounded-3xl">
           {modoJogo.titulo}
         </h2>
       </div>
-      <div className="flex gap-16">
-        <h2 className="text-primary text-lg font-bold pl-5">
+      <div className="flex gap-4 items-center">
+        <h2 className="text-primary text-lg font-bold ">
           3/3 Predefinições
         </h2>
+        <Button size={"icon"}>
+          <Play />
+        </Button>
         <ModalPresentes/>
       </div>
       <TabelaPredefinicoes/>
