@@ -1,7 +1,6 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { gameData } from "../../../constants/GameData";
-
 
 import {
   Breadcrumb,
@@ -13,8 +12,9 @@ import {
 
 import TabelaPredefinicoes from "./components/TabelaPredefinicoes";
 import { Button } from "../../../components/ui/button";
-import { Check, CircleCheckBig, MoreHorizontal, MoreVertical, Play, SquarePen, Trash2 } from "lucide-react";
+import { Play } from "lucide-react";
 import { PredefinicoesAction } from "./components/PredefinicoesAction";
+import NewPredefinicoes from "./components/NewPredefinicoes";
 
 export const Predefinicoes = () => {
   const { idJogoSelecionado, modoJogoSelecionado } = useParams();
@@ -25,33 +25,19 @@ export const Predefinicoes = () => {
     (modo) => modo.id === parseInt(modoJogoSelecionado ?? "")
   );
 
-  const [eventosAtivos, setEventosAtivos] = useState(
-    modoJogo
-      ? modoJogo.predefinicoes.flatMap((predef) =>
-        predef.eventos.map((evento) => ({
-          id: evento.id,
-          ativo: evento.ativo,
-        }))
-      )
-      : []
-  );
+  const [predefinicoes, setPredefinicoes] = useState([
+    { name: "SEGD Minecraft", isActive: true },
+    { name: "Live Quarta", isActive: false },
+    { name: "Clássico", isActive: false },
+  ]);
 
-  const toggleAtivo = (eventoId: number) => {
-    setEventosAtivos((prev) =>
-      prev.map((evento) =>
-        evento.id === eventoId ? { ...evento, ativo: !evento.ativo } : evento
-      )
-    );
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const addNewPredefinicao = (name: any) => {
+    setPredefinicoes((prev) => [...prev, { name, isActive: false }]);
   };
 
   if (!jogo || !modoJogo) return <p>Jogo ou Modo de Jogo não encontrado</p>;
-
-  const predefinicoes = [
-    { name: "SEGD Mnecraft", isActive: true },
-    { name: "Live Quarta", isActive: false },
-    { name: "Classico", isActive: false },
-  ];
-
 
   return (
     <div className="p-4">
@@ -67,9 +53,7 @@ export const Predefinicoes = () => {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink to={`/jogos/${jogo.id}`}>
-              {jogo.titulo}
-            </BreadcrumbLink>
+            <BreadcrumbLink to={`/jogos/${jogo.id}`}>{jogo.titulo}</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
@@ -93,13 +77,17 @@ export const Predefinicoes = () => {
         </h2>
       </div>
       <div className="flex gap-4 items-center">
-        <h2 className="text-primary text-lg font-bold ">
-          3/3 Predefinições
+        <h2 className="text-primary text-lg font-bold">
+          {predefinicoes.length}/3 Predefinições
         </h2>
         <Button size={"icon"}>
           <Play />
         </Button>
-        <Button variant={"outline"} size={"sm"}>
+        <Button
+          variant={"outline"}
+          size={"sm"}
+          onClick={() => setOpenDialog(true)}
+        >
           Adicionar Predefinição
         </Button>
       </div>
@@ -115,6 +103,13 @@ export const Predefinicoes = () => {
           />
         ))}
       </div>
+
+      <NewPredefinicoes
+        openDialog={openDialog}
+        setOpenDialog={setOpenDialog}
+        onAddPredefinicao={addNewPredefinicao}
+      />
+
       <TabelaPredefinicoes />
     </div>
   );
