@@ -93,7 +93,7 @@ const saveSounds = async (value) => {
   }
 
   try {
-    const reply = await client.set(key, JSON.stringify(value), 'EX', 86400);
+    const reply = await client.set(key, JSON.stringify(value), 'EX', 172800);
     console.log("Resposta do Redis:", reply); 
     return reply;
   } catch (err) {

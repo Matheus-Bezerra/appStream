@@ -2,6 +2,7 @@
 const soundService = require('../services/soundService');
 
 exports.getUserSounds = (req, res) => {
+    // console.log("REQUISI", req.body)
     const { sound } = req.query; // Obtém o termo de busca da query string
     if (!sound) {
         return res.status(400).json({ error: 'Por favor, informe uma palavra-chave para a busca.' });

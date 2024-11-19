@@ -1,5 +1,6 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
+const { saveSounds, getSounds } = require('./redisService'); // Importa os serviços Redis
 
 // Função para extrair a URL direta do áudio
 const getDirectAudioUrl = async (pageUrl) => {
@@ -46,7 +47,18 @@ exports.searchingSounds = async (query) => {
 };
 
 exports.getTopSounds = async () => {
+  const cacheKey = 'availableSounds';
+
   try {
+    // 1. Tentar obter os sons do Redis
+    const cachedSounds = await getSounds();
+    if (cachedSounds) {
+      console.log('Retornando sons do cache do Redis');
+      return cachedSounds;
+    }
+
+    // 2. Caso não haja cache, fazer a chamada na API
+    console.log('Cache vazio, buscando sons da API...');
     const response = await axios.get('https://www.myinstants.com/');
     const html = response.data;
     const $ = cheerio.load(html);
@@ -67,6 +79,10 @@ exports.getTopSounds = async () => {
         directUrl: soundDirectUrl, // URL direta do áudio
       });
     }
+
+    // 3. Salvar os sons no Redis com expiração de 48 horas
+    await saveSounds(sounds);
+    console.log('Sons salvos no Redis com sucesso.');
 
     return sounds;
   } catch (error) {

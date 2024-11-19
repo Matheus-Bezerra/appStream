@@ -41,13 +41,16 @@ const TabelaPredefinicoes = () => {
   const [eventosAtivos, setEventosAtivos] = useState(
     modoJogo
       ? modoJogo.predefinicoes.flatMap((predef) =>
-          predef.eventos.map((evento) => ({
-            id: evento.id,
-            ativo: evento.ativo,
-          }))
-        )
+        predef.eventos.map((evento) => ({
+          id: evento.id,
+          ativo: evento.ativo,
+        }))
+      )
       : []
   );
+
+  const [presenteSelecionado, setPresenteSelecionado] = useState<string | null>(null);
+
 
   const toggleAtivo = (eventoId: number) => {
     setEventosAtivos((prev) =>
@@ -103,20 +106,18 @@ const TabelaPredefinicoes = () => {
                     <Switch
                       checked={eventoAtual?.ativo}
                       onCheckedChange={() => toggleAtivo(evento.id)}
-                      className={`${
-                        eventoAtual?.ativo ? "bg-blue-600" : "bg-gray-200"
-                      } relative inline-flex items-center h-6 rounded-full w-11`}
+                      className={`${eventoAtual?.ativo ? "bg-blue-600" : "bg-gray-200"
+                        } relative inline-flex items-center h-6 rounded-full w-11`}
                     >
                       <span
-                        className={`${
-                          eventoAtual?.ativo ? "translate-x-6" : "translate-x-1"
-                        } inline-block w-4 h-4 transform bg-white rounded-full`}
+                        className={`${eventoAtual?.ativo ? "translate-x-6" : "translate-x-1"
+                          } inline-block w-4 h-4 transform bg-white rounded-full`}
                       />
                     </Switch>
                   </TableCell>
                   <TableCell className="flex items-center">
                     <img
-                      src={evento.presente || "/path/to/default-image.jpg"}
+                      src={presenteSelecionado || evento.presente || "/path/to/default-image.jpg"}
                       alt={evento.funcao.nome}
                       className="w-10 h-10 object-cover rounded-lg mr-2"
                     />
@@ -126,7 +127,7 @@ const TabelaPredefinicoes = () => {
                   <TableCell>{evento.video}</TableCell>
                   <TableCell>
                     <div>
-                      <DropAcoes/>
+                      <DropAcoes />
                     </div>
                   </TableCell>
                 </TableRow>
@@ -153,15 +154,15 @@ const TabelaPredefinicoes = () => {
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="p-4 bg-gray-800 rounded-lg flex justify-between items-center">
-                <h3 className="text-lg font-semibold ">Presente</h3>
+                <h3 className="text-lg font-semibold">Presente</h3>
                 <img
-                  src={RoseImage}
-                  alt="Rose"
+                  src={presenteSelecionado || RoseImage}
+                  alt={presenteSelecionado ? "Presente Selecionado" : "Rose"}
                   className="w-16 bg-slate-700 p-1 rounded-full cursor-pointer"
                   onClick={openDialogPresentes}
                 />
               </div>
-              <div className="p-4 bg-gray-800  rounded-lg flex ">
+              <div className="p-4 bg-gray-800 rounded-lg flex justify-between items-center">
                 <div>
                   <h3 className="text-lg font-semibold mb-2">Funções</h3>
                 </div>
@@ -190,7 +191,7 @@ const TabelaPredefinicoes = () => {
                   </div>
                 </div>
               </div>
-              <div className="p-4 bg-gray-800 rounded-lg flex gap-3">
+              <div className="p-4 bg-gray-800 rounded-lg flex justify-between items-center">
                 <div>
                   <h3 className="text-lg font-semibold mb-2">Vídeo</h3>
                 </div>
@@ -226,7 +227,7 @@ const TabelaPredefinicoes = () => {
                   </div>
                 </div>
               </div>
-              <div className="p-4 bg-gray-800 rounded-lg grid grid-cols-2 items-center">
+              <div className="p-4 bg-gray-800 rounded-lg flex justify-between items-center">
                 <div>
                   <h3 className="text-lg font-semibold mb-2">Áudio</h3>
                 </div>
@@ -238,9 +239,9 @@ const TabelaPredefinicoes = () => {
                     src={MusicImage}
                     alt="Upload"
                     className="w-16 bg-slate-700 p-1 rounded-full cursor-pointer"
-                  onClick={openDialogSounds}
+                    onClick={openDialogSounds}
                   />
-                  
+
                 </label>
               </div>
             </div>
@@ -264,8 +265,15 @@ const TabelaPredefinicoes = () => {
             </div>
           </DialogContent>
         </Dialog>
-        <ModalPresentes isDialogOpen={isDialogPresentesOpen} setIsDialogOpen={setIsDialogPresentesOpen} />
-        <ModalSounds isDialogOpen={isDialogSoundsOpen} setIsDialogOpen={setIsDialogSoundsOpen} />
+        <ModalPresentes
+          isDialogOpen={isDialogPresentesOpen}
+          setIsDialogOpen={setIsDialogPresentesOpen}
+          onSelectGift={(giftUrl) => setPresenteSelecionado(giftUrl)}
+        />
+        <ModalSounds
+          isDialogOpen={isDialogSoundsOpen}
+          setIsDialogOpen={setIsDialogSoundsOpen}
+        />
 
       </div>
     </div>

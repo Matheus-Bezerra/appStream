@@ -17,9 +17,10 @@ import { Button } from "../../../../components/ui/button";
 interface ModalPresentesProps {
   isDialogOpen: boolean;
   setIsDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  onSelectGift: (giftUrl: string) => void;
 }
 
-export const ModalPresentes: React.FC<ModalPresentesProps> = ({ isDialogOpen, setIsDialogOpen }) => {
+export const ModalPresentes: React.FC<ModalPresentesProps> = ({ isDialogOpen, setIsDialogOpen, onSelectGift  }) => {
   const { idJogoSelecionado, modoJogoSelecionado } = useParams();
   const jogo = gameData.find(
     (game) => game.id === parseInt(idJogoSelecionado ?? "")
@@ -101,7 +102,11 @@ export const ModalPresentes: React.FC<ModalPresentesProps> = ({ isDialogOpen, se
           {gifts.map((gift) => (
             <div
               key={gift.id}
-              className="p-2 bg-foreground rounded-lg flex flex-col items-center text-center text-white border-2 border-yellow-500"
+              className="p-2 bg-foreground rounded-lg flex flex-col items-center text-center text-white border-2 border-yellow-500 cursor-pointer"
+              onClick={() => {
+                onSelectGift(gift.image_urls[0]); // Atualiza o presente selecionado
+                setIsDialogOpen(false); // Fecha a modal
+              }}
             >
               <img
                 src={gift.image_urls[0]}
