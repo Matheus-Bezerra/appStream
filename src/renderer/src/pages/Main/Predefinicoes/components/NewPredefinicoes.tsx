@@ -52,7 +52,7 @@ function NewPredefinicoes({
           <input
             type="text"
             placeholder="Nome da Predefinição"
-            className="rounded-md p-2 bg-[#363B4A]"
+            className="rounded-md p-2 bg-[#363B4A] text-white"
             value={newPredefinicaoName}
             onChange={(e) => setNewPredefinicaoName(e.target.value)}
             required

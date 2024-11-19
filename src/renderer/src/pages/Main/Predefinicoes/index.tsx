@@ -32,9 +32,23 @@ export const Predefinicoes = () => {
   ]);
 
   const [openDialog, setOpenDialog] = useState(false);
+  const [editingPredefinicao, setEditingPredefinicao] = useState(null);
+  const [newName, setNewName] = useState("");
 
   const addNewPredefinicao = (name: any) => {
     setPredefinicoes((prev) => [...prev, { name, isActive: false }]);
+  };
+
+  const deletePredefinicao = (name: string) => {
+    setPredefinicoes((prev) => prev.filter((predef) => predef.name !== name));
+  };
+
+  const renamePredefinicao = (oldName: string, newName: string) => {
+    setPredefinicoes((prev) =>
+      prev.map((predef) =>
+        predef.name === oldName ? { ...predef, name: newName } : predef
+      )
+    );
   };
 
   if (!jogo || !modoJogo) return <p>Jogo ou Modo de Jogo não encontrado</p>;
@@ -53,7 +67,9 @@ export const Predefinicoes = () => {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink to={`/jogos/${jogo.id}`}>{jogo.titulo}</BreadcrumbLink>
+            <BreadcrumbLink to={`/jogos/${jogo.id}`}>
+              {jogo.titulo}
+            </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
@@ -98,8 +114,10 @@ export const Predefinicoes = () => {
             name={predefinicao.name}
             isActive={predefinicao.isActive}
             onSelect={() => console.log(`${predefinicao.name} selecionado`)}
-            onRename={() => console.log(`Renomear ${predefinicao.name}`)}
-            onDelete={() => console.log(`Excluir ${predefinicao.name}`)}
+            onRename={(newName) =>
+              renamePredefinicao(predefinicao.name, newName)
+            }
+            onDelete={() => deletePredefinicao(predefinicao.name)}
           />
         ))}
       </div>
