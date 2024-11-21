@@ -3,9 +3,9 @@ const redisService = require('../services/redisService');
 exports.saveUserPreferences = async (req, res) => {
     console.log("req bodyyy ----------> ", req.body)
     try {
-        const { usuario, preferences } = req.body;
+        const { usuario, predefinicoes } = req.body;
         console.log("ENTREI")
-        await redisService.saveData(usuario, preferences);
+        await redisService.saveData(usuario, predefinicoes);
         console.log('Preferências salvas com sucesso!'); // Log para verificar o fluxo
 
         res.status(200).json({ message: 'Preferências salvas com sucesso!' });
@@ -18,9 +18,9 @@ exports.saveUserPreferences = async (req, res) => {
 exports.getUserPreferences = async (req, res) => {
     const { usuario } = req.body; // Captura o usuário da URL
     try {
-        const preferences = await redisService.getData(usuario); // Chama a função de busca
-        if (preferences) {
-            res.status(200).json(preferences); // Retorna as preferências encontradas
+        const predefinicoes = await redisService.getData(usuario); // Chama a função de busca
+        if (predefinicoes) {
+            res.status(200).json(predefinicoes); // Retorna as preferências encontradas
         } else {
             res.status(404).json({ message: 'Preferências não encontradas' }); // Se não encontrar, retorna 404
         }
