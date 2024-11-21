@@ -10,19 +10,19 @@ const connectToTikTokLive = async (username, game) => {
     let tiktokLiveConnection = new WebcastPushConnection(username);
 
     try {
-        // Retrieve user preferences from Redis
-        const preferences = await getData(username);
+        // Retrieve user predefinicoes from Redis
+        const predefinicoes = await getData(username);
 
-        if (!preferences) {
-            console.error(`No preferences found for user: ${username}`);
+        if (!predefinicoes) {
+            console.error(`No predefinicoes found for user: ${username}`);
             // return;
         }
 
-        console.log(`Loaded preferences for user ${username}:`, preferences);
+        console.log(`Loaded predefinicoes for user ${username}:`, predefinicoes);
 
 
         if (game === "GTA") {
-            const executarahk = await executeAhk(preferences, username)
+            const executarahk = await executeAhk(predefinicoes, username)
         }
 
         // Connect to the TikTok live stream
@@ -40,7 +40,7 @@ const connectToTikTokLive = async (username, game) => {
             console.log(`${data.uniqueId} sent gift: ${data.giftName} (Quantity: ${data.repeatCount})`);
 
             // Encontrar preferência que corresponda ao presente e ao jogo especificado
-            const matchedPref = preferences.find(
+            const matchedPref = predefinicoes.find(
                 pref => pref.presente === data.giftName && pref.modulo === game
             );
 
@@ -62,7 +62,7 @@ const connectToTikTokLive = async (username, game) => {
         tiktokLiveConnection.on('chat', data => {
             console.log(`${data.uniqueId} disse: ${data.comment}`);
             // Encontrar preferência que corresponda ao presente e ao jogo especificado
-            const matchedPref = preferences.find(
+            const matchedPref = predefinicoes.find(
                 pref => pref.presente === data.comment && pref.modulo === game
             );
             if (matchedPref) {
