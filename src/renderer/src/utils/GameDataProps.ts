@@ -2,10 +2,12 @@ interface FuncaoProps {
     imagem?: any;
     nome: string;
     tecla: string;
+    modoJogo: string; // id do modo do jogo
+    jogo: string; // id do jogo
   }
   
   export interface EventosProps {
-    id: number;
+    id: number; //id do evento
     ativo: boolean;
     presente?: string;  
     funcao: FuncaoProps;
@@ -14,7 +16,7 @@ interface FuncaoProps {
   }
   
   export interface PredefinicoesProps {
-    id: number;
+    id: number; // id da predefinição
     nome: string;
     eventos: EventosProps[];
   }
