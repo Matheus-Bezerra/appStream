@@ -1,56 +1,60 @@
 interface FuncaoProps {
-    imagem?: any;
-    nome: string;
-    tecla: string;
-    modoJogo: string; // id do modo do jogo
-    jogo: string; // id do jogo
-  }
-  
-  export interface EventosProps {
-    id: number; //id do evento
-    ativo: boolean;
-    presente?: string;  
-    funcao: FuncaoProps;
-    audio: string;
-    video: string;
-  }
-  
-  export interface PredefinicoesProps {
-    id: number; // id da predefinição
-    nome: string;
-    eventos: EventosProps[];
-  }
-  
-  export interface ModeProps {
-    id: number;
-    idJogo: number;
-    titulo: string;
-    imagemModo?: string;  
-    navigateTo: string;
-    predefinicoes: PredefinicoesProps[];
-  }
-  
-  export interface GameProps {
-    id: number;
-    titulo: string;
-    modes: ModeProps[];
-    acessado: string;
-    banner: string;
-    imagem: string;
-    imagemGame: string;
-    ultimoAcesso: boolean;
-  }
+  imagem?: any;
+  nome: string;
+  tecla: string;
+  modoJogo: string; // id do modo do jogo
+  jogo: string; // id do jogo
+}
 
-  export interface Gift {
-    id: number;
-    name: string;
-    diamond_count: number;
-    image_urls: string[];
-  }
+export interface EventosProps {
+  id: number; //id do evento
+  ativo: boolean;
+  presente?: string;
+  funcao: FuncaoProps;
+  audio: string;
+  video: string;
+}
 
-  export interface Sound {
-    title: string;
-    url: string;
-    directUrl: string;
-  }
-  
+export interface PredefinicoesProps {
+  id: number; // id da predefinição
+  nome: string;
+  eventos: EventosProps[];
+}
+
+interface api {
+  usuario: string;
+  predefinicoes: PredefinicoesProps[]
+}
+
+export interface ModeProps {
+  id: number;
+  idJogo: number;
+  titulo: string;
+  imagemModo?: string;
+  navigateTo: string;
+  predefinicoes: PredefinicoesProps[];
+}
+
+export interface GameProps {
+  id: number;
+  titulo: string;
+  modes: ModeProps[];
+  acessado: string;
+  banner: string;
+  imagem: string;
+  imagemGame: string;
+  ultimoAcesso: boolean;
+}
+
+export interface Gift {
+  id: number;
+  name: string;
+  diamond_count: number;
+  image_urls: string[];
+}
+
+export interface Sound {
+  title: string;
+  url: string;
+  directUrl: string;
+}
