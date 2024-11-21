@@ -25,15 +25,15 @@ export const GameModes = () => {
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink href="/">Home</BreadcrumbLink>
+            <BreadcrumbLink to="/">Home</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink href="/jogos">Meus jogos</BreadcrumbLink>
+            <BreadcrumbLink to="/jogos">Meus jogos</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink href={`/jogos/${jogo.id}`}>{jogo.titulo}</BreadcrumbLink>
+            <BreadcrumbLink to={`/jogos/${jogo.id}`}>{jogo.titulo}</BreadcrumbLink>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>

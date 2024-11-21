@@ -4,6 +4,7 @@
   "description": "",
   "main": "tecla-server.js",
   "scripts": {
+    "start": "node index.js --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,8 +13,11 @@
   "dependencies": {
     "@tensorflow-models/facemesh": "^0.0.5",
     "@tensorflow/tfjs": "^4.21.0",
+    "axios": "^1.7.7",
     "backend": "file:",
     "canvas": "^2.11.2",
+    "cheerio": "^1.0.0",
+    "cors": "^2.8.5",
     "express": "^4.21.1",
     "jimp": "^1.6.0",
     "modern-rcon": "^1.0.3",
