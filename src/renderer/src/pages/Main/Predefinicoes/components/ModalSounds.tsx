@@ -129,13 +129,13 @@ export const ModalSounds: React.FC<ModalSoundsProps> = ({
                     <Input
                         type="text"
                         placeholder="Buscar áudios específicos"
-                        className="w-80 p-2 pl-10 rounded-2xl text-white bg-gray-800 mb-2"
+                        className="w-80 p-2 pl-10 rounded-sm  text-white bg-gray-800 mb-2"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
                     <button
                         onClick={() => searchSounds.mutate()}
-                        className="p-2 bg-yellow-500 rounded-xl text-white"
+                        className="p-1 bg-yellow-500 rounded-sm text-white h-10"
                     >
                         Buscar
                     </button>
