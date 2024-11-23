@@ -70,6 +70,13 @@ export interface Efeitos {
   image_urls: string[];
 }
 
+export interface Effect {
+  id: number;
+  name: string;
+  image_urls: string[];
+  description: string;
+}
+
 export interface Sound {
   title: string;
   url: string;
