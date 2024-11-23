@@ -1,13 +1,5 @@
 import { useState } from "react";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogFooter,
-} from "../../../../components/Dialog";
-import {
   Table,
   TableBody,
   TableCell,
@@ -16,17 +8,14 @@ import {
   TableRow,
 } from "../../../../components/Table";
 import { Switch } from "../../../../components/Switch";
-import { Input } from "../../../../components/ui/input";
 import { gameData } from "../../../../constants/GameData";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Button } from "../../../../components/ui/button";
-import RoseImage from "../../../../assets/rose.webp";
-import PenImage from "../../../../assets/pen.png";
-import UploadImage from "../../../../assets/upload.png";
-import MusicImage from "../../../../assets/music.png";
 import DropAcoes from "./DropAcoes";
 import { ModalPresentes } from "./ModalPresentes";
 import { ModalSounds } from "./ModalSounds";
+import { ModalEfeitos } from "./ModalEfeitos";
+
 
 
 const TabelaPredefinicoes = () => {
@@ -41,16 +30,22 @@ const TabelaPredefinicoes = () => {
   const [eventosAtivos, setEventosAtivos] = useState(
     modoJogo
       ? modoJogo.predefinicoes.flatMap((predef) =>
-        predef.eventos.map((evento) => ({
-          id: evento.id,
-          ativo: evento.ativo,
-        }))
-      )
+          predef.eventos.map((evento) => ({
+            id: evento.id,
+            ativo: evento.ativo,
+          }))
+        )
       : []
   );
 
-  const [presenteSelecionado, setPresenteSelecionado] = useState<string | null>(null);
+  const [presenteSelecionado, setPresenteSelecionado] = useState<string | null>(
+    null
+  );
 
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isDialogPresentesOpen, setIsDialogPresentesOpen] = useState(false);
+  const [isDialogSoundsOpen, setIsDialogSoundsOpen] = useState(false);
+  const [fileName, setFileName] = useState<string | null>(null);
 
   const toggleAtivo = (eventoId: number) => {
     setEventosAtivos((prev) =>
@@ -69,8 +64,12 @@ const TabelaPredefinicoes = () => {
 
   const [isDialogPresentesOpen, setIsDialogPresentesOpen] = useState(false);
   const openDialogPresentes = () => setIsDialogPresentesOpen(true);
+
   const [isDialogSoundsOpen, setIsDialogSoundsOpen] = useState(false);
   const openDialogSounds = () => setIsDialogSoundsOpen(true);
+
+  const [isDialogEfeitosOpen, setIsDialogEfeitosOpen] = useState(false);
+  const openDialogEfeitos = () => setIsDialogEfeitosOpen(true);
 
   const [isDragging, setIsDragging] = useState(false);
   const [fileName, setFileName] = useState<string | null>(null);
@@ -78,10 +77,49 @@ const TabelaPredefinicoes = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setFileName(file.name); // Atualiza o nome do arquivo
-      console.log("Arquivo selecionado via input:", file);
+      setFileName(file.name);
     }
   };
+
+  // Função para enviar os dados
+  const enviarDados = useMutation({
+    mutationFn: async (dados: any) => {
+      const response = await fetch("http://localhost:3000/api/eventos", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dados),
+      });
+      if (!response.ok) throw new Error("Erro ao enviar evento");
+      return response.json();
+    },
+    onSuccess: (data) => {
+      console.log("Dados enviados com sucesso:", data);
+      setIsDialogOpen(false); // Fecha a modal após o envio
+    },
+    onError: (error) => {
+      console.error("Erro ao enviar evento:", error);
+    },
+  });
+
+  const handleAdicionarEvento = () => {
+    if (!jogo || !modoJogo) {
+      console.error("Jogo ou Modo de Jogo não encontrado.");
+      return;
+    }
+
+    const dadosParaEnviar = {
+      usuario: "exemploUsuario", // Substituir pelo usuário real
+      modoJogo: modoJogoSelecionado || "",
+      jogo: idJogoSelecionado || "",
+      predefinicoes: modoJogo.predefinicoes,
+    };
+
+    enviarDados.mutate(dadosParaEnviar);
+  };
+
+  if (!jogo || !modoJogo) return <p>Jogo ou Modo de Jogo não encontrado</p>;
 
   return (
     <div className="mt-5">
@@ -92,7 +130,7 @@ const TabelaPredefinicoes = () => {
             <TableHead>Presente</TableHead>
             <TableHead>Função</TableHead>
             <TableHead>Aúdio</TableHead>
-            <TableHead>Vídeo</TableHead>
+            <TableHead>Efeitos</TableHead>
             <TableHead>Ações</TableHead>
           </TableRow>
         </TableHeader>
@@ -106,18 +144,24 @@ const TabelaPredefinicoes = () => {
                     <Switch
                       checked={eventoAtual?.ativo}
                       onCheckedChange={() => toggleAtivo(evento.id)}
-                      className={`${eventoAtual?.ativo ? "bg-blue-600" : "bg-gray-200"
-                        } relative inline-flex items-center h-6 rounded-full w-11`}
+                      className={`${
+                        eventoAtual?.ativo ? "bg-blue-600" : "bg-gray-200"
+                      } relative inline-flex items-center h-6 rounded-full w-11`}
                     >
                       <span
-                        className={`${eventoAtual?.ativo ? "translate-x-6" : "translate-x-1"
-                          } inline-block w-4 h-4 transform bg-white rounded-full`}
+                        className={`${
+                          eventoAtual?.ativo ? "translate-x-6" : "translate-x-1"
+                        } inline-block w-4 h-4 transform bg-white rounded-full`}
                       />
                     </Switch>
                   </TableCell>
                   <TableCell className="flex items-center">
                     <img
-                      src={presenteSelecionado || evento.presente || "/path/to/default-image.jpg"}
+                      src={
+                        presenteSelecionado ||
+                        evento.presente ||
+                        "/path/to/default-image.jpg"
+                      }
                       alt={evento.funcao.nome}
                       className="w-10 h-10 object-cover rounded-lg mr-2"
                     />
@@ -193,39 +237,21 @@ const TabelaPredefinicoes = () => {
               </div>
               <div className="p-4 bg-gray-800 rounded-lg flex justify-between items-center">
                 <div>
-                  <h3 className="text-lg font-semibold mb-2">Vídeo</h3>
+                  <h3 className="text-lg font-semibold mb-2">Efeitos</h3>
                 </div>
-                <div className="grid grid-cols-2 items-center">
-                  <label
-                    htmlFor="video-upload"
-                    className="flex flex-col items-center cursor-pointer"
-                  >
-                    <img
-                      src={UploadImage}
-                      alt="Upload"
-                      className="w-16 bg-slate-700 p-1 rounded-full"
-                    />
-                    <Input
-                      id="video-upload"
-                      type="file"
-                      className="hidden"
-                      onChange={handleFileChange}
-                    />
-                    {fileName && (
-                      <p className="text-gray-200 text-sm mt-2">
-                        Arquivo: {fileName}
-                      </p>
-                    )}
-                  </label>
-                  <div className="p-2 bg-slate-700 text-center rounded-lg">
-                    <p className="text-sm">
-                      <span className="text-primary">
-                        Clique para fazer upload
-                      </span>{" "}
-                      ou arraste e solte SVG, PNG, JPG ou GIF (max. 800x400px)
-                    </p>
-                  </div>
-                </div>
+                <label
+                  htmlFor="audio-upload"
+                  className="flex items-center gap-2 cursor-pointer"
+                >
+                  <img
+                    src={UploadImage}
+                    alt="Upload"
+                    className="w-16 bg-slate-700 p-1 rounded-full"
+
+                    onClick={openDialogEfeitos}
+                  />
+
+                </label>
               </div>
               <div className="p-4 bg-gray-800 rounded-lg flex justify-between items-center">
                 <div>
@@ -270,6 +296,13 @@ const TabelaPredefinicoes = () => {
           setIsDialogOpen={setIsDialogPresentesOpen}
           onSelectGift={(giftUrl) => setPresenteSelecionado(giftUrl)}
         />
+
+        <ModalEfeitos
+          isDialogOpen={isDialogEfeitosOpen}
+          setIsDialogOpen={setIsDialogEfeitosOpen}
+          onSelectGift={(giftUrl) => setPresenteSelecionado(giftUrl)}
+        />
+       
         <ModalSounds
           isDialogOpen={isDialogSoundsOpen}
           setIsDialogOpen={setIsDialogSoundsOpen}
@@ -279,4 +312,5 @@ const TabelaPredefinicoes = () => {
     </div>
   );
 };
+
 export default TabelaPredefinicoes;

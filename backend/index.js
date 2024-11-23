@@ -1,10 +1,11 @@
 const express = require('express');
 const http = require('http');
-const cors = require('cors'); // Importe o CORS
+const cors = require('cors'); 
 const webcamRoutes = require('./routes/webcamRoutes');
 const tiktokRoutes = require('./routes/tiktokRoutes');
 const redisRoutes = require('./routes/redisRoutes');
 const soundRoutes = require('./routes/soundRoutes');
+const snapCameraRoutes = require('./routes/installSnapCameraRoutes');
 
 const initializeWebSocket = require('./config/websocketServer');
 
@@ -38,6 +39,9 @@ app.use('/redis', redisRoutes);
 
 // Rota Sons
 app.use('/sounds', soundRoutes);
+
+// Rota para instalação do snap camera
+app.use('/snap-camera', snapCameraRoutes);
 
 
 // Inicia o servidor HTTP e WebSocket na mesma porta

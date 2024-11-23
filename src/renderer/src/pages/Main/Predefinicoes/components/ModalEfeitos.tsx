@@ -12,17 +12,15 @@ import { gameData } from "../../../../constants/GameData";
 import { useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Gift } from '../../../../utils/GameDataProps';
-import { Efeitos } from '../../../../utils/GameDataProps';
-
 import { Button } from "../../../../components/ui/button";
 
-interface ModalPresentesProps {
+interface ModalEfeitosProps {
   isDialogOpen: boolean;
   setIsDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onSelectGift: (giftUrl: string) => void;
 }
 
-export const ModalPresentes: React.FC<ModalPresentesProps> = ({ isDialogOpen, setIsDialogOpen, onSelectGift  }) => {
+export const ModalEfeitos: React.FC<ModalEfeitosProps> = ({ isDialogOpen, setIsDialogOpen, onSelectGift  }) => {
   const { idJogoSelecionado, modoJogoSelecionado } = useParams();
   const jogo = gameData.find(
     (game) => game.id === parseInt(idJogoSelecionado ?? "")

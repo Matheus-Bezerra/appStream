@@ -2,7 +2,8 @@ interface FuncaoProps {
   imagem?: any;
   nome: string;
   tecla: string;
-  
+  modoJogo: string; // id do modo do jogo
+  jogo: string; // id do jogo
 }
 
 export interface EventosProps {
@@ -22,8 +23,6 @@ export interface PredefinicoesProps {
 
 interface api {
   usuario: string;
-  modoJogo: string; // id do modo do jogo
-  jogo: string; // id do jogo
   predefinicoes: PredefinicoesProps[]
 }
 
@@ -54,8 +53,17 @@ export interface Gift {
   image_urls: string[];
 }
 
+export interface Efeitos {
+  id: number;
+  name: string;
+  diamond_count: number;
+  image_urls: string[];
+}
+
 export interface Sound {
   title: string;
   url: string;
   directUrl: string;
 }
+
+
