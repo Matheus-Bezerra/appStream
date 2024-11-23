@@ -15,6 +15,12 @@ import DropAcoes from "./DropAcoes";
 import { ModalPresentes } from "./ModalPresentes";
 import { ModalSounds } from "./ModalSounds";
 import { ModalEfeitos } from "./ModalEfeitos";
+import { useMutation } from "@tanstack/react-query";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../../../components/Dialog";
+import RoseImage from '../../../../imagens/rose.webp'
+import PenImage from '../../../../assets/pen.png'
+import MusicImage from '../../../../assets/music.png'
+import UploadImage from '../../../../assets/upload.png'
 
 
 
@@ -41,12 +47,6 @@ const TabelaPredefinicoes = () => {
   const [presenteSelecionado, setPresenteSelecionado] = useState<string | null>(
     null
   );
-
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [isDialogPresentesOpen, setIsDialogPresentesOpen] = useState(false);
-  const [isDialogSoundsOpen, setIsDialogSoundsOpen] = useState(false);
-  const [fileName, setFileName] = useState<string | null>(null);
-
   const toggleAtivo = (eventoId: number) => {
     setEventosAtivos((prev) =>
       prev.map((evento) =>
