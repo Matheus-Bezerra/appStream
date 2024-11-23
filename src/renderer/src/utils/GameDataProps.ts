@@ -2,10 +2,18 @@ interface FuncaoProps {
   imagem?: any;
   nome: string;
   tecla: string;
-  modoJogo: string; // id do modo do jogo
-  jogo: string; // id do jogo
+
 }
 
+export interface AdicionarEventosProps {
+  id_user: string
+  id_predefinicao: string
+  ativo: boolean;
+  presente?: string;
+  funcao: FuncaoProps;
+  audio: string;
+  video: string;
+}
 export interface EventosProps {
   id: number; //id do evento
   ativo: boolean;
@@ -24,6 +32,8 @@ export interface PredefinicoesProps {
 interface api {
   usuario: string;
   predefinicoes: PredefinicoesProps[]
+  modoJogo: string; // id do modo do jogo
+  jogo: string; // id do jogo
 }
 
 export interface ModeProps {

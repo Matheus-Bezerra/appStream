@@ -11,18 +11,24 @@ import { Switch } from "../../../../components/Switch";
 import { gameData } from "../../../../constants/GameData";
 import { useParams } from "react-router-dom";
 import { Button } from "../../../../components/ui/button";
-import DropAcoes from "./DropAcoes";
+import DropAcoes, { DropdownMenuCheckboxes } from "./DropAcoes";
 import { ModalPresentes } from "./ModalPresentes";
 import { ModalSounds } from "./ModalSounds";
 import { ModalEfeitos } from "./ModalEfeitos";
 import { useMutation } from "@tanstack/react-query";
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../../../components/Dialog";
-import RoseImage from '../../../../imagens/rose.webp'
-import PenImage from '../../../../assets/pen.png'
-import MusicImage from '../../../../assets/music.png'
-import UploadImage from '../../../../assets/upload.png'
-
-
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../../../../components/Dialog";
+import RoseImage from "../../../../imagens/rose.webp";
+import PenImage from "../../../../assets/pen.png";
+import MusicImage from "../../../../assets/music.png";
+import UploadImage from "../../../../assets/upload.png";
+import { AdicionarEventosProps } from "@/utils/GameDataProps";
 
 const TabelaPredefinicoes = () => {
   const { idJogoSelecionado, modoJogoSelecionado } = useParams();
@@ -80,6 +86,15 @@ const TabelaPredefinicoes = () => {
       setFileName(file.name);
     }
   };
+  
+  const handleDelete = (index: number) => {
+    setEventosDinamicos((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const handleEdit = (index: number) => {
+    console.log("Editando item:", eventosDinamicos[index]);
+    // Lógica de edição a ser implementada
+  };
 
   // Função para enviar os dados
   const enviarDados = useMutation({
@@ -119,7 +134,17 @@ const TabelaPredefinicoes = () => {
     enviarDados.mutate(dadosParaEnviar);
   };
 
+  const [eventosDinamicos, setEventosDinamicos] = useState<
+    AdicionarEventosProps[]
+  >([]);
+
+  const handleAdicionarEventoDinamico = (evento: AdicionarEventosProps) => {
+    setEventosDinamicos((prev) => [...prev, evento]);
+  };
+
   if (!jogo || !modoJogo) return <p>Jogo ou Modo de Jogo não encontrado</p>;
+
+
 
   return (
     <div className="mt-5">
@@ -135,49 +160,55 @@ const TabelaPredefinicoes = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {modoJogo.predefinicoes.map((predef) =>
-            predef.eventos.map((evento) => {
-              const eventoAtual = eventosAtivos.find((e) => e.id === evento.id);
-              return (
-                <TableRow key={evento.id}>
-                  <TableCell className="font-medium">
-                    <Switch
-                      checked={eventoAtual?.ativo}
-                      onCheckedChange={() => toggleAtivo(evento.id)}
-                      className={`${
-                        eventoAtual?.ativo ? "bg-blue-600" : "bg-gray-200"
-                      } relative inline-flex items-center h-6 rounded-full w-11`}
-                    >
-                      <span
-                        className={`${
-                          eventoAtual?.ativo ? "translate-x-6" : "translate-x-1"
-                        } inline-block w-4 h-4 transform bg-white rounded-full`}
-                      />
-                    </Switch>
-                  </TableCell>
-                  <TableCell className="flex items-center">
-                    <img
-                      src={
-                        presenteSelecionado ||
-                        evento.presente ||
-                        "/path/to/default-image.jpg"
-                      }
-                      alt={evento.funcao.nome}
-                      className="w-10 h-10 object-cover rounded-lg mr-2"
-                    />
-                  </TableCell>
-                  <TableCell>{evento.funcao.nome}</TableCell>
-                  <TableCell>{evento.audio}</TableCell>
-                  <TableCell>{evento.video}</TableCell>
-                  <TableCell>
-                    <div>
-                      <DropAcoes />
-                    </div>
-                  </TableCell>
-                </TableRow>
-              );
-            })
+          {modoJogo.predefinicoes.flatMap((predef) =>
+            predef.eventos.map((evento) => (
+              <TableRow key={evento.id}>
+                <TableCell>{/* Lógica do switch */}</TableCell>
+                <TableCell>{/* Imagem do presente */}</TableCell>
+                <TableCell>{evento.funcao.nome}</TableCell>
+                <TableCell>{evento.audio}</TableCell>
+                <TableCell>{evento.video}</TableCell>
+                <TableCell>
+                <DropdownMenuCheckboxes
+                    onDelete={() => console.warn("Excluir para modoJogo não implementado")}
+                    onEdit={() => console.warn("Editar para modoJogo não implementado")}
+                  />
+                </TableCell>
+              </TableRow>
+            ))
           )}
+          {eventosDinamicos.map((evento, index) => (
+            <TableRow key={`dinamico-${index}`}>
+              <TableCell>
+                <Switch
+                  checked={evento.ativo}
+                  onCheckedChange={() =>
+                    setEventosDinamicos((prev) =>
+                      prev.map((e, i) =>
+                        i === index ? { ...e, ativo: !e.ativo } : e
+                      )
+                    )
+                  }
+                />
+              </TableCell>
+              <TableCell>
+                <img
+                  src={evento.presente || "/path/to/default-image.jpg"}
+                  alt={evento.funcao.nome}
+                  className="w-10 h-10 object-cover rounded-lg"
+                />
+              </TableCell>
+              <TableCell>{evento.funcao.nome}</TableCell>
+              <TableCell>{evento.audio}</TableCell>
+              <TableCell>{evento.video}</TableCell>
+              <TableCell>
+              <DropdownMenuCheckboxes
+                  onDelete={() => handleDelete(index)} // Função de exclusão
+                  onEdit={() => handleEdit(index)} // Função de edição
+                />
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
       <div className="flex justify-center">
@@ -247,10 +278,8 @@ const TabelaPredefinicoes = () => {
                     src={UploadImage}
                     alt="Upload"
                     className="w-16 bg-slate-700 p-1 rounded-full"
-
                     onClick={openDialogEfeitos}
                   />
-
                 </label>
               </div>
               <div className="p-4 bg-gray-800 rounded-lg flex justify-between items-center">
@@ -267,7 +296,6 @@ const TabelaPredefinicoes = () => {
                     className="w-16 bg-slate-700 p-1 rounded-full cursor-pointer"
                     onClick={openDialogSounds}
                   />
-
                 </label>
               </div>
             </div>
@@ -294,20 +322,27 @@ const TabelaPredefinicoes = () => {
         <ModalPresentes
           isDialogOpen={isDialogPresentesOpen}
           setIsDialogOpen={setIsDialogPresentesOpen}
-          onSelectGift={(giftUrl) => setPresenteSelecionado(giftUrl)}
+          onAddEvent={(evento: AdicionarEventosProps) =>
+            handleAdicionarEventoDinamico(evento)
+          }
+          onSelectGift={function (giftUrl: string): void {
+            throw new Error("Função não implementada.");
+          }}
         />
-
         <ModalEfeitos
           isDialogOpen={isDialogEfeitosOpen}
           setIsDialogOpen={setIsDialogEfeitosOpen}
-          onSelectGift={(giftUrl) => setPresenteSelecionado(giftUrl)}
+          onAddEvent={(evento: AdicionarEventosProps) =>
+            handleAdicionarEventoDinamico(evento)
+          }
         />
-       
         <ModalSounds
           isDialogOpen={isDialogSoundsOpen}
           setIsDialogOpen={setIsDialogSoundsOpen}
+          onAddEvent={(evento: AdicionarEventosProps) =>
+            handleAdicionarEventoDinamico(evento)
+          }
         />
-
       </div>
     </div>
   );

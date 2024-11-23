@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useMutation } from '@tanstack/react-query';
+import { useMutation } from "@tanstack/react-query";
 import {
   Dialog,
   DialogContent,
@@ -11,18 +11,22 @@ import { Input } from "../../../../components/ui/input";
 import { gameData } from "../../../../constants/GameData";
 import { useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import { Gift } from '../../../../utils/GameDataProps';
-import { Efeitos } from '../../../../utils/GameDataProps';
-
+import { AdicionarEventosProps, Gift } from "../../../../utils/GameDataProps";
 import { Button } from "../../../../components/ui/button";
 
 interface ModalPresentesProps {
   isDialogOpen: boolean;
   setIsDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onSelectGift: (giftUrl: string) => void;
+  onAddEvent: (evento: AdicionarEventosProps) => void; // Propriedade para adicionar eventos
 }
 
-export const ModalPresentes: React.FC<ModalPresentesProps> = ({ isDialogOpen, setIsDialogOpen, onSelectGift  }) => {
+export const ModalPresentes: React.FC<ModalPresentesProps> = ({
+  isDialogOpen,
+  setIsDialogOpen,
+  onSelectGift,
+  onAddEvent,
+}) => {
   const { idJogoSelecionado, modoJogoSelecionado } = useParams();
   const jogo = gameData.find(
     (game) => game.id === parseInt(idJogoSelecionado ?? "")
@@ -53,13 +57,29 @@ export const ModalPresentes: React.FC<ModalPresentesProps> = ({ isDialogOpen, se
     },
   });
 
-  console.log("Is Dialog Openn ", isDialogOpen)
-
   useEffect(() => {
     if (isDialogOpen) {
       fetchGifts.mutate();
     }
   }, [isDialogOpen]);
+
+  const handleAddEvent = (gift: Gift) => {
+    const novoEvento: AdicionarEventosProps = {
+      id_user: "1", // Substitua com o ID do usuário real
+      id_predefinicao: modoJogo?.id.toString() || "",
+      ativo: true,
+      presente: gift.image_urls[0],
+      funcao: {
+        nome: gift.name,
+        tecla: "CTRL + A", // Altere conforme necessário
+      },
+      audio: "default-audio.mp3", // Altere conforme necessário
+      video: "default-video.mp4", // Altere conforme necessário
+    };
+
+    onAddEvent(novoEvento); // Adiciona o evento
+    setIsDialogOpen(false); // Fecha a modal
+  };
 
   const presentes = modoJogo
     ? modoJogo.predefinicoes.flatMap((predef) => predef.eventos)
@@ -74,7 +94,10 @@ export const ModalPresentes: React.FC<ModalPresentesProps> = ({ isDialogOpen, se
       <DialogContent className="max-w-2xl bg-gray-900 rounded-xl p-4">
         <DialogHeader className="flex justify-between ">
           <div className="flex gap-4">
-            <button onClick={() => setIsDialogOpen(false)} aria-label="Fechar modal">
+            <button
+              onClick={() => setIsDialogOpen(false)}
+              aria-label="Fechar modal"
+            >
               <ArrowLeft
                 size={40}
                 color="#FAC638"
@@ -83,7 +106,9 @@ export const ModalPresentes: React.FC<ModalPresentesProps> = ({ isDialogOpen, se
             </button>
             <div className="flex flex-col ">
               <DialogTitle className="text-white text-2xl">Presentes</DialogTitle>
-              <p className="text-gray-400 mb-4">Gerencie seus próprios presentes</p>
+              <p className="text-gray-400 mb-4">
+                Gerencie seus próprios presentes
+              </p>
             </div>
           </div>
         </DialogHeader>
@@ -105,10 +130,7 @@ export const ModalPresentes: React.FC<ModalPresentesProps> = ({ isDialogOpen, se
             <div
               key={gift.id}
               className="p-2 bg-foreground rounded-lg flex flex-col items-center text-center text-white border-2 border-yellow-500 cursor-pointer"
-              onClick={() => {
-                onSelectGift(gift.image_urls[0]); // Atualiza o presente selecionado
-                setIsDialogOpen(false); // Fecha a modal
-              }}
+              onClick={() => handleAddEvent(gift)} // Adiciona evento ao clicar
             >
               <img
                 src={gift.image_urls[0]}
