@@ -6,14 +6,19 @@ interface FuncaoProps {
 }
 
 export interface AdicionarEventosProps {
-  id_user: string
-  id_predefinicao: string
+  id_user: string;
+  id_predefinicao: string;
   ativo: boolean;
   presente?: string;
   funcao: FuncaoProps;
   audio: string;
-  video: string;
+  video: string;
+  interval?: number; // Adicionado como opcional
+  commands?: string; // Adicionado como opcional
+  repetitions?: number; // Adicionado como opcional
+  nome?: string; // Adiciona nome como opcional
 }
+
 export interface EventosProps {
   id: number; //id do evento
   ativo: boolean;

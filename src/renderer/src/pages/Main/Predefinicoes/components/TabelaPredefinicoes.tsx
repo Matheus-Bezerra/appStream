@@ -13,6 +13,7 @@ import { useParams } from "react-router-dom";
 import { Button } from "../../../../components/ui/button";
 import DropAcoes, { DropdownMenuCheckboxes } from "./DropAcoes";
 import { ModalPresentes } from "./ModalPresentes";
+import { ModalFuncao } from "./ModalFuncao";
 import { ModalSounds } from "./ModalSounds";
 import { ModalEfeitos } from "./ModalEfeitos";
 import { useMutation } from "@tanstack/react-query";
@@ -42,11 +43,11 @@ const TabelaPredefinicoes = () => {
   const [eventosAtivos, setEventosAtivos] = useState(
     modoJogo
       ? modoJogo.predefinicoes.flatMap((predef) =>
-          predef.eventos.map((evento) => ({
-            id: evento.id,
-            ativo: evento.ativo,
-          }))
-        )
+        predef.eventos.map((evento) => ({
+          id: evento.id,
+          ativo: evento.ativo,
+        }))
+      )
       : []
   );
 
@@ -71,6 +72,10 @@ const TabelaPredefinicoes = () => {
   const [isDialogPresentesOpen, setIsDialogPresentesOpen] = useState(false);
   const openDialogPresentes = () => setIsDialogPresentesOpen(true);
 
+
+  const [isDialogFuncaoOpen, setIsDialogFuncaoOpen] = useState(false);
+  const openDialogFuncao = () => setIsDialogFuncaoOpen(true);
+
   const [isDialogSoundsOpen, setIsDialogSoundsOpen] = useState(false);
   const openDialogSounds = () => setIsDialogSoundsOpen(true);
 
@@ -86,7 +91,7 @@ const TabelaPredefinicoes = () => {
       setFileName(file.name);
     }
   };
-  
+
   const handleDelete = (index: number) => {
     setEventosDinamicos((prev) => prev.filter((_, i) => i !== index));
   };
@@ -169,7 +174,7 @@ const TabelaPredefinicoes = () => {
                 <TableCell>{evento.audio}</TableCell>
                 <TableCell>{evento.video}</TableCell>
                 <TableCell>
-                <DropdownMenuCheckboxes
+                  <DropdownMenuCheckboxes
                     onDelete={() => console.warn("Excluir para modoJogo não implementado")}
                     onEdit={() => console.warn("Editar para modoJogo não implementado")}
                   />
@@ -202,7 +207,7 @@ const TabelaPredefinicoes = () => {
               <TableCell>{evento.audio}</TableCell>
               <TableCell>{evento.video}</TableCell>
               <TableCell>
-              <DropdownMenuCheckboxes
+                <DropdownMenuCheckboxes
                   onDelete={() => handleDelete(index)} // Função de exclusão
                   onEdit={() => handleEdit(index)} // Função de edição
                 />
@@ -247,6 +252,8 @@ const TabelaPredefinicoes = () => {
                       src={PenImage}
                       alt="Pen"
                       className="w-16 bg-slate-700 p-1 rounded-full"
+                      onClick={openDialogFuncao}
+
                     />
                   </div>
                   <div className="p-2 bg-slate-700 rounded-lg">
@@ -329,6 +336,14 @@ const TabelaPredefinicoes = () => {
             throw new Error("Função não implementada.");
           }}
         />
+        <ModalFuncao
+          isDialogOpen={isDialogFuncaoOpen}
+          setIsDialogOpen={setIsDialogFuncaoOpen}
+          onAddEvent={(evento: AdicionarEventosProps) => handleAdicionarEventoDinamico(evento)}
+        />
+
+
+
         <ModalEfeitos
           isDialogOpen={isDialogEfeitosOpen}
           setIsDialogOpen={setIsDialogEfeitosOpen}

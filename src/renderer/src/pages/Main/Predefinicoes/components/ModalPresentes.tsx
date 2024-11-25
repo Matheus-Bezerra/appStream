@@ -129,7 +129,7 @@ export const ModalPresentes: React.FC<ModalPresentesProps> = ({
           {gifts.map((gift) => (
             <div
               key={gift.id}
-              className="p-2 bg-foreground rounded-lg flex flex-col items-center text-center text-white border-2 border-yellow-500 cursor-pointer"
+              className="p-2 bg-foreground rounded-lg flex flex-col items-center text-center text-white border border-gray-700 hover:border-yellow-500"
               onClick={() => handleAddEvent(gift)} // Adiciona evento ao clicar
             >
               <img
