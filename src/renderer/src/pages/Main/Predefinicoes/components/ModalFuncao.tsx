@@ -31,7 +31,7 @@ export const ModalFuncao: React.FC<ModalFuncaoProps> = ({
             id_user: "example_user",
             id_predefinicao: "example_predef",
             ativo: true,
-            funcao: { nome: "Example Function", tecla: commands },
+            funcao: { nome: name, tecla: commands },
             audio: "default-audio.mp3",
             video: "default-video.mp4",
             interval, 
