@@ -11,7 +11,7 @@ import { useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Effect } from "../../../../utils/GameDataProps";
 import { AdicionarEventosProps } from "../../../../utils/GameDataProps";
-
+import snapImage from '../../../../imagens/snap.webp';
 
 interface ModalEfeitosProps {
   isDialogOpen: boolean;
@@ -37,37 +37,33 @@ export const ModalEfeitos: React.FC<ModalEfeitosProps> = ({
   const [searchTerm, setSearchTerm] = useState("");
   const [effects, setEffects] = useState<Effect[]>([]);
 
-  // Dados estáticos de efeitos
-  const staticEffects: Effect[] = [
-    {
-      id: 1,
-      name: "Boca Grande",
-      image_urls: ["https://via.placeholder.com/150?text=Boca+Grande"],
-      description: "Aumenta o tamanho da boca de forma engraçada.",
-    },
-    {
-      id: 2,
-      name: "Cara de Leão",
-      image_urls: ["https://via.placeholder.com/150?text=Cara+de+Leao"],
-      description: "Transforma seu rosto em um leão feroz.",
-    },
-    {
-      id: 3,
-      name: "Olhos Gigantes",
-      image_urls: ["https://via.placeholder.com/150?text=Olhos+Gigantes"],
-      description: "Deixa seus olhos desproporcionalmente grandes.",
-    },
-    {
-      id: 4,
-      name: "Nariz de Porco",
-      image_urls: ["https://via.placeholder.com/150?text=Nariz+de+Porco"],
-      description: "Transforma seu nariz em um nariz de porco.",
-    },
-  ];
+  const handleClose = () => {
+    setIsDialogOpen(false);
+    setEffects([]); // Limpa os efeitos ao fechar
+  };
 
   useEffect(() => {
     if (isDialogOpen) {
-      setEffects(staticEffects); // Usa os efeitos estáticos
+      fetch("http://localhost:3000/snap-camera/shortcuts")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Erro ao buscar efeitos");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          const dynamicEffects = data.map((item: { lens_id: string; shortcut: string }) => ({
+            id: parseInt(item.lens_id),
+            name: `Efeito ${item.lens_id}`,
+            image_urls: [snapImage], // Usa a imagem importada
+            description: `Atalho: ${item.shortcut}`,
+          }));
+          setEffects(dynamicEffects);
+        })
+        .catch((error) => {
+          console.error("Erro ao carregar efeitos:", error);
+          setEffects([]);
+        });
     }
   }, [isDialogOpen]);
 
@@ -85,8 +81,8 @@ export const ModalEfeitos: React.FC<ModalEfeitosProps> = ({
       video: effect.name,
     };
 
-    onAddEvent(novoEvento); // Adiciona o evento
-    setIsDialogOpen(false); // Fecha o modal
+    onAddEvent(novoEvento);
+    setIsDialogOpen(false);
   };
 
   const efeitosFiltrados = effects.filter((effect) =>
@@ -98,7 +94,7 @@ export const ModalEfeitos: React.FC<ModalEfeitosProps> = ({
       <DialogContent className="max-w-2xl bg-gray-900 rounded-xl p-4">
         <DialogHeader className="flex justify-between">
           <div className="flex gap-4">
-            <button onClick={() => setIsDialogOpen(false)} aria-label="Fechar modal">
+            <button onClick={handleClose} aria-label="Fechar modal">
               <ArrowLeft
                 size={40}
                 color="#FAC638"
@@ -135,7 +131,9 @@ export const ModalEfeitos: React.FC<ModalEfeitosProps> = ({
                 className="w-16 h-16 object-cover rounded-md mb-2"
               />
               <p className="text-sm font-semibold">{effect.name}</p>
-              <p className="text-xs text-gray-400">{effect.description}</p>
+              <p className="text-xs text-gray-400">
+                Atalho: <span className="text-yellow-500">{effect.description.split(': ')[1]}</span>
+              </p>
             </div>
           ))}
         </div>

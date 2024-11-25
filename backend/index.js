@@ -5,7 +5,9 @@ const webcamRoutes = require('./routes/webcamRoutes');
 const tiktokRoutes = require('./routes/tiktokRoutes');
 const redisRoutes = require('./routes/redisRoutes');
 const soundRoutes = require('./routes/soundRoutes');
-const snapCameraRoutes = require('./routes/installSnapCameraRoutes');
+const installSnapCameraRoutes = require('./routes/installSnapCameraRoutes');
+const snapCameraRoutes = require('./routes/snapCameraRoutes');
+
 
 const initializeWebSocket = require('./config/websocketServer');
 
@@ -41,6 +43,9 @@ app.use('/redis', redisRoutes);
 app.use('/sounds', soundRoutes);
 
 // Rota para instalação do snap camera
+app.use('/config', installSnapCameraRoutes);
+
+// Rota func snap camera
 app.use('/snap-camera', snapCameraRoutes);
 
 
