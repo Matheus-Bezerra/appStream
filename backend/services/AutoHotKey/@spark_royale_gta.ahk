@@ -5,11 +5,11 @@ D::
     SendInput {D}
 Return
 
-^f:: ; Atalho para simular carro com efeito adicional
-    SendInput {Ctrl+F}
-Return
-
 A::
     SendInput {A}
+Return
+
+^f:: ; Atalho para Ctrl+F com efeito adicional
+    SendInput {Ctrl+F}
 Return
 

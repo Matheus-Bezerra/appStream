@@ -9,6 +9,7 @@ const installSnapCameraRoutes = require('./routes/installSnapCameraRoutes');
 const snapCameraRoutes = require('./routes/snapCameraRoutes');
 
 
+
 const initializeWebSocket = require('./config/websocketServer');
 
 require('./keyboardListener');
@@ -47,6 +48,8 @@ app.use('/config', installSnapCameraRoutes);
 
 // Rota func snap camera
 app.use('/snap-camera', snapCameraRoutes);
+
+
 
 
 // Inicia o servidor HTTP e WebSocket na mesma porta

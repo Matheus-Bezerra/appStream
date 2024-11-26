@@ -43,7 +43,9 @@ export const ModalEfeitos: React.FC<ModalEfeitosProps> = ({
   };
 
   useEffect(() => {
-    if (isDialogOpen) {
+    let intervalId: NodeJS.Timeout;
+
+    const fetchEffects = () => {
       fetch("http://localhost:3000/snap-camera/shortcuts")
         .then((response) => {
           if (!response.ok) {
@@ -64,8 +66,24 @@ export const ModalEfeitos: React.FC<ModalEfeitosProps> = ({
           console.error("Erro ao carregar efeitos:", error);
           setEffects([]);
         });
+    };
+
+    if (isDialogOpen) {
+      // Busca inicial
+      fetchEffects();
+
+      // Configura chamadas repetitivas a cada 10 segundos
+      intervalId = setInterval(() => {
+        fetchEffects();
+      }, 5000);
     }
+
+    return () => {
+      // Limpa o intervalo ao fechar a modal
+      clearInterval(intervalId);
+    };
   }, [isDialogOpen]);
+
 
   const handleAddEvent = (effect: Effect) => {
     const novoEvento: AdicionarEventosProps = {
@@ -98,7 +116,7 @@ export const ModalEfeitos: React.FC<ModalEfeitosProps> = ({
               <ArrowLeft
                 size={40}
                 color="#FAC638"
-                className="bg-[#363B4A] rounded-lg p-2"
+                className="bg-[#202229] rounded-lg p-2"
               />
             </button>
             <div className="flex flex-col">

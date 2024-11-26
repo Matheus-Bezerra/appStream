@@ -11,5 +11,8 @@ router.get('/favorites', snapCameraController.getFavorites);
 // Rota para obter os atalhos das lentes
 router.get('/shortcuts', snapCameraController.getLensShortcuts);
 
+// atualizar shortcuts
+router.post('/shortcuts', snapCameraController.addLensShortcut);
+
 
 module.exports = router;
