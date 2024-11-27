@@ -144,6 +144,28 @@ const TabelaPredefinicoes = () => {
   >([]);
 
   const handleAdicionarEventoDinamico = (evento: AdicionarEventosProps) => {
+    const enviarApi = {
+      usuario: "3d0ca315-aff9–4fc2-be61–3b76b9a2d798",
+      predefinicoes: {
+        id: "8e8af196-1035-4e50-866f-d11cb18ea4ce",
+        eventos: [
+          {
+            id: "7175d925-a861-4979-81a6-d687c71ff3a8",
+            ativo: true,
+            presente: "Rosa",
+            funcao: {
+              imagem: "imagem.png",
+              nome: "Pular Infinito",
+              tecla: "control + a"
+            },
+            audio: "../audio.mp3",
+            video: "../video.mp4"
+          }
+        ],
+      },
+      modoJogo: 2, // Modo Jogo Sobrevivencia exemplo id 2
+      jogo: 2 // Jogo Minecraft exemplo id 1
+    }
     setEventosDinamicos((prev) => [...prev, evento]);
   };
 

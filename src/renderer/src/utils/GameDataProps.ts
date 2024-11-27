@@ -30,7 +30,7 @@ export interface EventosProps {
 
 export interface PredefinicoesProps {
   id: number; // id da predefinição
-  nome: string;
+  nome?: string;
   eventos: EventosProps[];
 }
 
