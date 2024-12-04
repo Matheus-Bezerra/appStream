@@ -8,6 +8,8 @@ import { Predefinicoes } from "./pages/Main/Predefinicoes";
 import { Jogos } from "./pages/Main/Jogos";
 import { GameModes } from "./pages/Main/GameModes";
 import Login from "./pages/Auth/Login";
+import ForgotPassword from "./pages/Auth/ForgotPassword";
+
 
 export const router = createHashRouter([
   {
@@ -40,6 +42,10 @@ export const router = createHashRouter([
       {
         path: "/auth/login",
         element: <Login />,
+      },
+      {
+        path: "/auth/forgot-password",
+        element: <ForgotPassword />,
       },
     ],
   },

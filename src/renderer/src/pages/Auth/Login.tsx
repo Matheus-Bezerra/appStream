@@ -3,7 +3,7 @@ import logoImage from "../../imagens/image.png";
 import GoogleIcon from "@mui/icons-material/Google";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTiktok } from "@fortawesome/free-brands-svg-icons";
-
+import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
@@ -54,9 +54,9 @@ const Login = () => {
 
             {/* Forgot Password Link */}
             <div className=" text-white mb-4">
-              <a href="#" className="hover:underline ">
+              <Link to="/auth/forgot-password" className="hover:underline">
                 Esqueceu a senha?
-              </a>
+              </Link>
             </div>
           </div>
           {/* Remember Me Checkbox */}
@@ -81,8 +81,8 @@ const Login = () => {
             href="#"
             className="hover:bg-slate-700 ease-in duration-300 flex items-center justify-around gap-2 bg-[#363B4A] rounded-3xl px-2 py-2 w-32 "
           >
-<FontAwesomeIcon icon={faTiktok} className="fill-white"/>    
-        <h2 className="text-white ">Tik Tok</h2>
+            <FontAwesomeIcon icon={faTiktok} className="fill-white" />
+            <h2 className="text-white ">Tik Tok</h2>
           </a>
         </div>
         {/* Sign up Link */}
