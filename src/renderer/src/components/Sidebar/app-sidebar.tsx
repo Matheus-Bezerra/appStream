@@ -48,6 +48,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
                 <SidebarItem to="/live" icon={<RadioTower size={24} />} label="Live" />
                 <SidebarItem to="/overlays" icon={<Airplay size={24} />} label="Overlays" />
                 <SidebarItem to="/configuracoes" icon={<Bolt size={24} />} label="Configurações" />
+                <SidebarItem to="/auth/login" icon={<Bolt size={24} />} label="Login" />
+
               </ul>
             </div>
 
