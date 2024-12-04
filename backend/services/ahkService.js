@@ -22,6 +22,9 @@ const executeAhk = async (preferences, username) => {
         if (pref.tecla) {
             ahkContent += `${pref.tecla}::\n    SendInput {${pref.tecla}}\nReturn\n\n`;
         }
+        if (pref.efeito) {
+            ahkContent += `${pref.efeito}::\n    SendInput {${pref.efeito}}\nReturn\n\n`;
+        }
     });
 
     const ahkFilePath = path.join(ahkDir, `${username}_gta.ahk`);
@@ -35,8 +38,9 @@ const executeAhk = async (preferences, username) => {
         console.error(`Erro ao executar o arquivo AHK: ${error.message}`);
     });
 
-   
+
 };
+
 
 // Função para encerrar o processo AHK quando o serviço terminar
 const stopAhk = () => {

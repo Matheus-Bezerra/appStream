@@ -2,8 +2,13 @@ const { WebcastPushConnection } = require('tiktok-live-connector');
 const { piscarTela } = require('./webcamService');
 const { executarAcaoNoJogo } = require('./actionsMineCraftService');
 const { executarTecla } = require('./actionsGtaService');
+const { executarTecla2 } = require('./actionsGtaService');
+const keySender = require('node-key-sender');
+
+
 const { getData } = require('./redisService'); // Import the Redis service
 const { executeAhk } = require('./ahkService');
+
 
 
 const connectToTikTokLive = async (username, game) => {
@@ -71,10 +76,20 @@ const connectToTikTokLive = async (username, game) => {
                 // Execute based on module and action
                 if (matchedPref.modulo === 'GTA' && matchedPref.tecla) {
                     executarTecla(matchedPref.tecla);
-                } else if (matchedPref.modulo === 'webcam') {
-                    piscarTela();
+                } else if (matchedPref.modulo === 'SnapCamera' && matchedPref.efeito) {
+                    console.log("entrei no snapcamera")
+                    console.log(`Simulando combinação de teclas para SnapCamera: ${matchedPref.efeito}`);
+                    // Divide a combinação em um array (ex.: "Ctrl+F" -> ["control", "f"])
+                    const combination = matchedPref.efeito.toLowerCase().split('+');
+                    keySender.sendCombination(combination)
+                        .then(() => console.log(`Combinação "${matchedPref.efeito}" simulada com sucesso!`))
+                        .catch(err => console.error('Erro ao simular a combinação:', err));
+                    // piscarTela();
                 } else if (matchedPref.modulo === 'Minecraft') {
                     executarAcaoNoJogo(matchedPref.acao, username);
+                } else if (matchedPref.modulo === 'GTA' && matchedPref.efeito) {
+                    executarTecla2(matchedPref.efeito);
+
                 }
             } else {
                 console.log(`Nenhuma ação definida para o presente "${data.comment}" no módulo "${game}".`);

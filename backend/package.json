@@ -23,6 +23,7 @@
     "jimp": "^1.6.0",
     "modern-rcon": "^1.0.3",
     "node-global-key-listener": "^0.3.0",
+    "node-key-sender": "^1.0.11",
     "node-webcam": "^0.8.2",
     "ps-list": "^8.1.1",
     "redis": "^4.7.0",

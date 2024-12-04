@@ -5,7 +5,11 @@ D::
     SendInput {D}
 Return
 
-A::
-    SendInput {A}
+j::
+    SendInput {j}
+Return
+
+Ctrl+F::
+    SendInput {Ctrl+F}
 Return
 

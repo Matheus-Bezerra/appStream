@@ -9,3 +9,7 @@ A::
     SendInput {A}
 Return
 
+^f::
+    SendInput {^f}
+Return
+
