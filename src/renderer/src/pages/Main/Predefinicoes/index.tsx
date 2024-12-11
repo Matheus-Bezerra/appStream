@@ -14,7 +14,7 @@ import {
 
 import TabelaPredefinicoes from "./components/TabelaPredefinicoes";
 import { Button } from "../../../components/ui/button";
-import { Play, StopCircle } from "lucide-react";
+import { Play, StopCircle, Loader } from "lucide-react"; // Importando ícone de carregamento
 import { PredefinicoesAction } from "./components/PredefinicoesAction";
 import NewPredefinicoes from "./components/NewPredefinicoes";
 
@@ -34,11 +34,13 @@ export const Predefinicoes = () => {
   ]);
 
   const [openDialog, setOpenDialog] = useState(false);
-  const [monitoring, setMonitoring] = useState(false); // Estado para controlar o botão
+  const [monitoring, setMonitoring] = useState(false); // Estado para controle do monitoramento
+  const [isLoading, setIsLoading] = useState(false); // Estado para controle de carregamento
 
   const handlePlayClick = async () => {
+    setIsLoading(true); // Ativa o estado de carregamento
     const payload = {
-      username: "@bellajogadaoficial",
+      username: "@austin.thedog",
       game: "Minecraft",
     };
 
@@ -71,15 +73,19 @@ export const Predefinicoes = () => {
           className: "toast-custom",
         });
       }
+    } finally {
+      setIsLoading(false); // Desativa o carregamento
     }
   };
 
   const handleStopClick = async () => {
+    setIsLoading(true); // Ativa o estado de carregamento
 
     const payload = {
-      username: "@bellajogadaoficial",
+      username: "@austin.thedog",
       game: "Minecraft",
     };
+
     try {
       const response = await fetch("http://localhost:3000/tiktok/parar", {
         method: "POST",
@@ -109,6 +115,8 @@ export const Predefinicoes = () => {
           className: "toast-custom",
         });
       }
+    } finally {
+      setIsLoading(false); // Desativa o carregamento
     }
   };
 
@@ -158,7 +166,11 @@ export const Predefinicoes = () => {
         <h2 className="text-primary text-lg font-bold">
           {predefinicoes.length}/3 Predefinições
         </h2>
-        {monitoring ? (
+        {isLoading ? (
+          <Button size={"icon"} disabled>
+            <Loader className="animate-spin" /> {/* Ícone de carregamento */}
+          </Button>
+        ) : monitoring ? (
           <Button size={"icon"} onClick={handleStopClick}>
             <StopCircle />
           </Button>
