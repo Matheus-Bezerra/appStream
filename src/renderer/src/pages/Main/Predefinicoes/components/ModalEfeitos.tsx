@@ -8,7 +8,7 @@ import {
 import { Input } from "../../../../components/ui/input";
 import { gameData } from "../../../../constants/GameData";
 import { useParams } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Edit, Check } from "lucide-react"; // Ícones para edição
 import { Effect } from "../../../../utils/GameDataProps";
 import { AdicionarEventosProps } from "../../../../utils/GameDataProps";
 import snapImage from '../../../../imagens/snap.webp';
@@ -36,6 +36,8 @@ export const ModalEfeitos: React.FC<ModalEfeitosProps> = ({
 
   const [searchTerm, setSearchTerm] = useState("");
   const [effects, setEffects] = useState<Effect[]>([]);
+  const [editingEffectId, setEditingEffectId] = useState<number | null>(null);
+  const [newEffectName, setNewEffectName] = useState("");
 
   const handleClose = () => {
     setIsDialogOpen(false);
@@ -57,7 +59,7 @@ export const ModalEfeitos: React.FC<ModalEfeitosProps> = ({
           const dynamicEffects = data.map((item: { lens_id: string; shortcut: string }) => ({
             id: parseInt(item.lens_id),
             name: `Efeito ${item.lens_id}`,
-            image_urls: [snapImage], // Usa a imagem importada
+            image_urls: [snapImage],
             description: `Atalho: ${item.shortcut}`,
           }));
           setEffects(dynamicEffects);
@@ -69,21 +71,16 @@ export const ModalEfeitos: React.FC<ModalEfeitosProps> = ({
     };
 
     if (isDialogOpen) {
-      // Busca inicial
       fetchEffects();
-
-      // Configura chamadas repetitivas a cada 10 segundos
       intervalId = setInterval(() => {
         fetchEffects();
       }, 5000);
     }
 
     return () => {
-      // Limpa o intervalo ao fechar a modal
       clearInterval(intervalId);
     };
   }, [isDialogOpen]);
-
 
   const handleAddEvent = (effect: Effect) => {
     const novoEvento: AdicionarEventosProps = {
@@ -101,6 +98,22 @@ export const ModalEfeitos: React.FC<ModalEfeitosProps> = ({
 
     onAddEvent(novoEvento);
     setIsDialogOpen(false);
+  };
+
+  const handleEditEffectName = (effectId: number) => {
+    setEditingEffectId(effectId);
+    const effect = effects.find((e) => e.id === effectId);
+    setNewEffectName(effect?.name || "");
+  };
+
+  const handleSaveEffectName = (effectId: number) => {
+    setEffects((prev) =>
+      prev.map((effect) =>
+        effect.id === effectId ? { ...effect, name: newEffectName } : effect
+      )
+    );
+    setEditingEffectId(null);
+    setNewEffectName("");
   };
 
   const efeitosFiltrados = effects.filter((effect) =>
@@ -141,14 +154,38 @@ export const ModalEfeitos: React.FC<ModalEfeitosProps> = ({
             <div
               key={effect.id}
               className="p-2 bg-foreground rounded-lg flex flex-col items-center text-center text-white border border-gray-700 hover:border-yellow-500"
-              onClick={() => handleAddEvent(effect)}
             >
               <img
                 src={effect.image_urls[0]}
                 alt={effect.name}
                 className="w-16 h-16 object-cover rounded-md mb-2"
               />
-              <p className="text-sm font-semibold">{effect.name}</p>
+              {editingEffectId === effect.id ? (
+                <div className="flex flex-col items-center">
+                  <Input
+                    type="text"
+                    value={newEffectName}
+                    onChange={(e) => setNewEffectName(e.target.value)}
+                    className="text-sm mb-2"
+                  />
+                  <button
+                    onClick={() => handleSaveEffectName(effect.id)}
+                    className="text-yellow-500 text-xs"
+                  >
+                    <Check size={20} /> Salvar
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <p className="text-sm font-semibold">{effect.name}</p>
+                  <button
+                    onClick={() => handleEditEffectName(effect.id)}
+                    className="flex items-center justify-center gap-1 text-gray-400 text-xs mt-1"
+                    >
+                    <Edit size={16} /> Editar
+                  </button>
+                </>
+              )}
               <p className="text-xs text-gray-400">
                 Atalho: <span className="text-yellow-500">{effect.description.split(': ')[1]}</span>
               </p>

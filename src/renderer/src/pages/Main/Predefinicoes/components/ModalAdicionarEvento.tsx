@@ -78,7 +78,7 @@ const ModalAdicionarEvento: React.FC<ModalAdicionarEventoProps> = ({
                   <span className="text-primary">Intervalo:</span> 200ms
                 </p>
                 <p className="text-gray-300 text-sm">
-                  <span className="text-primary">Comandos:</span> Control D + ALT
+                  <span className="text-primary">Comandos:</span> Control D + ALTAAA
                 </p>
                 <p className="text-gray-300 text-sm">
                   <span className="text-primary">Repetições:</span> 3x
