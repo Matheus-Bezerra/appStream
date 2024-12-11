@@ -18,6 +18,8 @@ const executarTecla = (tecla) => {
         });
 };
 
+
+
 const executarTecla2 = (efeito) => {
     console.log("efeito-------------------->", efeito)
     // Simula o envio direto de uma tecla para o AHK

@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { exec } = require('child_process');
+const keySender = require('node-key-sender');
 
 // Caminho para o arquivo settings.json
 // const settingsFilePath = 'C:/Users/Gabriel Freire/AppData/Local/Snap/Snap Camera/settings.json';
@@ -147,8 +148,37 @@ function isSnapCameraRunning() {
     });
 }
 
+function executarEfeito(efeito) {
+    console.log("entrei no snapcamera")
+    console.log(`Simulando combinação de teclas para SnapCamera: ${efeito}`);
+    // Divide a combinação em um array (ex.: "Ctrl+F" -> ["control", "f"])
+    const combination = normalizeKeys(efeito.split('+'));
+    keySender.sendCombination(combination)
+        .then(() => console.log(`Combinação "${efeito}" simulada com sucesso!`))
+        .catch(err => console.error('Erro ao simular a combinação:', err));
+}
+
+
+function executar(tecla) {
+    console.log("entrei no gta")
+    console.log(`Simulando combinação de teclas para gta: ${tecla}`);
+    // Divide a combinação em um array (ex.: "Ctrl+F" -> ["control", "f"])
+    const combination = normalizeKeys(tecla.split('+'));
+    keySender.sendCombination(combination)
+        .then(() => console.log(`Combinação "${tecla}" simulada com sucesso!`))
+        .catch(err => console.error('Erro ao simular a combinação:', err));
+}
+
+function normalizeKeys(combination) {
+    const keyMap = {
+        'ctrl': 'control', // Mapeia Ctrl para control
+        'alt': 'alt', // Caso precise mapear outras teclas
+        'shift': 'shift'
+    };
+
+    return combination.map(key => keyMap[key.toLowerCase()] || key.toLowerCase());
+}
 
 
 
-
-module.exports = { getRecents, getFavorites, getLensShortcuts, addLensShortcut };
+module.exports = { getRecents, getFavorites, getLensShortcuts, addLensShortcut, executarEfeito, executar };

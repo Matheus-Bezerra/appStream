@@ -4,6 +4,8 @@ const router = express.Router();
 
 // Rota para iniciar a conexão com a live do TikTok
 router.post('/monitorar', tiktokController.connectToTikTokLive);
+router.post('/parar', tiktokController.disconnectFromTikTokLive);
+
 router.post('/gifts', tiktokController.getAvailableGifts);
 router.post('/top3', tiktokController.roomUser);
 router.post('/newViewer', tiktokController.viewer);

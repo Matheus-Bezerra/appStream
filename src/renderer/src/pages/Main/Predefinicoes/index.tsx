@@ -1,6 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { gameData } from "../../../constants/GameData";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import {
   Breadcrumb,
@@ -12,7 +14,7 @@ import {
 
 import TabelaPredefinicoes from "./components/TabelaPredefinicoes";
 import { Button } from "../../../components/ui/button";
-import { Play } from "lucide-react";
+import { Play, StopCircle } from "lucide-react";
 import { PredefinicoesAction } from "./components/PredefinicoesAction";
 import NewPredefinicoes from "./components/NewPredefinicoes";
 
@@ -32,29 +34,89 @@ export const Predefinicoes = () => {
   ]);
 
   const [openDialog, setOpenDialog] = useState(false);
-  const [editingPredefinicao, setEditingPredefinicao] = useState(null);
-  const [newName, setNewName] = useState("");
+  const [monitoring, setMonitoring] = useState(false); // Estado para controlar o botão
 
-  const addNewPredefinicao = (name: any) => {
-    setPredefinicoes((prev) => [...prev, { name, isActive: false }]);
+  const handlePlayClick = async () => {
+    const payload = {
+      username: "@bellajogadaoficial",
+      game: "Minecraft",
+    };
+
+    try {
+      const response = await fetch("http://localhost:3000/tiktok/monitorar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.ok) {
+        setMonitoring(true); // Ativa o monitoramento
+        toast.success("Monitoramento iniciado com sucesso!", {
+          className: "toast-success",
+        });
+      } else {
+        toast.error("Erro ao iniciar monitoramento: " + response.statusText, {
+          className: "toast-custom",
+        });
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error("Erro ao fazer requisição: " + error.message, {
+          className: "toast-custom",
+        });
+      } else {
+        toast.error("Erro desconhecido", {
+          className: "toast-custom",
+        });
+      }
+    }
   };
 
-  const deletePredefinicao = (name: string) => {
-    setPredefinicoes((prev) => prev.filter((predef) => predef.name !== name));
-  };
+  const handleStopClick = async () => {
 
-  const renamePredefinicao = (oldName: string, newName: string) => {
-    setPredefinicoes((prev) =>
-      prev.map((predef) =>
-        predef.name === oldName ? { ...predef, name: newName } : predef
-      )
-    );
+    const payload = {
+      username: "@bellajogadaoficial",
+      game: "Minecraft",
+    };
+    try {
+      const response = await fetch("http://localhost:3000/tiktok/parar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.ok) {
+        setMonitoring(false); // Desativa o monitoramento
+        toast.success("Monitoramento interrompido com sucesso!", {
+          className: "toast-success",
+        });
+      } else {
+        toast.error("Erro ao interromper monitoramento: " + response.statusText, {
+          className: "toast-custom",
+        });
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error("Erro ao fazer requisição: " + error.message, {
+          className: "toast-custom",
+        });
+      } else {
+        toast.error("Erro desconhecido", {
+          className: "toast-custom",
+        });
+      }
+    }
   };
 
   if (!jogo || !modoJogo) return <p>Jogo ou Modo de Jogo não encontrado</p>;
 
   return (
     <div className="p-4">
+      <ToastContainer /> {/* Necessário para exibir os toasts */}
       {/* Breadcrumb para navegação */}
       <Breadcrumb>
         <BreadcrumbList>
@@ -96,9 +158,15 @@ export const Predefinicoes = () => {
         <h2 className="text-primary text-lg font-bold">
           {predefinicoes.length}/3 Predefinições
         </h2>
-        <Button size={"icon"}>
-          <Play />
-        </Button>
+        {monitoring ? (
+          <Button size={"icon"} onClick={handleStopClick}>
+            <StopCircle />
+          </Button>
+        ) : (
+          <Button size={"icon"} onClick={handlePlayClick}>
+            <Play />
+          </Button>
+        )}
         <Button
           variant={"outline"}
           size={"sm"}
@@ -115,9 +183,19 @@ export const Predefinicoes = () => {
             isActive={predefinicao.isActive}
             onSelect={() => console.log(`${predefinicao.name} selecionado`)}
             onRename={(newName) =>
-              renamePredefinicao(predefinicao.name, newName)
+              setPredefinicoes((prev) =>
+                prev.map((predef) =>
+                  predef.name === predefinicao.name
+                    ? { ...predef, name: newName }
+                    : predef
+                )
+              )
             }
-            onDelete={() => deletePredefinicao(predefinicao.name)}
+            onDelete={() =>
+              setPredefinicoes((prev) =>
+                prev.filter((predef) => predef.name !== predefinicao.name)
+              )
+            }
           />
         ))}
       </div>
@@ -125,7 +203,9 @@ export const Predefinicoes = () => {
       <NewPredefinicoes
         openDialog={openDialog}
         setOpenDialog={setOpenDialog}
-        onAddPredefinicao={addNewPredefinicao}
+        onAddPredefinicao={(name) =>
+          setPredefinicoes((prev) => [...prev, { name, isActive: false }])
+        }
       />
 
       <TabelaPredefinicoes />

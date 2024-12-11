@@ -74,6 +74,17 @@
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+
+  .toast-custom {
+    background-color: black !important; /* Fundo preto */
+    color: white !important; /* Texto branco */
+  }
+  
+  .toast-success {
+    background-color: black !important; /* Fundo preto */
+    color: yellow !important; /* Texto amarelo para sucesso */
+  }
+  
 }
 
 

@@ -3,12 +3,15 @@ const { piscarTela } = require('./webcamService');
 const { executarAcaoNoJogo } = require('./actionsMineCraftService');
 const { executarTecla } = require('./actionsGtaService');
 const { executarTecla2 } = require('./actionsGtaService');
-const keySender = require('node-key-sender');
+const { executarEfeito } = require('./actionsSnapCameraService');
+const { executar } = require('./actionsSnapCameraService');
+
 
 
 const { getData } = require('./redisService'); // Import the Redis service
 const { executeAhk } = require('./ahkService');
 
+const connections = {}; // Objeto para armazenar conexões ativas
 
 
 const connectToTikTokLive = async (username, game) => {
@@ -16,6 +19,7 @@ const connectToTikTokLive = async (username, game) => {
 
     try {
         // Retrieve user predefinicoes from Redis
+        
         const predefinicoes = await getData(username);
 
         if (!predefinicoes) {
@@ -26,13 +30,15 @@ const connectToTikTokLive = async (username, game) => {
         console.log(`Loaded predefinicoes for user ${username}:`, predefinicoes);
 
 
-        if (game === "GTA") {
-            const executarahk = await executeAhk(predefinicoes, username)
-        }
+        // if (game === "GTA") {
+        //     const executarahk = await executeAhk(predefinicoes, username)
+        // }
 
         // Connect to the TikTok live stream
         let state = await tiktokLiveConnection.connect();
         try {
+            connections[username] = tiktokLiveConnection; // Armazena a conexão ativa
+
             console.log(`Connected to ${state.roomInfo.owner.nickname}'s live stream`);
         } catch (error) {
 
@@ -75,16 +81,13 @@ const connectToTikTokLive = async (username, game) => {
 
                 // Execute based on module and action
                 if (matchedPref.modulo === 'GTA' && matchedPref.tecla) {
-                    executarTecla(matchedPref.tecla);
+                    // executarTecla(matchedPref.tecla);
+                    executar(matchedPref.tecla);
+
+
                 } else if (matchedPref.modulo === 'SnapCamera' && matchedPref.efeito) {
-                    console.log("entrei no snapcamera")
-                    console.log(`Simulando combinação de teclas para SnapCamera: ${matchedPref.efeito}`);
-                    // Divide a combinação em um array (ex.: "Ctrl+F" -> ["control", "f"])
-                    const combination = matchedPref.efeito.toLowerCase().split('+');
-                    keySender.sendCombination(combination)
-                        .then(() => console.log(`Combinação "${matchedPref.efeito}" simulada com sucesso!`))
-                        .catch(err => console.error('Erro ao simular a combinação:', err));
                     // piscarTela();
+                    executarEfeito(matchedPref.efeito);
                 } else if (matchedPref.modulo === 'Minecraft') {
                     executarAcaoNoJogo(matchedPref.acao, username);
                 } else if (matchedPref.modulo === 'GTA' && matchedPref.efeito) {
@@ -100,10 +103,33 @@ const connectToTikTokLive = async (username, game) => {
 
     } catch (error) {
         // stopAhk()
-        console.error('Erro ao conectar à live:', error);
+        console.error('Erro ao conectar à live--->:', error);
+        throw error; // Repassa o erro ao controlador
+
     }
 };
 
+
+const disconnectFromTikTokLive = (username) => {
+    const connection = connections[username];
+    if (connection) {
+        // Remove todos os event listeners
+        connection.removeAllListeners();
+        // Desconecta a conexão
+        connection.disconnect();
+        // Remove a conexão da lista ativa
+        delete connections[username];
+        console.log(`Disconnected from ${username}'s live stream`);
+    } else {
+        console.log(`No active connection found for ${username}`);
+    }
+};
+
+
+
+
+
 module.exports = {
-    connectToTikTokLive
+    connectToTikTokLive,
+    disconnectFromTikTokLive
 };

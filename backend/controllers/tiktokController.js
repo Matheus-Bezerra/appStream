@@ -20,9 +20,22 @@ exports.connectToTikTokLive = (req, res) => {
         })
         .catch((err) => {
             console.error('Erro ao conectar à live:', err);
-            res.status(500).json({ error: 'Erro ao conectar à live' });
+            res.status(404).json({ error: 'Erro ao conectar à live', message: "erro ao encontrar" });
         });
 };
+
+exports.disconnectFromTikTokLive = (req, res) => {
+    const { username } = req.body;
+
+    try {
+        tiktokService.disconnectFromTikTokLive(username);
+        res.status(200).json({ message: `Desconectado com sucesso da live de ${username}` });
+    } catch (err) {
+        console.error('Erro ao desconectar da live:', err);
+        res.status(500).json({ error: 'Erro ao desconectar da live' });
+    }
+};
+
 
 
 exports.getAvailableGifts = (req, res) => {
