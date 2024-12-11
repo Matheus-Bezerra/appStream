@@ -2,7 +2,7 @@
 const Rcon = require('modern-rcon'); // Importa o pacote modern-rcon
 
 const rcon = new Rcon(
-    'localhost',   // Host do servidor
+    '127.0.0.1',   // Host do servidor
     25575,         // Porta RCON configurada no server.properties
     'teste', // Senha definida no server.properties
 );
