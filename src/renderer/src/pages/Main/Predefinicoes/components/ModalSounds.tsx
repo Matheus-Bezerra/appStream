@@ -24,14 +24,14 @@ interface ModalSoundsProps {
   isDialogOpen: boolean;
   setIsDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onSelectSound?: (soundUrl: string) => void;
-  onAddEvent: (evento: AdicionarEventosProps) => void; // Adicionada aqui
+  onAddEvent: (evento: AdicionarEventosProps) => void;
 }
 
 export const ModalSounds: React.FC<ModalSoundsProps> = ({
   isDialogOpen,
   setIsDialogOpen,
   onSelectSound,
-  onAddEvent, // Adicionada aqui
+  onAddEvent,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sounds, setSounds] = useState<Sound[]>([]);
@@ -94,18 +94,30 @@ export const ModalSounds: React.FC<ModalSoundsProps> = ({
   const playAudio = (url: string) => {
     if (currentAudio) {
       currentAudio.pause();
-      setCurrentAudio(null);
+      currentAudio.currentTime = 0;
     }
 
     const audio = new Audio(url);
     audio.play();
     setCurrentAudio(audio);
+
+    audio.addEventListener("ended", () => {
+      setCurrentAudio(null);
+    });
+  };
+
+  const stopAudio = () => {
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio.currentTime = 0;
+      setCurrentAudio(null);
+    }
   };
 
   const handleAddEvent = (sound: Sound) => {
     const novoEvento: AdicionarEventosProps = {
-      id_user: "1", // Substitua com o ID do usuário real
-      id_predefinicao: "1", // Atualize com o ID real da predefinição
+      id_user: "1",
+      id_predefinicao: "1",
       ativo: true,
       presente: "",
       funcao: {
@@ -113,11 +125,11 @@ export const ModalSounds: React.FC<ModalSoundsProps> = ({
         tecla: "CTRL + S",
       },
       audio: sound.directUrl,
-      video: "default-video.mp4", // Ajuste conforme necessário
+      video: "default-video.mp4",
     };
 
-    onAddEvent(novoEvento); // Chama a função para adicionar o evento
-    setIsDialogOpen(false); // Fecha a modal
+    onAddEvent(novoEvento);
+    setIsDialogOpen(false);
   };
 
   return (
@@ -142,7 +154,6 @@ export const ModalSounds: React.FC<ModalSoundsProps> = ({
           </div>
         </DialogHeader>
 
-        {/* Barra de pesquisa */}
         <div className="flex justify-between items-center mb-4">
           <Input
             type="text"
@@ -165,41 +176,117 @@ export const ModalSounds: React.FC<ModalSoundsProps> = ({
           <div className="grid grid-cols-2 gap-4 max-h-[300px] overflow-y-auto">
             {searchedSounds.length > 0
               ? searchedSounds.map((sound, index) => (
-                  <div
-                    key={index}
-                    className="p-4 bg-gray-800 rounded-lg text-center text-white border border-gray-700 hover:border-yellow-500"
-                    onClick={() => handleAddEvent(sound)}
-                  >
-                    <p className="text-lg font-semibold mb-2">{sound.title}</p>
-                    <button
+                <div
+                  key={index}
+                  className="p-4 bg-gray-800 rounded-lg text-center text-white border border-gray-700 hover:border-yellow-500"
+                  onClick={() => handleAddEvent(sound)}
+                >
+                  <p className="text-lg font-semibold mb-2">{sound.title}</p>
+                  <div className="flex justify-center gap-2">
+                    {/* Ícone de Play */}
+                    <div
                       onClick={(e) => {
                         e.stopPropagation();
                         playAudio(sound.directUrl);
                       }}
-                      className="text-yellow-500 underline"
+                      className="cursor-pointer p-3 rounded-full bg-yellow-500 hover:bg-yellow-400 flex items-center justify-center"
                     >
-                      Ouvir
-                    </button>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="w-6 h-6 text-black"
+                      >
+                        <polygon points="5 3 19 12 5 21 5 3" />
+                      </svg>
+                    </div>
+
+                    {/* Ícone de Stop */}
+                    <div
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        stopAudio();
+                      }}
+                      className="cursor-pointer p-3 rounded-full bg-red-500 hover:bg-red-400 flex items-center justify-center"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="w-6 h-6 text-black"
+                      >
+                        <rect x="5" y="5" width="14" height="14" />
+                      </svg>
+                    </div>
                   </div>
-                ))
+                </div>
+              ))
               : sounds.map((sound, index) => (
-                  <div
-                    key={index}
-                    className="p-4 bg-gray-800 rounded-lg text-center text-white border border-gray-700 hover:border-yellow-500"
-                    onClick={() => handleAddEvent(sound)}
-                  >
-                    <p className="text-lg font-semibold mb-2">{sound.title}</p>
-                    <button
+                <div
+                  key={index}
+                  className="p-4 bg-gray-800 rounded-lg text-center text-white border border-gray-700 hover:border-yellow-500"
+                  onClick={() => handleAddEvent(sound)}
+                >
+                  <p className="text-lg font-semibold mb-2">{sound.title}</p>
+                  <div className="flex justify-center gap-2">
+                    {/* Ícone de Play */}
+                    <div
                       onClick={(e) => {
                         e.stopPropagation();
                         playAudio(sound.directUrl);
                       }}
-                      className="text-yellow-500 underline"
+                      className="cursor-pointer p-2 rounded-full bg-yellow-500 hover:bg-yellow-400 flex items-center justify-center"
+                      style={{ width: "36px", height: "36px" }} // Define o tamanho do círculo
                     >
-                      Ouvir
-                    </button>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="w-6 h-6 text-black"
+                      >
+                        <polygon points="5 3 19 12 5 21 5 3" />
+                      </svg>
+                    </div>
+
+                    {/* Ícone de Stop */}
+                    <div
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        stopAudio();
+                      }}
+                      className="cursor-pointer p-2 rounded-full bg-red-500 hover:bg-red-400 flex items-center justify-center"
+                      style={{ width: "36px", height: "36px" }} // Define o tamanho do círculo
+
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="w-6 h-6 text-black"
+                      >
+                        <rect x="5" y="5" width="14" height="14" />
+                      </svg>
+                    </div>
                   </div>
-                ))}
+
+                </div>
+              ))}
           </div>
         )}
       </DialogContent>
