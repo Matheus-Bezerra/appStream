@@ -122,6 +122,45 @@ const getSounds = async () => {
 }
 
 
+const saveEffects = async (value) => {
+  console.log("CHEGUEI NA availableEffects", value);
+  console.log("CHEGUEI No efeitos");
+  const key = `availableEffects`;
+
+  if (!client.isOpen) {
+    await client.connect();
+    await client.select(4); 
+  }
+
+  try {
+    const reply = await client.set(key, JSON.stringify(value));
+    console.log("Resposta do Redis:", reply); 
+    return reply;
+  } catch (err) {
+    console.error("Erro ao salvar no Redis:", err);
+    throw err; 
+  }
+};
+
+const getEffects = async () => {
+  const key = `availableEffects`;
+  console.log("key", key);
+
+  if (!client.isOpen) {
+    await client.connect();
+    await client.select(4); 
+  }
+
+  try {
+    const reply = await client.get(key);
+    // console.log("Resposta do Redis buscar:", reply); 
+    return reply ? JSON.parse(reply) : null; 
+  } catch (err) {
+    console.error("Erro ao buscar no Redis:", err);
+    throw err; 
+  }
+}
+
 
 
 module.exports = {
@@ -130,5 +169,7 @@ module.exports = {
   saveGifts,
   getGifts,
   saveSounds,
-  getSounds
+  getSounds,
+  saveEffects,
+  getEffects
 };

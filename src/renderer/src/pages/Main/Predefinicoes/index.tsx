@@ -40,7 +40,7 @@ export const Predefinicoes = () => {
   const handlePlayClick = async () => {
     setIsLoading(true); // Ativa o estado de carregamento
     const payload = {
-      username: "@austin.thedog",
+      username: "@vilhennaa_",
       game: "Minecraft",
     };
 
@@ -55,11 +55,11 @@ export const Predefinicoes = () => {
 
       if (response.ok) {
         setMonitoring(true); // Ativa o monitoramento
-        toast.success("Monitoramento iniciado com sucesso!", {
+        toast.success("Live iniciado com sucesso!", {
           className: "toast-success",
         });
       } else {
-        toast.error("Erro ao iniciar monitoramento: " + response.statusText, {
+        toast.error("Erro ao iniciar monitoramento: " + "Usuario incorreto | Live finalizada", {
           className: "toast-custom",
         });
       }
@@ -82,7 +82,7 @@ export const Predefinicoes = () => {
     setIsLoading(true); // Ativa o estado de carregamento
 
     const payload = {
-      username: "@austin.thedog",
+      username: "@vilhennaa_",
       game: "Minecraft",
     };
 

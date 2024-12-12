@@ -6,42 +6,28 @@ import {
   DialogTitle,
 } from "../../../../components/Dialog";
 import { Input } from "../../../../components/ui/input";
-import { gameData } from "../../../../constants/GameData";
-import { useParams } from "react-router-dom";
-import { ArrowLeft, Edit, Check } from "lucide-react"; // Ícones para edição
-import { Effect } from "../../../../utils/GameDataProps";
-import { AdicionarEventosProps } from "../../../../utils/GameDataProps";
+import { ArrowLeft, Edit, Check } from "lucide-react";
 import snapImage from '../../../../imagens/snap.webp';
+import { Effect } from "../../../../utils/GameDataProps";
 
-interface ModalEfeitosProps {
-  isDialogOpen: boolean;
-  setIsDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  onSelectEffect?: (effectUrl: string) => void;
-  onAddEvent: (evento: AdicionarEventosProps) => void;
-}
-
-export const ModalEfeitos: React.FC<ModalEfeitosProps> = ({
+export const ModalEfeitos = ({
   isDialogOpen,
   setIsDialogOpen,
-  onSelectEffect,
   onAddEvent,
+}: {
+  isDialogOpen: boolean;
+  setIsDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  onAddEvent: (evento: any) => void;
 }) => {
-  const { idJogoSelecionado, modoJogoSelecionado } = useParams();
-  const jogo = gameData.find(
-    (game) => game.id === parseInt(idJogoSelecionado ?? "")
-  );
-  const modoJogo = jogo?.modes.find(
-    (modo) => modo.id === parseInt(modoJogoSelecionado ?? "")
-  );
-
   const [searchTerm, setSearchTerm] = useState("");
   const [effects, setEffects] = useState<Effect[]>([]);
   const [editingEffectId, setEditingEffectId] = useState<number | null>(null);
   const [newEffectName, setNewEffectName] = useState("");
+  const [editedNames, setEditedNames] = useState<Record<string, string>>({}); // Chaves como string
 
   const handleClose = () => {
     setIsDialogOpen(false);
-    setEffects([]); // Limpa os efeitos ao fechar
+    setEffects([]);
   };
 
   useEffect(() => {
@@ -57,8 +43,8 @@ export const ModalEfeitos: React.FC<ModalEfeitosProps> = ({
         })
         .then((data) => {
           const dynamicEffects = data.map((item: { lens_id: string; shortcut: string }) => ({
-            id: parseInt(item.lens_id),
-            name: `Efeito ${item.lens_id}`,
+            id: parseInt(item.lens_id, 10),
+            name: editedNames[item.lens_id] || `Efeito ${item.lens_id}`, // Converte para string e acessa
             image_urls: [snapImage],
             description: `Atalho: ${item.shortcut}`,
           }));
@@ -72,20 +58,18 @@ export const ModalEfeitos: React.FC<ModalEfeitosProps> = ({
 
     if (isDialogOpen) {
       fetchEffects();
-      intervalId = setInterval(() => {
-        fetchEffects();
-      }, 5000);
+      intervalId = setInterval(fetchEffects, 5000);
     }
 
     return () => {
       clearInterval(intervalId);
     };
-  }, [isDialogOpen]);
+  }, [isDialogOpen, editedNames]);
 
   const handleAddEvent = (effect: Effect) => {
-    const novoEvento: AdicionarEventosProps = {
+    const novoEvento = {
       id_user: "1",
-      id_predefinicao: modoJogo?.id.toString() || "0",
+      id_predefinicao: "0",
       ativo: true,
       presente: effect.image_urls[0],
       funcao: {
@@ -107,11 +91,10 @@ export const ModalEfeitos: React.FC<ModalEfeitosProps> = ({
   };
 
   const handleSaveEffectName = (effectId: number) => {
-    setEffects((prev) =>
-      prev.map((effect) =>
-        effect.id === effectId ? { ...effect, name: newEffectName } : effect
-      )
-    );
+    setEditedNames((prev) => ({
+      ...prev,
+      [effectId.toString()]: newEffectName, // Salva o nome editado como string
+    }));
     setEditingEffectId(null);
     setNewEffectName("");
   };
@@ -181,7 +164,7 @@ export const ModalEfeitos: React.FC<ModalEfeitosProps> = ({
                   <button
                     onClick={() => handleEditEffectName(effect.id)}
                     className="flex items-center justify-center gap-1 text-gray-400 text-xs mt-1"
-                    >
+                  >
                     <Edit size={16} /> Editar
                   </button>
                 </>

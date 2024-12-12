@@ -9,7 +9,13 @@ router.post('/avaliableGift', redisController.saveGiftAvailable);
 router.get('/getGift', redisController.getGiftAvailable); 
 router.post('/avaliableSounds', redisController.saveSounds); 
 router.get('/getSounds', redisController.getSounds); 
+router.post('/saveEffects', redisController.saveEffects); 
+router.get('/getEffects', redisController.getEffects); 
 
 
 
 module.exports = router;
+
+
+
+  
