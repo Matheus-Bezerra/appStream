@@ -50,6 +50,22 @@ exports.getUserPreferences = async (req, res) => {
 };
 
 
+exports.getEventos = async (req, res) => {
+    const { usuario } = req.body; // Captura o usuário da URL
+    try {
+        const eventos = await redisService.getEventos(usuario); // Chama a função de busca
+        if (eventos) {
+            res.status(200).json(eventos); // Retorna as preferências encontradas
+        } else {
+            res.status(404).json({ message: 'Preferências não encontradas' }); // Se não encontrar, retorna 404
+        }
+    } catch (error) {
+        console.error("Erro ao buscar preferências:", error);
+        res.status(500).json({ error: 'Erro ao buscar preferências' });
+    }
+};
+
+
 exports.saveGiftAvailable = async (req, res) => {
     try {
         console.log("ENTREI")

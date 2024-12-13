@@ -23,6 +23,27 @@ const saveData = async (usuario, value) => {
 };
 
 
+// Função para buscar dados no Redis usando a chave personalizada
+const getData = async (usuario) => {
+  const key = `preDefinicaoUsuario:${usuario}`;
+  console.log("key", key);
+
+  if (!client.isOpen) {
+    await client.connect();
+    await client.select(1);
+  }
+
+  try {
+    const reply = await client.get(key);
+    console.log("Resposta do Redis buscar:", reply); 
+    return reply ? JSON.parse(reply) : null; 
+  } catch (err) {
+    console.error("Erro ao buscar no Redis:", err);
+    throw err; 
+  }
+}
+
+
 const saveEventos = async (usuario, newData) => {
   console.log("CHEGUEI NA SAVEDATA");
   const key = `preDefinicaoUsuario:${newData.id}`;
@@ -82,11 +103,7 @@ try {
 };
 
 
-
-
-
-// Função para buscar dados no Redis usando a chave personalizada
-const getData = async (usuario) => {
+const getEventos = async (usuario) => {
   const key = `preDefinicaoUsuario:${usuario}`;
   console.log("key", key);
 
@@ -104,6 +121,8 @@ const getData = async (usuario) => {
     throw err; 
   }
 }
+
+
 
 const saveGifts = async (value) => {
   console.log("CHEGUEI NA saveGifts");
@@ -227,8 +246,9 @@ const getEffects = async () => {
 
 module.exports = {
   saveData,
-  saveEventos,
   getData,
+  saveEventos,
+  getEventos,
   saveGifts,
   getGifts,
   saveSounds,
