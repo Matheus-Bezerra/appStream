@@ -15,13 +15,13 @@ exports.saveUserPreferences = async (req, res) => {
     }
 };
 
-exports.savePredefinicao = async (req, res) => {
+exports.saveEventos = async (req, res) => {
     console.log("req bodyyy ----------> ", req.body);
     try {
         const { usuario, ...data } = req.body; // Captura o usuário e os dados
         console.log("ENTREI");
 
-        await redisService.savePredefinicao(usuario, data);
+        await redisService.saveEventos(usuario, data);
         console.log('Preferências salvas com sucesso!');
 
         res.status(200).json({ message: 'Preferências salvas com sucesso!' });

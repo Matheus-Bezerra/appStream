@@ -23,7 +23,7 @@ const saveData = async (usuario, value) => {
 };
 
 
-const savePredefinicao = async (usuario, newData) => {
+const saveEventos = async (usuario, newData) => {
   console.log("CHEGUEI NA SAVEDATA");
   const key = `preDefinicaoUsuario:${newData.id}`;
   console.log("CHEGUEI NA key", key);
@@ -227,7 +227,7 @@ const getEffects = async () => {
 
 module.exports = {
   saveData,
-  savePredefinicao,
+  saveEventos,
   getData,
   saveGifts,
   getGifts,

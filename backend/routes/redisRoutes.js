@@ -7,8 +7,8 @@ router.post('/salvar', redisController.saveUserPreferences);
 router.get('/buscar', redisController.getUserPreferences); 
 
 // Rota para iniciar a conexão com a live do TikTok
-router.post('/predefinicoes', redisController.savePredefinicao);
-// router.get('/predefinicoes', redisController.getPredefinicao); 
+router.post('/eventos', redisController.saveEventos);
+router.get('/eventos', redisController.getEventos); 
 
 
 router.post('/avaliableGift', redisController.saveGiftAvailable); 
