@@ -15,6 +15,25 @@ exports.saveUserPreferences = async (req, res) => {
     }
 };
 
+exports.savePredefinicao = async (req, res) => {
+    console.log("req bodyyy ----------> ", req.body);
+    try {
+        const { usuario, ...data } = req.body; // Captura o usuário e os dados
+        console.log("ENTREI");
+
+        await redisService.savePredefinicao(usuario, data);
+        console.log('Preferências salvas com sucesso!');
+
+        res.status(200).json({ message: 'Preferências salvas com sucesso!' });
+    } catch (error) {
+        console.error('Erro ao salvar preferências:', error);
+        res.status(500).json({ error: 'Erro ao salvar preferências' });
+    }
+};
+
+
+
+
 exports.getUserPreferences = async (req, res) => {
     const { usuario } = req.body; // Captura o usuário da URL
     try {

@@ -23,6 +23,68 @@ const saveData = async (usuario, value) => {
 };
 
 
+const savePredefinicao = async (usuario, newData) => {
+  console.log("CHEGUEI NA SAVEDATA");
+  const key = `preDefinicaoUsuario:${newData.id}`;
+  console.log("CHEGUEI NA key", key);
+
+  if (!client.isOpen) {
+    await client.connect();
+    await client.select(1);
+}
+
+try {
+    // Busca dados existentes no Redis
+    const existingData = await client.get(key);
+    let updatedData;
+
+    if (existingData) {
+        console.log("Dados existentes encontrados, processando atualização...");
+        const parsedData = JSON.parse(existingData);
+
+        if (parsedData.id === newData.id && parsedData.nome === newData.nome) {
+            // Substituir eventos existentes com o mesmo ID ou adicionar novos
+            console.log("Atualizando eventos existentes...");
+            const updatedEvents = parsedData.eventos.map(existingEvent => {
+                const newEvent = newData.eventos.find(evento => evento.id === existingEvent.id);
+                return newEvent || existingEvent;
+            });
+
+            // Adiciona novos eventos que não existiam anteriormente
+            const newEvents = newData.eventos.filter(
+                evento => !parsedData.eventos.some(existing => existing.id === evento.id)
+            );
+
+            // Atualizar objeto com eventos mesclados e substituídos
+            updatedData = {
+                ...parsedData,
+                eventos: [...updatedEvents, ...newEvents],
+            };
+        } else {
+            // Substituir completamente o objeto se `id` ou `nome` forem diferentes
+            console.log("ID ou Nome diferentes, substituindo dados...");
+            updatedData = newData;
+        }
+    } else {
+        // Se não houver dados no Redis, salva o novo diretamente
+        console.log("Nenhum dado encontrado, salvando novo...");
+        updatedData = newData;
+    }
+
+    // Salva os dados atualizados no Redis
+    const reply = await client.set(key, JSON.stringify(updatedData));
+    console.log("Dados salvos no Redis com sucesso:", reply);
+    return reply;
+} catch (err) {
+    console.error("Erro ao salvar no Redis:", err);
+    throw err; // Lança erro para tratamento posterior
+}
+};
+
+
+
+
+
 // Função para buscar dados no Redis usando a chave personalizada
 const getData = async (usuario) => {
   const key = `preDefinicaoUsuario:${usuario}`;
@@ -165,6 +227,7 @@ const getEffects = async () => {
 
 module.exports = {
   saveData,
+  savePredefinicao,
   getData,
   saveGifts,
   getGifts,
