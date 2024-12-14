@@ -29,6 +29,7 @@
     "redis": "^4.7.0",
     "sudo-prompt": "^9.2.1",
     "tiktok-live-connector": "^1.2.0",
+    "uuid": "^11.0.3",
     "ws": "^8.18.0"
   }
 }

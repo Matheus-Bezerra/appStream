@@ -15,24 +15,6 @@ exports.saveUserPreferences = async (req, res) => {
     }
 };
 
-exports.saveEventos = async (req, res) => {
-    console.log("req bodyyy ----------> ", req.body);
-    try {
-        const { usuario, ...data } = req.body; // Captura o usuário e os dados
-        console.log("ENTREI");
-
-        await redisService.saveEventos(usuario, data);
-        console.log('Preferências salvas com sucesso!');
-
-        res.status(200).json({ message: 'Preferências salvas com sucesso!' });
-    } catch (error) {
-        console.error('Erro ao salvar preferências:', error);
-        res.status(500).json({ error: 'Erro ao salvar preferências' });
-    }
-};
-
-
-
 
 exports.getUserPreferences = async (req, res) => {
     const { usuario } = req.body; // Captura o usuário da URL
@@ -46,6 +28,25 @@ exports.getUserPreferences = async (req, res) => {
     } catch (error) {
         console.error("Erro ao buscar preferências:", error);
         res.status(500).json({ error: 'Erro ao buscar preferências' });
+    }
+};
+
+
+
+
+exports.saveEventos = async (req, res) => {
+    console.log("req bodyyy ----------> ", req.body);
+    try {
+        const { usuario, ...data } = req.body; // Captura o usuário e os dados
+        console.log("ENTREI");
+
+        await redisService.saveEventos(usuario, data);
+        console.log('Preferências salvas com sucesso!');
+
+        res.status(200).json({ message: 'Preferências salvas com sucesso!' });
+    } catch (error) {
+        console.error('Erro ao salvar preferências:', error);
+        res.status(500).json({ error: 'Erro ao salvar preferências' });
     }
 };
 
@@ -157,6 +158,95 @@ exports.getEffects = async (req, res) => {
 };
 
 
+exports.savePredefinicao = async (req, res) => {
+    const { usuario, nome } = req.body;
+
+    if (!usuario || !nome) {
+        return res.status(400).json({ error: 'Usuário e nome da predefinição são obrigatórios.' });
+    }
+
+    try {
+        const predefinicao = { nome }; // Dados da predefinição enviados
+        const data = await redisService.savePredefinicao(usuario, predefinicao);
+        res.status(200).json(data); // Retorna as predefinições atualizadas
+    } catch (error) {
+        console.error("Erro ao salvar predefinições:", error);
+
+        // Verifica se o erro é relacionado a nomes duplicados
+        if (error.message.includes("já possui uma predefinição")) {
+            return res.status(400).json({ error: error.message });
+        }
+
+        res.status(500).json({ error: 'Erro ao salvar predefinições.' });
+    }
+};
 
 
-  
+exports.getPredefinicao = async (req, res) => {
+    const { nome } = req.params; // Captura o nome enviado como parâmetro da URL
+
+    if (!nome) {
+        return res.status(400).json({ error: 'Nome é obrigatório' });
+    }
+
+    try {
+        const id = await redisService.getPredefinicoes(nome);
+        if (id) {
+            res.status(200).json({ nome, id });
+        } else {
+            res.status(404).json({ message: 'ID não encontrado para o nome fornecido' });
+        }
+    } catch (error) {
+        console.error("Erro ao buscar ID por nome:", error);
+        res.status(500).json({ error: 'Erro ao buscar ID' });
+    }
+};
+
+exports.deleteTodasPredefinicoes = async (req, res) => {
+    const { usuario } = req.params; // Captura o usuário da URL
+
+    if (!usuario) {
+        return res.status(400).json({ error: 'Usuário é obrigatório.' });
+    }
+
+    try {
+        const result = await redisService.deleteTodasPredefinicoes(usuario);
+        if (result) {
+            res.status(200).json({ message: `Todas as predefinições do usuário ${usuario} foram removidas.` });
+        } else {
+            res.status(404).json({ message: `Nenhuma predefinição encontrada para o usuário ${usuario}.` });
+        }
+    } catch (error) {
+        console.error("Erro ao deletar predefinições:", error);
+        res.status(500).json({ error: 'Erro ao deletar predefinições.' });
+    }
+};
+
+
+
+exports.deletePredefinicao = async (req, res) => {
+    const { usuario, id } = req.params; // Captura o usuário e o ID da URL
+
+    if (!usuario || !id) {
+        return res.status(400).json({ error: 'Usuário e ID da predefinição são obrigatórios.' });
+    }
+
+    try {
+        const result = await redisService.deletePredefinicao(usuario, id);
+        if (result) {
+            res.status(200).json({ message: `Predefinição com o ID ${id} foi removida para o usuário ${usuario}.` });
+        } else {
+            res.status(404).json({ message: `Predefinição com o ID ${id} não encontrada para o usuário ${usuario}.` });
+        }
+    } catch (error) {
+        console.error("Erro ao deletar predefinição:", error);
+        res.status(500).json({ error: 'Erro ao deletar predefinição.' });
+    }
+};
+
+
+
+
+
+
+

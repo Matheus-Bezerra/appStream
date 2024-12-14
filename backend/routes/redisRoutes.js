@@ -7,8 +7,11 @@ router.post('/salvar', redisController.saveUserPreferences);
 router.get('/buscar', redisController.getUserPreferences); 
 
 // Pre-definicoes
-router.post('/eventos', redisController.saveEventos);
-router.get('/eventos', redisController.getEventos); 
+router.post('/pre-definicao', redisController.savePredefinicao);
+router.get('/pre-definicao/:nome', redisController.getPredefinicao); 
+router.delete('/pre-definicao/:usuario', redisController.deleteTodasPredefinicoes);//deleta todas
+router.delete('/pre-definicao/:usuario/:id', redisController.deletePredefinicao); //deleta uma pre-de especifica
+
 
 // eventos
 router.post('/eventos', redisController.saveEventos);
