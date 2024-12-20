@@ -87,9 +87,9 @@ const Login = () => {
         </div>
         {/* Sign up Link */}
         <div className="mt-6 text-white text-center">
-          <a href="#" className="hover:underline">
+          <Link to="/auth/register" className="hover:underline">
             Registre-se Aqui
-          </a>
+          </Link>
         </div>
       </div>
       <div className="w-1/2 h-screen bg-[#1c1f28] hidden lg:block">

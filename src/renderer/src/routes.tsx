@@ -9,6 +9,7 @@ import { Jogos } from "./pages/Main/Jogos";
 import { GameModes } from "./pages/Main/GameModes";
 import Login from "./pages/Auth/Login";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
+import Register from "./pages/Auth/Register";
 
 
 export const router = createHashRouter([
@@ -46,6 +47,10 @@ export const router = createHashRouter([
       {
         path: "/auth/forgot-password",
         element: <ForgotPassword />,
+      },
+      {
+        path: "/auth/Register",
+        element: <Register />,
       },
     ],
   },

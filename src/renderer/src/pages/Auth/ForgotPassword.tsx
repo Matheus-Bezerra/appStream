@@ -41,7 +41,7 @@ const ForgotPassword = () => {
                 type={showPassword ? "text" : "password"}
                 name="password"
                 id="password"
-                placeholder="••••••••"
+                placeholder="Nova senha"
                 className="w-full border bg-[#363B4A] text-white border-zinc-800 rounded-3xl font-bold py-2 px-3 focus:outline-none focus:border-primary"
                 required
               />
@@ -67,7 +67,7 @@ const ForgotPassword = () => {
                 type={showConfirmPassword ? "text" : "password"}
                 name="confirm-password"
                 id="confirm-password"
-                placeholder="••••••••"
+                placeholder="Confirme a senha"
                 className="w-full border bg-[#363B4A] text-white border-zinc-800 rounded-3xl font-bold py-2 px-3 focus:outline-none focus:border-primary"
                 required
               />
@@ -85,7 +85,7 @@ const ForgotPassword = () => {
 
           <button
             type="submit"
-            className="w-full bg-zinc-900 hover:bg-zinc-700 text-white font-medium rounded-3xl py-2 px-4 text-center focus:ring-4 focus:outline-none focus:ring-primary-300"
+            className="w-full bg-zinc-900 hover:bg-primary hover:text-zinc-800 hover:-translate-y-2 hover:scale-100 duration-200 transition ease-in-out delay-150 text-white font-medium rounded-3xl py-2 px-4 text-center focus:ring-4 focus:outline-none focus:ring-primary-300"
           >
             Resetar Senha
           </button>
