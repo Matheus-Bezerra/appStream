@@ -63,18 +63,18 @@ const Register = () => {
               className="w-full border bg-[#363B4A] text-white border-zinc-800 rounded-xl font-bold py-2 px-3 focus:outline-none focus:border-primary"
             >
               {[
-                "January",
-                "February",
-                "March",
-                "April",
-                "May",
-                "June",
-                "July",
-                "August",
-                "September",
-                "October",
-                "November",
-                "December",
+                 "Janeiro",
+                 "Fevereiro",
+                 "Março",
+                 "Abril",
+                 "Maio",
+                 "Junho",
+                 "Julho",
+                 "Agosto",
+                 "Setembro",
+                 "Outubro",
+                 "Novembro",
+                 "Dezembro",
               ].map((month, index) => (
                 <option key={index} value={month}>
                   {month}
