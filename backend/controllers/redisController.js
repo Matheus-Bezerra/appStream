@@ -192,7 +192,7 @@ exports.getPredefinicao = async (req, res) => {
     try {
         const id = await redisService.getPredefinicoes(nome);
         if (id) {
-            res.status(200).json({ nome, id });
+            res.status(200).json({ dados: id });
         } else {
             res.status(404).json({ message: 'ID não encontrado para o nome fornecido' });
         }
