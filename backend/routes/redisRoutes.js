@@ -12,6 +12,9 @@ router.get('/pre-definicao/:nome', redisController.getPredefinicao);
 router.delete('/pre-definicao/:usuario', redisController.deleteTodasPredefinicoes);//deleta todas
 router.delete('/pre-definicao/:usuario/:id', redisController.deletePredefinicao); //deleta uma pre-de especifica
 
+router.put('/pre-definicao/ativar/:usuario/:id', redisController.tornarAtiva);
+router.patch('/pre-definicao/renomear/:usuario/:id', redisController.renomearPredefinicao);
+
 
 // eventos
 router.post('/eventos', redisController.saveEventos);

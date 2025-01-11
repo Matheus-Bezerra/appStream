@@ -382,7 +382,70 @@ exports.deletePredefinicao = async (usuario, id) => {
   }
 };
 
+exports.tornarAtiva = async (usuario, id) => {
+  const key = `predefinicoes:${usuario}`;
+
+  if (!client.isOpen) {
+      await client.connect();
+      await client.select(1);
+  }
+
+  try {
+      const data = await client.get(key);
+      if (!data) return false;
+
+      const parsedData = JSON.parse(data);
+      let found = false;
+
+      const updatedData = parsedData.map(predef => {
+          if (predef.id === id) {
+              found = true;
+              return { ...predef, ativo: true };
+          }
+          return { ...predef, ativo: false };
+      });
+
+      if (!found) return false;
+
+      await client.set(key, JSON.stringify(updatedData));
+      return true;
+  } catch (err) {
+      console.error("Erro ao atualizar predefinição ativa no Redis:", err);
+      throw err;
+  }
+};
 
 
 
+exports.renomearPredefinicao = async (usuario, id, nome) => {
+  const key = `predefinicoes:${usuario}`;
 
+  if (!client.isOpen) {
+      await client.connect();
+      await client.select(1);
+  }
+
+  try {
+      const data = await client.get(key);
+      if (!data) return false;
+
+      const parsedData = JSON.parse(data);
+      let found = false;
+
+      const updatedData = parsedData.map(predef => {
+          if (predef.id === id) {
+              found = true;
+              return { ...predef, nome };
+          }
+          return predef;
+      });
+
+      if (!found) return false;
+
+      await client.set(key, JSON.stringify(updatedData));
+      return true;
+  } catch (err) {
+      console.error("Erro ao renomear predefinição no Redis:", err);
+      throw err;
+  }
+};

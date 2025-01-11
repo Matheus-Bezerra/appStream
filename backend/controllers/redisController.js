@@ -192,7 +192,7 @@ exports.getPredefinicao = async (req, res) => {
     try {
         const id = await redisService.getPredefinicoes(nome);
         if (id) {
-            res.status(200).json({ dados: id });
+            res.status(200).json({ predefinicoes: id });
         } else {
             res.status(404).json({ message: 'ID não encontrado para o nome fornecido' });
         }
@@ -245,8 +245,45 @@ exports.deletePredefinicao = async (req, res) => {
 };
 
 
+exports.tornarAtiva = async (req, res) => {
+    const { usuario, id } = req.params;
+
+    if (!usuario || !id) {
+        return res.status(400).json({ error: 'Usuário e ID da predefinição são obrigatórios.' });
+    }
+
+    try {
+        const result = await redisService.tornarAtiva(usuario, id);
+        if (result) {
+            res.status(200).json({ message: `Predefinição com o ID ${id} foi marcada como ativa.` });
+        } else {
+            res.status(404).json({ error: `Predefinição com o ID ${id} não encontrada para o usuário ${usuario}.` });
+        }
+    } catch (error) {
+        console.error("Erro ao atualizar predefinição ativa:", error);
+        res.status(500).json({ error: 'Erro ao atualizar predefinição ativa.' });
+    }
+};
 
 
 
+exports.renomearPredefinicao = async (req, res) => {
+    const { usuario, id } = req.params;
+    const { nome } = req.body;
 
+    if (!usuario || !id || !nome) {
+        return res.status(400).json({ error: 'Usuário, ID da predefinição e novo nome são obrigatórios.' });
+    }
 
+    try {
+        const result = await redisService.renomearPredefinicao(usuario, id, nome);
+        if (result) {
+            res.status(200).json({ message: `Predefinição com o ID ${id} foi renomeada para "${nome}".` });
+        } else {
+            res.status(404).json({ error: `Predefinição com o ID ${id} não encontrada para o usuário ${usuario}.` });
+        }
+    } catch (error) {
+        console.error("Erro ao renomear predefinição:", error);
+        res.status(500).json({ error: 'Erro ao renomear predefinição.' });
+    }
+};
