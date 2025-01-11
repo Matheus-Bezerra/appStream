@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors({
     // origin: 'http://localhost:5173', // Permitir apenas esta origem
     origin: '*', // Permito todas as origens aqui de requisição
-    methods: ['GET', 'POST'], // Permitir esses tipos.
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], // Permitir esses tipos.
 }));
 
 
